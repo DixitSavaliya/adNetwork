@@ -1,0 +1,97 @@
+.padding i {
+    padding: 10px;
+}
+td.action {
+    padding: 0px;
+    vertical-align: middle;
+    text-align: center;
+}
+th.action {
+    width: 100px;
+    text-align: center;
+}
+th.center {
+    text-align: center;
+    width: 50px;
+}
+.left select#exampleCustomSelect {
+    width: 70px;
+    /* margin-left: 8px; */
+} 
+.left {
+    text-align: end;
+} 
+.badge-success {
+    color: #fff;
+    background-color: #4dbd74;
+    font-size: small;
+}
+.badge-danger {
+    color: #fff;
+    background-color: #f86c6b;
+    font-size: small;
+}
+.pagination{
+    margin: 10px auto !important;
+    cursor: pointer;
+  }
+  
+  .pagination .page-item .page-link{
+    background-color: #fff !important;
+    color:  #007bff !important;
+    border: 1px solid #dee2e6 !important;
+    padding: .5rem .75rem !important;
+    font-weight: bold !important;
+  }
+  
+  .pagination .page-item .page-link:hover {
+    background-color: #e9ecef !important;
+  }
+  
+  .pagination .active .page-link {
+    background-color: #007bff !important;
+    color: #fff !important;
+    border: 1px solid #dee2e6 !important;
+    padding: .5rem .75rem !important;
+    font-size: 0.9rem !important;
+    font-weight: bold !important;
+  }
+  .pagination .active .page-link:hover {
+    background-color: #e9ecef !important;
+    color: #007bff !important;
+  }
+  .space {
+    display: flex;
+    padding: 10px;
+  }
+  .space i {
+  
+    padding: 10px;
+  }
+  .lt select#exampleCustomSelect {
+    width: 80px;
+}
+.lt {
+  text-align: end;
+}
+.lt span {
+  padding: 9px !important;
+}
+.table td {
+    /* padding: 0.75rem; */
+    /* vertical-align: top; */
+    border-top: 1px solid #c8ced3;
+    cursor: pointer;
+}
+
+.center .form-check-input {
+  position: unset !important; 
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+}
+
+.centers .form-check-input{
+  position: inherit !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+}
