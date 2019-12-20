@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Bar, Line} from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import {
   Badge,
   Row,
@@ -201,10 +201,10 @@ const cardChartOpts4 = {
 
 // Social Box Chart
 const socialBoxData = [
-  {data: [65, 59, 84, 84, 51, 55, 40], label: 'facebook'},
-  {data: [1, 13, 9, 17, 34, 41, 38], label: 'twitter'},
-  {data: [78, 81, 80, 45, 34, 12, 40], label: 'linkedin'},
-  {data: [35, 23, 56, 22, 97, 23, 64], label: 'google'}
+  { data: [65, 59, 84, 84, 51, 55, 40], label: 'facebook' },
+  { data: [1, 13, 9, 17, 34, 41, 38], label: 'twitter' },
+  { data: [78, 81, 80, 45, 34, 12, 40], label: 'linkedin' },
+  { data: [35, 23, 56, 22, 97, 23, 64], label: 'google' }
 ];
 
 const makeSocialBoxData = (dataSetNo) => {
@@ -414,12 +414,10 @@ const mainChartOpts = {
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false
     };
-    console.log("dashboard component called")
   }
 
   toggle() {
@@ -430,10 +428,12 @@ class Dashboard extends Component {
 
 
   render() {
+    const { auth, login, getUser } = this.props;
 
     return (
       <div className="animated fadeIn">
-         <h1>Welcome {this.props.auth.auth_data.username} To Dashboard</h1>
+        <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
+        <h5>Welcome To Dashboard</h5>
         {/* <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-primary">

@@ -39,7 +39,7 @@ class Full extends Component {
   render() {
     return (
       <div className="app">
-        <Header />
+        <Header {...this.props}/>
         <div className="app-body">
           <Sidebar {...this.props} />
           <main className="main">

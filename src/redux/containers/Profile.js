@@ -48,4 +48,4 @@ const mapDispatchToProps = (dispatch) => ({
     updateprofile:(data) => dispatch(updateprofile(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PorfileContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(PorfileContainer);

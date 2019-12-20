@@ -38,7 +38,7 @@ class ChangePassword extends Component {
         const data = {
             old_password: this.state.old_password,
             new_password: this.state.new_password,
-            username:this.props.auth.auth_data.username,
+            username:this.props.auth.auth_data ? this.props.auth.auth_data.user_email || this.props.auth.auth_data.username : '',
             id:this.props.auth.auth_data.id
         }
         console.log("data", data)

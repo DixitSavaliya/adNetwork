@@ -137,13 +137,15 @@ class CreateApp extends React.Component {
     componentDidMount() {
         if (this.props.id) {
             const obj = {
-                application_id: this.props.id
+                application_id: this.props.id,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group
             }
             this.props.getAppDataById(obj).then((res) => {
                 this.setState({
                     App: this.state.App = res.response.data
                 })
-                console.log("app",this.state.App)
+                console.log("app", this.state.App)
                 if (this.state.App.is_live == 1) {
                     this.setState({
                         updateRightBtn: this.state.updateRightBtn = true,
@@ -253,7 +255,9 @@ class CreateApp extends React.Component {
                     package: this.state.package,
                     icon: this.state.selectedFile,
                     type: this.state.customSelect,
-                    is_live: this.state.is_live
+                    is_live: this.state.is_live,
+                    user_id: this.props.auth.auth_data.id,
+                    user_group: this.props.auth.auth_data.user_group
 
                 }
                 console.log("obj", obj);
@@ -290,7 +294,9 @@ class CreateApp extends React.Component {
                     icon: this.state.selectedFile,
                     type: this.state.customSelect,
                     is_live: this.state.is_live,
-                    id: this.state.app_id
+                    id: this.state.app_id,
+                    user_id: this.props.auth.auth_data.id,
+                    user_group: this.props.auth.auth_data.user_group
                 }
                 console.log("obj", obj);
                 this.props.editApp(obj);

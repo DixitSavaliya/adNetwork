@@ -8,6 +8,7 @@ const initialState = {
     user: {},
     avatar: {},
     auth_data: {},
+    user_data: {},
     count: {},
     userrole: {},
     userroledata: {},
@@ -17,29 +18,36 @@ const initialState = {
     userright: {},
     searchdata: {},
     appCount: {},
-    appData: {}
+    appData: {},
+    userdata: {}
 };
 
 const auth = (state = initialState, action) => {
     switch (action.type) {
+
+        //REGISTER USER
         case ACTION.REGISTER_REQUEST:
             return {
                 ...state,
                 fetching: true,
             };
         case ACTION.REGISTER_SUCCESS:
-            Auth.setAuth(action.response.data);
             return {
                 ...state,
                 fetching: false,
-                auth_data: action.response.data,
+                userdata: action.response.data,
             };
         case ACTION.REGISTER_FAILURE:
             return {
                 ...state,
                 fetching: false,
+                userdata: {},
                 error: action.error
             };
+
+
+
+
         case ACTION.LOGIN_REQUEST:
             return {
                 ...state,
@@ -50,8 +58,7 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 fetching: false,
-                auth_data: action.response.data,
-                user: {},
+                auth_data: action.response.data
             };
         case ACTION.LOGIN_FAILURE:
             Auth.removeAuth();
@@ -118,12 +125,14 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATE_PROFILE_SUCCESS:
+            Swal.fire("Update Profile Successfully!", "", "success");
             return {
                 ...state,
                 fetching: false,
                 user: action.response.data
             };
         case ACTION.UPDATE_PROFILE_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
             return {
                 ...state,
                 fetching: false,
@@ -665,26 +674,46 @@ const auth = (state = initialState, action) => {
             };
 
 
-              //SEARCHAPP
+        //SEARCHAPP
         case ACTION.SEARCHAPP_REQUEST:
-                return {
-                    ...state,
-                    fetching: true,
-                };
-            case ACTION.SEARCHAPP_SUCCESS:
-                return {
-                    ...state,
-                    fetching: false,
-                    appData: action.response.data
-                };
-            case ACTION.SEARCHAPP_FAILURE:
-                Swal.fire("Something went wrong!", "", "warning");
-                return {
-                    ...state,
-                    fetching: false,
-                    appData: {},
-                    error: action.error
-                };
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.SEARCHAPP_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                appData: action.response.data
+            };
+        case ACTION.SEARCHAPP_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                appData: {},
+                error: action.error
+            };
+
+
+        //SEARCHUSERROLEID
+        case ACTION.SEARCHUSERROLEID_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.SEARCHUSERROLEID_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.SEARCHUSERROLEID_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
 
 

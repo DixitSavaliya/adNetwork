@@ -17,7 +17,8 @@ class FullContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    user:state.auth.user
 });
 const mapDispatchToProps = (dispatch) => ({
 

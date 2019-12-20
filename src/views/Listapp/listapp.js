@@ -53,7 +53,9 @@ class ListApp extends React.Component {
 
     searchApplicationDataKeyUp(e) {
         const obj = {
-            search_string: e.target.value
+            search_string: e.target.value,
+            user_id:this.props.auth.auth_data.id,
+            user_group:this.props.auth.auth_data.user_group
         }
         this.props.searchApplicationData(obj).then((res) => {
             this.setState({

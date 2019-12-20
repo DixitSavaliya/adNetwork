@@ -14,6 +14,10 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
+    this.mobileSidebarToggle = this.mobileSidebarToggle.bind(this);
+    this.sidebarMinimize = this.sidebarMinimize.bind(this);
+    this.sidebarToggle = this.sidebarToggle.bind(this);
+    this.asideToggle = this.asideToggle.bind(this);
   }
 
   sidebarToggle(e) {
@@ -67,7 +71,7 @@ class Header extends Component {
           <NavItem className="d-md-down-none">
             <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
           </NavItem> */}
-          <HeaderDropdown auth={auth} logout={logout}/>
+          <HeaderDropdown auth={auth} logout={logout} {...this.props}/>
         </Nav>
         <NavbarToggler className="d-md-down-none" onClick={this.asideToggle}>
           <span className="navbar-toggler-icon"></span>

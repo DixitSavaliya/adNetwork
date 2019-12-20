@@ -18,13 +18,13 @@ export const login = (auth) => {
   };
 };
 
-export const register = (auth) => {
+export const register = (info) => {
   return {
     [CALL_API]: {
-      endpoint: '/auth/register',
+      endpoint: 'AP/registerUsers',
       init: {
         method: 'POST',
-        body: JSON.stringify(auth),
+        body: JSON.stringify(info),
       },
       types: [
         ACTION.REGISTER_REQUEST,
@@ -101,6 +101,19 @@ export const updateprofile = (data) => {
         body: JSON.stringify(data),
       },
       types: ["UPDATE_PROFILE_REQUEST", "UPDATE_PROFILE_SUCCESS", "UPDATE_PROFILE_FAILURE"],
+    }
+  };
+};
+
+export const getUserRoleId = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'UserRole/searchUserRole',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["SEARCHUSERROLEID_REQUEST", "SEARCHUSERROLEID_SUCCESS", "SEARCHUSERROLEID_FAILURE"],
     }
   };
 };

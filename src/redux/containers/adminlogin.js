@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch) => ({
     login:(info) => dispatch(login(info))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminLoginContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLoginContainer);

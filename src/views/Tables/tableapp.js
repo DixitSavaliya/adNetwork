@@ -65,6 +65,10 @@ export default class TableApp extends React.Component {
     }
 
     getApplicationCount() {
+        // const obj = {
+        //     user_id:this.props.auth.auth_data.id,
+        //     user_group:this.props.auth.auth_data.user_group
+        // }
         let _this = this;
         this.props.applicationCount().then(function (res) {
             _this.setState({
@@ -76,7 +80,9 @@ export default class TableApp extends React.Component {
     getApplicationPageData() {
         const obj = {
             page_no: "1",
-            items_per_page: this.state.items_per_page
+            items_per_page: this.state.items_per_page,
+            // user_id:this.props.auth.auth_data.id,
+            // user_group:this.props.auth.auth_data.user_group
         }
         let _this = this;
         this.props.applicationPGData(obj).then(function (res) {

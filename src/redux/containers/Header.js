@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { logout } from '../actions/auth';
-
 import Header from '../../components/Header/Header';
 
 class HeaderContainer extends Component {
@@ -25,9 +23,8 @@ class HeaderContainer extends Component {
 
     render() {
       const { auth, logout } = this.props;
-
         return (
-            <Header auth={auth} logout={logout} />
+            <Header auth={auth} logout={logout} {...this.props} />
         );
     }
 }
@@ -39,4 +36,4 @@ const mapDispatchToProps = (dispatch) => ({
     logout:() => dispatch(logout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HeaderContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

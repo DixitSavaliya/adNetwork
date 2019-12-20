@@ -64,16 +64,21 @@ class Login extends Component {
     if (isValid) {
       console.log(this.state);
       this.setState({
-        password: '',
-        passworderror: '',
-        username: '',
-        usernameerror: '',
-        customSelectName: '',
-        customSelectNameerror: ''
+        passworderror: this.state.passworderror = '',
+        usernameerror: this.state.usernameerror = ''
       })
+      const obj = {
+        username:this.state.username,
+        password:this.state.password,
+        user_group:this.state.customSelectName
+      }
       if (this.state.username && this.state.password && this.state.customSelectName) {
         this.state['user_group'] = this.state.customSelectName;
-        this.props.login(this.state);
+        this.props.login(obj).then((res) => {
+          if(res.response.status == 1) {
+            this.props.getUser(res.response.data.id);
+          }
+        });
       }
     };
   }
@@ -89,7 +94,7 @@ class Login extends Component {
                   <CardBody>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
-                    <InputGroup className="mb-3">
+                    <InputGroup>
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -100,10 +105,10 @@ class Login extends Component {
                         autoComplete="username"
                       />
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.usernameerror}
                     </div>
-                    <InputGroup className="mb-4">
+                    <InputGroup>
                       <InputGroupAddon><i className="icon-lock"></i></InputGroupAddon>
                       <Input
                         type="password"
@@ -114,10 +119,10 @@ class Login extends Component {
                         autoComplete="current-password"
                       />
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div  className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.passworderror}
                     </div>
-                    <InputGroup className="mb-4">
+                    <InputGroup>
                       <InputGroupAddon><i className="fa fa-user-secret"></i></InputGroupAddon>
                       <Input
                         type="select"
@@ -131,7 +136,7 @@ class Login extends Component {
                         <option value="advertiser">Advertiser</option>
                       </Input>
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.customSelectNameerror}
                     </div>
                     <Row>
