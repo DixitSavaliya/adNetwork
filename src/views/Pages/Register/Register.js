@@ -167,9 +167,7 @@ class Register extends Component {
             this.props.history.push(this.props.from || { pathname: '/#/login' });
           }
         });
-       
         // this.state['user_group'] = this.state.customSelectName;
-
       }
     };
   }

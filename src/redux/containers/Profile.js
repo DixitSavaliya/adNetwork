@@ -12,7 +12,7 @@ class PorfileContainer extends Component {
     transferToDashboardIfLogout() {
         console.log("props", this.props);
         if (!this.props.auth.auth_data.access_token) {
-            this.props.history.push(this.props.from || { pathname: '/login' });
+            this.props.history.push(this.props.from || {pathname: '/login'});
         }
     }
     componentWillMount() {

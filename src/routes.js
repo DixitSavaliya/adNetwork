@@ -26,6 +26,8 @@ const routes = {
   '/viewapp': 'ViewApp',
   '/application': 'Profile',
   '/advertiser' : 'Advertiser',
-  '/publisher' : 'Publisher'
+  '/publisher' : 'Publisher',
+  '/custom-ads' : 'CustomAds',
+  '/monetization-network' : 'MonetizationNetwork'
 };
 export default routes;

@@ -8,7 +8,7 @@ class UserRoleContainer extends Component {
     
     transferToDashboardIfLoggedIn(){
         if (!this.props.auth.auth_data.access_token){
-            this.props.history.push(this.props.from || {pathname: '/'});
+            this.props.history.push(this.props.from || {pathname: '/login'});
         }
     }
 

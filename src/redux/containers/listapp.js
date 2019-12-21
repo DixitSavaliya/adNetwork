@@ -8,7 +8,7 @@ class ListAppContainer extends Component {
     
     transferToDashboardIfLoggedIn(){
         if (!this.props.auth.auth_data.access_token){
-            this.props.history.push(this.props.from || {pathname: '/'});
+            this.props.history.push(this.props.from || {pathname: '/login'});
         }
     }
 
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    applicationCount:() => dispatch(applicationCount()),
+    applicationCount:(obj) => dispatch(applicationCount(obj)),
     applicationPGData:(data) => dispatch(applicationPGData(data)),
     deleteApp:(data) => dispatch(deleteApp(data)),
     searchApplicationData:(data) => dispatch(searchApplicationData(data))

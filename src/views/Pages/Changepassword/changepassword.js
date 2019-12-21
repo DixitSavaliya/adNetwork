@@ -29,25 +29,21 @@ class ChangePassword extends Component {
             old_password: '',
             new_password: ''
         }
-        console.log("this.props", this.props);
         this.ChangePassword = this.ChangePassword.bind(this);
     }
 
     ChangePassword() {
-        console.log("state", this.state);
         const data = {
             old_password: this.state.old_password,
             new_password: this.state.new_password,
             username:this.props.auth.auth_data ? this.props.auth.auth_data.user_email || this.props.auth.auth_data.username : '',
             id:this.props.auth.auth_data.id
         }
-        console.log("data", data)
         this.props.changepassword(data);
     }
 
 
     render() {
-        console.log("Profile view this.props", this.props)
         const { auth } = this.props;
         const { fetching, error } = auth;
 

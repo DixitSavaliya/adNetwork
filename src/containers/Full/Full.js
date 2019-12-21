@@ -20,6 +20,8 @@ import ListApp from '../../redux/containers/listapp';
 import ViewApp from '../../redux/containers/viewapp';
 import Advertiser from '../../redux/containers/advertiser';
 import Publisher from '../../redux/containers/publisher';
+import MonetizationNetwork from '../../redux/containers/monetizationnetwork';
+import CustomAds from '../../redux/containers/customads';
 
 // Components
 import Buttons from '../../views/Components/Buttons/';
@@ -76,6 +78,8 @@ class Full extends Component {
                   <Route path="/viewapp/:id" name="ViewApp" component={ViewApp} />
                   <Route path="/advertiser" name="Advertiser" component={Advertiser} />
                   <Route path="/publisher" name="Publisher" component={Publisher} />
+                  <Route path="/monetization-network" name="MonetizationNetwork" component={MonetizationNetwork} />
+                  <Route path="/custom-ads" name="CustomAds" component={CustomAds} />
                   <Redirect from="/" to="/dashboard" />
                 </Switch>
               </Router>

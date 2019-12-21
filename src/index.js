@@ -6,7 +6,7 @@ import {
     Switch,
     Redirect
 } from 'react-router-dom';
-import history from './history';
+// import history from './history';
 
 import { Provider } from 'react-redux';
 import {

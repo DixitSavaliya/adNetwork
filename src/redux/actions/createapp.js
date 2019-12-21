@@ -13,12 +13,13 @@ export const createApp = (data) => {
     };
   };
 
-  export const applicationCount = () => {
+  export const applicationCount = (data) => {
     return {
       [CALL_API]: {
         endpoint: 'Application/countApplication',
         init: {
-          method: 'POST'
+          method: 'POST',
+          body: JSON.stringify(data)
         },
         types: ["APPCOUNT_REQUEST", "APPCOUNT_SUCCESS", "APPCOUNT_FAILURE"],
       }
@@ -43,6 +44,19 @@ export const createApp = (data) => {
     return {
       [CALL_API]: {
         endpoint: 'Application/getApplication',
+        init: {
+          method: 'POST',
+          body: JSON.stringify(data)
+        },
+        types: ["APPDATABYID_REQUEST", "APPDATABYID_SUCCESS", "APPDATABYID_FAILURE"],
+      }
+    };
+  };
+
+  export const getViewApplicationDetailsById = (data) => {
+    return {
+      [CALL_API]: {
+        endpoint: 'Application/getViewApplicationDetailsById',
         init: {
           method: 'POST',
           body: JSON.stringify(data)

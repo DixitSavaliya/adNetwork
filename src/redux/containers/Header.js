@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { logout } from '../actions/auth';
 import Header from '../../components/Header/Header';
 
 class HeaderContainer extends Component {
     transferToDashboardIfLogout(){
         if (!this.props.auth.auth_data.access_token){
-            this.props.history.push(this.props.from || { pathname: '/login' });
+            this.props.history.push(this.props.from || {pathname: '/login'});
         }
     }
     componentWillMount() {
@@ -22,18 +21,18 @@ class HeaderContainer extends Component {
     }
 
     render() {
-      const { auth, logout } = this.props;
+      const { auth} = this.props;
         return (
-            <Header auth={auth} logout={logout} {...this.props} />
+            <Header auth={auth} {...this.props} />
         );
     }
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
+    auth: state.auth
 });
 const mapDispatchToProps = (dispatch) => ({
-    logout:() => dispatch(logout()),
+    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

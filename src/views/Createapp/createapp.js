@@ -145,7 +145,6 @@ class CreateApp extends React.Component {
                 this.setState({
                     App: this.state.App = res.response.data
                 })
-                console.log("app", this.state.App)
                 if (this.state.App.is_live == 1) {
                     this.setState({
                         updateRightBtn: this.state.updateRightBtn = true,
@@ -221,7 +220,7 @@ class CreateApp extends React.Component {
     }
 
     onItemSelect(event) {
-        console.log("event", event.target.options[event.target.selectedIndex].innerHTML);
+
         let _id = event.target.options[event.target.selectedIndex].value;
         let _name = event.target.options[event.target.selectedIndex].innerHTML;
         this.setState({
@@ -260,7 +259,6 @@ class CreateApp extends React.Component {
                     user_group: this.props.auth.auth_data.user_group
 
                 }
-                console.log("obj", obj);
                 this.props.createApp(obj);
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
@@ -298,7 +296,6 @@ class CreateApp extends React.Component {
                     user_id: this.props.auth.auth_data.id,
                     user_group: this.props.auth.auth_data.user_group
                 }
-                console.log("obj", obj);
                 this.props.editApp(obj);
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
@@ -308,7 +305,6 @@ class CreateApp extends React.Component {
 
     render() {
         const { auth } = this.props;
-        console.log("props", this.props);
 
         return (
             <div className="animated fadeIn">

@@ -72,8 +72,17 @@ class AdminLogin extends Component {
         customSelectNameerror: ''
       })
       if (this.state.username && this.state.password && this.state.customSelectName) {
-        this.state['user_group'] = this.state.customSelectName;
-        this.props.login(this.state);
+        const obj = {
+          username:this.state.username,
+          password:this.state.password,
+          user_group:this.state.customSelectName
+        }
+        
+        this.props.login(obj).then((res) => {
+          if(res.response.status == 1) {
+            this.props.getUser(res.response.data.id);
+          }
+        });
       }
     };
   }

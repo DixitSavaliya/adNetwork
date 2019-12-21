@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
-import { login } from '../actions/auth';
+import { login,getUser } from '../actions/auth';
 
 import AdminLogin from '../../views/adminlogin/adminlogin';
 import Auth from '../Auth';
@@ -32,9 +32,9 @@ class AdminLoginContainer extends Component {
     }
 
     render() {
-      const { auth, login } = this.props;
+      const { auth, login , getUser } = this.props;
       return (
-        <AdminLogin auth={auth} login={login} />
+        <AdminLogin auth={auth} login={login} getUser={getUser} />
       );
     }
 }
@@ -43,7 +43,8 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 const mapDispatchToProps = (dispatch) => ({
-    login:(info) => dispatch(login(info))
+    login:(info) => dispatch(login(info)),
+    getUser:(info) => dispatch(getUser(info))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminLoginContainer);

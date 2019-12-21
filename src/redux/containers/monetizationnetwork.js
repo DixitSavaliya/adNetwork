@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getViewApplicationDetailsById} from '../actions/createapp';
-import ViewApp from '../../views/Viewapp/viewapp';
+import { getPublisherApplication} from '../actions/createapp';
+import MonetizationNetwork from '../../views/monetizationnetwork/monetizationnetwork';
 
-class ViewAppContainer extends Component {
+class MonetizationNetworkContainer extends Component {
     
     transferToDashboardIfLoggedIn(){
         if (!this.props.auth.auth_data.access_token){
@@ -24,10 +24,10 @@ class ViewAppContainer extends Component {
     }
 
     render() {
-      const {auth,getViewApplicationDetailsById} = this.props;
-      this.id = this.props.location.pathname.split('/')[2];
+      const {auth,getPublisherApplication} = this.props;
+    //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <ViewApp auth={auth} id={this.id} getViewApplicationDetailsById={getViewApplicationDetailsById}/>
+        <MonetizationNetwork auth={auth} getPublisherApplication={getPublisherApplication}/>
       );
     }
 }
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getViewApplicationDetailsById:(data) => dispatch(getViewApplicationDetailsById(data))
+    getPublisherApplication:(data) => dispatch(getPublisherApplication(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ViewAppContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MonetizationNetworkContainer));

@@ -49,7 +49,7 @@ class ViewApp extends React.Component {
             const obj = {
                 application_id: this.props.id
             }
-            this.props.getAppDataById(obj).then((res) => {
+            this.props.getViewApplicationDetailsById(obj).then((res) => {
                 var array = [];
                 array.push(res.response.data);
                 this.setState({

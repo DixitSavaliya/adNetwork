@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getViewApplicationDetailsById} from '../actions/createapp';
-import ViewApp from '../../views/Viewapp/viewapp';
+// import { createApp,getAppDataById,editApp} from '../actions/createapp';
+import CustomAds from '../../views/customads/customads';
 
-class ViewAppContainer extends Component {
+class CustomAdsContainer extends Component {
     
     transferToDashboardIfLoggedIn(){
         if (!this.props.auth.auth_data.access_token){
@@ -24,10 +24,11 @@ class ViewAppContainer extends Component {
     }
 
     render() {
-      const {auth,getViewApplicationDetailsById} = this.props;
-      this.id = this.props.location.pathname.split('/')[2];
+      const {auth} = this.props;
+      console.log("props",this.props);
+    //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <ViewApp auth={auth} id={this.id} getViewApplicationDetailsById={getViewApplicationDetailsById}/>
+        <CustomAds auth={auth}/>
       );
     }
 }
@@ -37,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getViewApplicationDetailsById:(data) => dispatch(getViewApplicationDetailsById(data))
+    // createApp:(data) => dispatch(createApp(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ViewAppContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomAdsContainer));

@@ -39,7 +39,7 @@ export default class TableRole extends React.Component {
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
 
         EventEmitter.subscribe('searchData', (data) => {
-            console.log("data",data);
+            console.log("data", data);
             this.setState({
                 searchData: data,
                 isData: true
@@ -108,22 +108,32 @@ export default class TableRole extends React.Component {
             page_no: this.state.perpage,
             items_per_page: this.state.items_per_page
         }
-        this.props.RolePGData(obj);
+        this.props.RolePGData(obj).then((res) => {
+            this.setState({
+                paginationdata: this.state.paginationdata = res.response.data
+            })
+        });
 
     }
 
     checkAllHandler(event) {
         console.log("data", event.target.checked, event.target.id);
-        for(var i=0;i<this.state.paginationdata.length;i++) {
-        this.state.paginationdata[i]['_Checked'] == true
+        console.log("paginationdata", this.state.paginationdata);
         // if (event.target.checked == true) {
-        //     this.setState({
-        //         check: this.state.check = true
-        //     })
-
+        //     for (var i = 0; i < this.state.paginationdata.length; i++) {
+        //         this.setState({
+        //             paginationdata: this.state.paginationdata = this.state.paginationdata[i]['_rowChecked'] == true
+        //         })
+           
         //     }
-        }
-        console.log("paginationdata",this.state.paginationdata);
+        // } else {
+        //     for (var i = 0; i < this.state.paginationdata.length; i++) {
+        //         this.setState({
+        //             paginationdata: this.state.paginationdata = this.state.paginationdata[i]['_rowChecked'] == false
+        //         })
+        //     }
+        // }
+        //      console.log("paginationdata", this.state.paginationdata);
     }
 
     editUserRoleData(data) {
@@ -177,7 +187,11 @@ export default class TableRole extends React.Component {
             page_no: '' + event.target.id,
             items_per_page: this.state.items_per_page
         }
-        this.props.RolePGData(obj);
+        this.props.RolePGData(obj).then((res) => {
+            this.setState({
+                paginationdata: this.state.paginationdata = res.response.data
+            })
+        });
 
     }
 
@@ -198,11 +212,7 @@ export default class TableRole extends React.Component {
 
     render() {
         const { auth, roleCountData, countData } = this.props;
-        console.log("roleCountData view this.props", this.props)
         this.state.count = this.props.auth.count;
-        this.state.paginationdata = this.props.auth.userrole;
-        console.log("paginationdata", this.state.paginationdata);
-        // const { fetching, error } = auth;
 
 
         var pageNumbers = [];
@@ -369,7 +379,7 @@ export default class TableRole extends React.Component {
                                                             <Input
                                                                 type="checkbox"
                                                                 id="exampleCustomCheckbox"
-                                                            onClick={this.checkAllHandler}
+                                                                onClick={this.checkAllHandler}
                                                             />
                                                         </th>
                                                         <th className="action">Action</th>

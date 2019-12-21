@@ -62,7 +62,6 @@ class Login extends Component {
   handleLogin(e) {
     const isValid = this.validate();
     if (isValid) {
-      console.log(this.state);
       this.setState({
         passworderror: this.state.passworderror = '',
         usernameerror: this.state.usernameerror = ''

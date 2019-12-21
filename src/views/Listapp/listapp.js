@@ -39,11 +39,13 @@ class ListApp extends React.Component {
         super(props);
         this.state = {
             application: [],
-            searchData: ''
+            searchData: '',
+            ownership: ''
         }
 
         this.searchApplicationDataKeyUp = this.searchApplicationDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
+        this.handleChangeAppEvent = this.handleChangeAppEvent.bind(this);
 
     }
 
@@ -51,87 +53,195 @@ class ListApp extends React.Component {
         EventEmitter.dispatch('per_page_app_value', e.target.value);
     }
 
+    handleChangeAppEvent(e) {
+        EventEmitter.dispatch('select_app', e.target.value);
+        this.setState({
+            ownership: this.state.ownership = e.target.value
+        })
+    }
+
     searchApplicationDataKeyUp(e) {
-        const obj = {
-            search_string: e.target.value,
-            user_id:this.props.auth.auth_data.id,
-            user_group:this.props.auth.auth_data.user_group
+        if (this.props.auth.auth_data.user_group == "publisher") {
+            const obj = {
+                search_string: e.target.value,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.ownership
+            }
+            this.props.searchApplicationData(obj).then((res) => {
+                this.setState({
+                    searchData: this.state.searchData = res.response.data
+                })
+                EventEmitter.dispatch('searchDataApp', this.state.searchData);
+            });
+        } else {
+            const obj = {
+                search_string: e.target.value,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.ownership = ""
+            }
+            this.props.searchApplicationData(obj).then((res) => {
+                this.setState({
+                    searchData: this.state.searchData = res.response.data
+                })
+                EventEmitter.dispatch('searchDataApp', this.state.searchData);
+            });
         }
-        this.props.searchApplicationData(obj).then((res) => {
-            this.setState({
-                searchData: this.state.searchData = res.response.data
-            })
-            EventEmitter.dispatch('searchDataApp', this.state.searchData);
-        });
     }
 
     render() {
         const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
-        console.log("props", this.props);
 
         return (
             <div>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Card className="main-card mb-3">
-                            <CardHeader>
-                                <CardTitle
-                                    className="font"
-                                >
-                                    Applications
-                                            </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                <div>
-                                    <Row>
-                                        <Col md="1">
-                                            <div className="rightapp">
-                                                <Link to="/createapp">
-                                                    <Button
-                                                        className="mb-2 mr-2"
-                                                        color="primary"
-                                                    >
-                                                        Add
-                                                            </Button>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col md="11">
+                {
+                    this.props.auth.auth_data.user_group == "publisher" ? (
+                        <Row>
+                            <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                <Card className="main-card mb-3">
+                                    <CardHeader>
+                                        <CardTitle
+                                            className="font"
+                                        >
+                                            Applications
+                                                </CardTitle>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <div>
+                                            <Row>
+                                                <Col md="1">
+                                                    <div className="rightapp">
+                                                        <Link to="/createapp">
+                                                            <Button
+                                                                className="mb-2 mr-2"
+                                                                color="primary"
+                                                            >
+                                                                Add
+                                                                </Button>
+                                                        </Link>
+                                                    </div>
+                                                </Col>
+                                                {
+                                                    this.props.auth.auth_data.user_group == "publisher" ? (
+                                                        <Col md="3">
+                                                            <Input
+                                                                type="select"
+                                                                id="exampleCustomSelect"
+                                                                name="customSelect"
+                                                                onChange={this.handleChangeAppEvent}
+                                                            >
+                                                                <option value="">All</option>
+                                                                <option value="1">My Only</option>
+                                                                <option value="2">Advertisers</option>
+                                                            </Input>
+                                                        </Col>
+                                                    ) : (
+                                                            null
+                                                        )
+                                                }
+                                                <Col md="8">
+                                                    <div>
+                                                        <Row>
+                                                            <Col md="8">
+                                                                <input
+                                                                    className="form-control"
+                                                                    type="text"
+                                                                    placeholder="Search"
+                                                                    aria-label="Search"
+                                                                    onKeyUp={this.searchApplicationDataKeyUp}
+                                                                />
+                                                            </Col>
+                                                            <span style={{ marginTop: '8px' }}>Records per page</span>
+                                                            <Col md="2">
+                                                                <Input
+                                                                    type="select"
+                                                                    id="exampleCustomSelect"
+                                                                    name="customSelect"
+                                                                    onChange={this.handleChangeEvent}
+                                                                >
+                                                                    <option value="5">5</option>
+                                                                    <option value="10">10</option>
+                                                                </Input>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <br />
+                                        <TableApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    ) : (
+                            <Row>
+                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                    <Card className="main-card mb-3">
+                                        <CardHeader>
+                                            <CardTitle
+                                                className="font"
+                                            >
+                                                Applications
+                                                </CardTitle>
+                                        </CardHeader>
+                                        <CardBody>
                                             <div>
                                                 <Row>
-                                                    <Col md="8">
-                                                        <input
-                                                            className="form-control"
-                                                            type="text"
-                                                            placeholder="Search"
-                                                            aria-label="Search"
-                                                            onKeyUp={this.searchApplicationDataKeyUp}
-                                                        />
+                                                    <Col md="1">
+                                                        <div className="rightapp">
+                                                            <Link to="/createapp">
+                                                                <Button
+                                                                    className="mb-2 mr-2"
+                                                                    color="primary"
+                                                                >
+                                                                    Add
+                                                                </Button>
+                                                            </Link>
+                                                        </div>
                                                     </Col>
-                                                    <span>Records per page</span>
-                                                    <Col md="2">
-                                                        <Input
-                                                            type="select"
-                                                            id="exampleCustomSelect"
-                                                            name="customSelect"
-                                                            onChange={this.handleChangeEvent}
-                                                        >
-                                                            <option value="2">2</option>
-                                                            <option value="4">4</option>
-                                                        </Input>
+
+                                                    <Col md="11">
+                                                        <div>
+                                                            <Row>
+                                                                <Col md="8">
+                                                                    <input
+                                                                        className="form-control"
+                                                                        type="text"
+                                                                        placeholder="Search"
+                                                                        aria-label="Search"
+                                                                        onKeyUp={this.searchApplicationDataKeyUp}
+                                                                    />
+                                                                </Col>
+                                                                <span style={{ marginTop: '8px' }}>Records per page</span>
+                                                                <Col md="2">
+                                                                    <Input
+                                                                        type="select"
+                                                                        id="exampleCustomSelect"
+                                                                        name="customSelect"
+                                                                        onChange={this.handleChangeEvent}
+                                                                    >
+                                                                        <option value="5">5</option>
+                                                                        <option value="10">10</option>
+                                                                    </Input>
+                                                                </Col>
+                                                            </Row>
+
+                                                        </div>
                                                     </Col>
                                                 </Row>
-                                            
                                             </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                <br />
-                                <TableApp applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+                                            <br />
+                                            <TableApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        )
+                }
+
             </div>
         );
     }

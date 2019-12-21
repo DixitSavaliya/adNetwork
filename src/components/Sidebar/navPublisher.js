@@ -28,12 +28,12 @@ export default {
         icon: 'fa fa-share-alt',
         children: [
           {
-            name: 'Custom-Monetization',
-            url: '/custom-monetization',
+            name: 'CustomAds',
+            url: '/custom-ads',
             icon: 'fa fa-plus-square',
           },
           {
-            name: 'Monetization-Network',
+            name: 'MonetizationNetwork',
             url: '/monetization-network',
             icon: 'fa fa-reorder',
           },
