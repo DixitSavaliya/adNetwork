@@ -91,7 +91,7 @@ class ListApp extends React.Component {
     }
 
     render() {
-        const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
+        const { auth, applicationCount, applicationPGData, deleteApp , activeAppAds,InactiveAppAds } = this.props;
 
         return (
             <div>
@@ -171,7 +171,7 @@ class ListApp extends React.Component {
                                             </Row>
                                         </div>
                                         <br />
-                                        <TableApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                        <TableApp InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                     </CardBody>
                                 </Card>
                             </Col>
@@ -234,7 +234,7 @@ class ListApp extends React.Component {
                                                 </Row>
                                             </div>
                                             <br />
-                                            <TableApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                            <TableApp InactiveAppAds={InactiveAppAds} auth={auth} applicationCount={applicationCount} activeAppAds={activeAppAds} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                         </CardBody>
                                     </Card>
                                 </Col>

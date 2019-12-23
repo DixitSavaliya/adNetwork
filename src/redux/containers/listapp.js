@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { applicationCount,applicationPGData,deleteApp,searchApplicationData} from '../actions/createapp';
+import {activeAppAds,InactiveAppAds} from '../actions/monetization';
 import ListApp from '../../views/Listapp/listapp';
 
 class ListAppContainer extends Component {
@@ -25,9 +26,9 @@ class ListAppContainer extends Component {
     }
 
     render() {
-      const {auth ,applicationCount,applicationPGData,deleteApp,searchApplicationData} = this.props;
+      const {auth ,applicationCount,applicationPGData,deleteApp,searchApplicationData,activeAppAds,InactiveAppAds} = this.props;
       return (
-        <ListApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} searchApplicationData={searchApplicationData} />
+        <ListApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} searchApplicationData={searchApplicationData} />
       );
     }
 }
@@ -40,7 +41,9 @@ const mapDispatchToProps = (dispatch) => ({
     applicationCount:(obj) => dispatch(applicationCount(obj)),
     applicationPGData:(data) => dispatch(applicationPGData(data)),
     deleteApp:(data) => dispatch(deleteApp(data)),
-    searchApplicationData:(data) => dispatch(searchApplicationData(data))
+    searchApplicationData:(data) => dispatch(searchApplicationData(data)),
+    activeAppAds:(data) => dispatch(activeAppAds(data)),
+    InactiveAppAds:(data) => dispatch(InactiveAppAds(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ListAppContainer));

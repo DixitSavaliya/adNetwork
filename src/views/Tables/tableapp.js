@@ -1,14 +1,16 @@
 import React from 'react';
 import { Table, CustomInput, Button } from 'reactstrap';
+import Switch from "react-switch";
 import './table.css';
 import API from '../../service';
 import Swal from 'sweetalert2';
+import { REMOTE_URL } from '../../redux/constants/index';
 import { EventEmitter } from '../../event';
 import history from '../../history';
 // import './table.css';
 import { HashRouter, Link, Route } from "react-router-dom";
 
-export default class    TableApp extends React.Component {
+export default class TableApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,7 +32,8 @@ export default class    TableApp extends React.Component {
             isPrevBtnActive: 'disabled',
             isNextBtnActive: '',
             onClickPage: "1",
-            ownership: ''
+            ownership: '',
+            ads: false
         }
 
         // this.checkAllHandler = this.checkAllHandler.bind(this);
@@ -39,6 +42,7 @@ export default class    TableApp extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.btnDecrementClick = this.btnDecrementClick.bind(this);
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
+        this.handleChangegetAds = this.handleChangegetAds.bind(this);
 
         EventEmitter.subscribe('searchDataApp', (data) => {
             this.setState({
@@ -230,6 +234,28 @@ export default class    TableApp extends React.Component {
         this.setState({ currentPage: listid });
     }
 
+    handleChangegetAds(data, index) {
+        if (data.ad_status == 1) {
+            if (data.ad_id != null) {
+                const obj = {
+                    id: data.ad_id
+                }
+                this.props.activeAppAds(obj).then((res) => {
+                    window.location.reload();
+                })
+            }
+        } else {
+            if (data.ad_id != null) {
+                const obj = {
+                    id: data.ad_id
+                }
+                this.props.InactiveAppAds(obj).then((res) => {
+                    window.location.reload();
+                })
+            }
+        }
+    }
+
     render() {
         let auth = this.props.auth.auth_data;
         var pageNumbers = [];
@@ -304,9 +330,11 @@ export default class    TableApp extends React.Component {
                                             <thead>
                                                 <tr>
                                                     <th className="action">Action</th>
+                                                    <th>Manage Ads</th>
+                                                    <th>App Icon</th>
                                                     <th>Name</th>
-                                                    <th>Discription</th>
                                                     <th>Package</th>
+                                                    <th>Discription</th>
                                                     <th>status</th>
                                                 </tr>
                                             </thead>
@@ -342,10 +370,18 @@ export default class    TableApp extends React.Component {
                                                                         </td>
                                                                     )
                                                             }
-
+                                                            <td>
+                                                                <Switch
+                                                                    checked={data.ad_status == 1 ? true : false}
+                                                                    onChange={() => this.handleChangegetAds(data, index)}
+                                                                />
+                                                            </td>
+                                                            <td onClick={() => this.appData(data)}>
+                                                                <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                            </td>
                                                             <td onClick={() => this.appData(data)}>{data.name}</td>
-                                                            <td onClick={() => this.appData(data)}>{data.description}</td>
                                                             <td onClick={() => this.appData(data)}>{data.package}</td>
+                                                            <td onClick={() => this.appData(data)}>{data.description}</td>
                                                             <td onClick={() => this.appData(data)}>
                                                                 <div className="btn_size">
                                                                     {
@@ -376,9 +412,11 @@ export default class    TableApp extends React.Component {
                                                         <thead>
                                                             <tr>
                                                                 <th className="action">Action</th>
+                                                                <th>Manage Ads</th>
+                                                                <th>App Icon</th>
                                                                 <th>Name</th>
-                                                                <th>Discription</th>
                                                                 <th>Package</th>
+                                                                <th>Discription</th>
                                                                 <th>status</th>
                                                             </tr>
                                                         </thead>
@@ -404,9 +442,11 @@ export default class    TableApp extends React.Component {
                                     <thead>
                                         <tr>
                                             <th className="action">Action</th>
+                                            <th>Manage Ads</th>
+                                            <th>App Icon</th>
                                             <th>Name</th>
-                                            <th>Discription</th>
                                             <th>Package</th>
+                                            <th>Discription</th>
                                             <th>status</th>
                                         </tr>
                                     </thead>
@@ -439,10 +479,18 @@ export default class    TableApp extends React.Component {
                                                                 </td>
                                                             )
                                                     }
-
+                                                    <td>
+                                                        <Switch
+                                                            checked={data.ad_status == 1 ? true : false}
+                                                            onChange={() => this.handleChangegetAds(data, index)}
+                                                        />
+                                                    </td>
+                                                    <td onClick={() => this.appData(data)}>
+                                                        <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                    </td>
                                                     <td onClick={() => this.appData(data)}>{data.name}</td>
-                                                    <td onClick={() => this.appData(data)}>{data.description}</td>
                                                     <td onClick={() => this.appData(data)}>{data.package}</td>
+                                                    <td onClick={() => this.appData(data)}>{data.description}</td>
                                                     <td onClick={() => this.appData(data)}>
                                                         <div className="btn_size">
                                                             {

@@ -52,6 +52,48 @@ export const getPublisherApplication = (data) => {
     };
   };
 
+  export const RemoveAppMonetization = (data) => {
+    return {
+      [CALL_API]: {
+        endpoint: 'Application/removeAppMonetisation',
+        init: {
+          method: 'POST',
+          body: JSON.stringify(data),
+        },
+        types: ["REMOVEAPPMONETIZATION_REQUEST", "REMOVEAPPMONETIZATION_SUCCESS", "REMOVEAPPMONETIZATION_FAILURE"],
+      }
+    };
+  };
+
+  export const activeAppAds = (data) => {
+    return {
+      [CALL_API]: {
+        endpoint: 'Application/inactiveAppMonetisation',
+        init: {
+          method: 'POST',
+          body: JSON.stringify(data),
+        },
+        types: ["ACTIVEAPPMONETIZATION_REQUEST", "ACTIVEAPPMONETIZATION_SUCCESS", "ACTIVEAPPMONETIZATION_FAILURE"],
+      }
+    };
+  };
+
+  export const InactiveAppAds = (data) => {
+    return {
+      [CALL_API]: {
+        endpoint: 'Application/activeAppMonetisation',
+        init: {
+          method: 'POST',
+          body: JSON.stringify(data),
+        },
+        types: ["INACTIVEAPPMONETIZATION_REQUEST", "INACTIVEAPPMONETIZATION_SUCCESS", "INACTIVEAPPMONETIZATION_FAILURE"],
+      }
+    };
+  };
+
+  
+  
+
   
   
 

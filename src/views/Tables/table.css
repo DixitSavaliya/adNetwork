@@ -95,3 +95,28 @@ th.center {
   margin-top: 0 !important;
   margin-left: 0 !important;
 }
+
+.react-switch-handle {
+  height: 20px !important;
+    width: 22px !important;
+    background: rgb(255, 255, 255);
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    transform: translateX(1px);
+    top: 4px !important;
+    outline: 0px;
+    border: 0px;
+    transition: background-color 0.25s ease 0s, transform 0.25s ease 0s, box-shadow 0.15s ease 0s;
+}
+
+.react-switch-bg{
+  height: 29px !important;
+    width: 50px !important;
+    margin: 0px;
+    position: relative;
+    background: rgb(136, 136, 136);
+    border-radius: 14px;
+    cursor: pointer;
+}

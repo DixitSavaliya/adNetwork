@@ -795,7 +795,66 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
+        //REMOVEAPPMONETIZATION
+        case ACTION.REMOVEAPPMONETIZATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.REMOVEAPPMONETIZATION_SUCCESS:
+            Swal.fire("AppMonetization Removed Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.REMOVEAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
+        //ACTIVEAPPMONETIZATION
+        case ACTION.ACTIVEAPPMONETIZATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.ACTIVEAPPMONETIZATION_SUCCESS:
+            Swal.fire("AppMonetization Inactive Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.ACTIVEAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+             //INACTIVEAPPMONETIZATION
+        case ACTION.INACTIVEAPPMONETIZATION_REQUEST:
+                return {
+                    ...state,
+                    fetching: true,
+                };
+            case ACTION.INACTIVEAPPMONETIZATION_SUCCESS:
+                Swal.fire("AppMonetization Active Successfully!", "", "success");
+                return {
+                    ...state,
+                    fetching: false
+                };
+            case ACTION.INACTIVEAPPMONETIZATION_FAILURE:
+                Swal.fire("Something went wrong!", "", "warning");
+                return {
+                    ...state,
+                    fetching: false,
+                    error: action.error
+                };
+    
 
 
 

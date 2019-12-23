@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getViewApplicationDetailsById} from '../actions/createapp';
+import {getAPPMonetization} from '../actions/monetization';
 import ViewApp from '../../views/Viewapp/viewapp';
 
 class ViewAppContainer extends Component {
@@ -24,10 +25,10 @@ class ViewAppContainer extends Component {
     }
 
     render() {
-      const {auth,getViewApplicationDetailsById} = this.props;
+      const {auth,getViewApplicationDetailsById,getAPPMonetization} = this.props;
       this.id = this.props.location.pathname.split('/')[2];
       return (
-        <ViewApp auth={auth} id={this.id} getViewApplicationDetailsById={getViewApplicationDetailsById}/>
+        <ViewApp auth={auth} id={this.id} getViewApplicationDetailsById={getViewApplicationDetailsById} getAPPMonetization={getAPPMonetization}/>
       );
     }
 }
@@ -37,7 +38,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getViewApplicationDetailsById:(data) => dispatch(getViewApplicationDetailsById(data))
+    getViewApplicationDetailsById:(data) => dispatch(getViewApplicationDetailsById(data)),
+    getAPPMonetization:(data) => dispatch(getAPPMonetization(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ViewAppContainer));
