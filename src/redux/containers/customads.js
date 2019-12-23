@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import {getPublisherApplication} from '../actions/monetization'
 // import { createApp,getAppDataById,editApp} from '../actions/createapp';
 import CustomAds from '../../views/customads/customads';
 
@@ -24,11 +25,10 @@ class CustomAdsContainer extends Component {
     }
 
     render() {
-      const {auth} = this.props;
-      console.log("props",this.props);
+      const {auth,getPublisherApplication} = this.props;
     //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <CustomAds auth={auth}/>
+        <CustomAds auth={auth} getPublisherApplication={getPublisherApplication}/>
       );
     }
 }
@@ -38,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    // createApp:(data) => dispatch(createApp(data))
+    getPublisherApplication:(data) => dispatch(getPublisherApplication(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomAdsContainer));

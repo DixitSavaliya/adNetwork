@@ -40,7 +40,8 @@ class Profile extends Component {
       first_name: '',
       last_name: '',
       mobile_no: '',
-      email_id: ''
+      email_id: '',
+      selectedFile:null
     }
     console.log("this.props", this.props);
     this.UpdateProfile = this.UpdateProfile.bind(this);
@@ -82,7 +83,9 @@ class Profile extends Component {
     axios.post(REMOTE_URL + "User/uploadUserImage", data)
       .then(response => {
         console.log("uploadUserImage response === > ", response);
-        this.props.profile.avatar = response.data.data;
+        this.setState({
+          selectedFile : this.state.selectedFile = response.data.data
+        })
       }).catch(error => {
         console.log("error", error);
       });
@@ -135,9 +138,9 @@ class Profile extends Component {
                   <Col xs="6">
                     <FormGroup className="img-upload">
                       {
-                        profile.avatar ? (
+                        this.state.selectedFile ? (
                           <div>
-                            <img className="pic" src={config.REMOTE_URL + profile.avatar} />
+                            <img className="pic" src={config.REMOTE_URL +  this.state.selectedFile} />
                           </div>
                         ) : (null)
                       }

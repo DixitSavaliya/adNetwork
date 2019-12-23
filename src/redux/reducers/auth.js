@@ -716,6 +716,86 @@ const auth = (state = initialState, action) => {
             };
 
 
+        //GETAPPBYPUBLISHERID
+        case ACTION.GETAPPBYPUBLISHERID_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.GETAPPBYPUBLISHERID_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.GETAPPBYPUBLISHERID_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+
+
+        //INSERTAPPMONETIZATION
+        case ACTION.INSERTAPPMONETIZATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.INSERTAPPMONETIZATION_SUCCESS:
+            Swal.fire("AppMonetization Inserted Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.INSERTAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+        //GETAPPMONETIZATION
+        case ACTION.GETAPPMONETIZATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.GETAPPMONETIZATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.GETAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+        //UPDATEAPPMONETIZATION
+        case ACTION.UPDATEAPPMONETIZATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.UPDATEAPPMONETIZATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.UPDATEAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+
 
 
 

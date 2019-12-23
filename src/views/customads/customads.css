@@ -1,0 +1,18 @@
+.content .col-md-8{
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.padding{
+    padding: 0px !important;
+}
+
+input#no {
+    margin-left: 5px !important;
+}
+.app-img{
+    width: 100px;
+    height: 48px;
+}
