@@ -28,7 +28,8 @@ export default class TableRole extends React.Component {
             pageBound: "3",
             isPrevBtnActive: 'disabled',
             isNextBtnActive: '',
-            onClickPage: "1"
+            onClickPage: "1",
+            _maincheck: false
         }
 
         this.checkAllHandler = this.checkAllHandler.bind(this);
@@ -37,6 +38,7 @@ export default class TableRole extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.btnDecrementClick = this.btnDecrementClick.bind(this);
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -93,6 +95,7 @@ export default class TableRole extends React.Component {
             this.setState({
                 paginationdata: this.state.paginationdata = res.response.data
             })
+            EventEmitter.dispatch('roleIsDisplay', 1);
         });
 
     }
@@ -102,21 +105,19 @@ export default class TableRole extends React.Component {
         if (event.target.checked == true) {
             console.log("true");
             this.setState({
-                check:this.state.check = true,
-                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: true }))
+                _maincheck: this.state._maincheck = true,
+                check: this.state.check = true,
+                paginationdata: this.state.paginationdata = this.state.paginationdata.map(el => ({ ...el, _rowChecked: true }))
             })
-            var array = [];
-            for(var i=0;i<this.state.paginationdata.length;i++) {
-                array.push({userRoleID:this.state.paginationdata[i].id});
-            }
-            console.log("array",array);
-            EventEmitter.dispatch('deletepagedata', array);
+            this.checkMaster(this.state.paginationdata);
         } else {
             console.log("fasle");
             this.setState({
-                check:this.state.check = false,
-                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: false }))
+                _maincheck: this.state._maincheck = false,
+                check: this.state.check = false,
+                paginationdata: this.state.paginationdata = this.state.paginationdata.map(el => ({ ...el, _rowChecked: false }))
             })
+            this.checkMaster(this.state.paginationdata);
         }
     }
 
@@ -125,7 +126,6 @@ export default class TableRole extends React.Component {
     }
 
     deleteUserRoleData(data) {
-        console.log("data", data);
         const obj = {
             userRoleID: data.id
         }
@@ -177,6 +177,59 @@ export default class TableRole extends React.Component {
             })
         });
 
+    }
+
+
+    checkMaster(data) {
+        let count = 0;
+        data.forEach(element => {
+            if (element._rowChecked == true) {
+                element._rowChecked = true;
+                count++;
+            } else {
+                element._rowChecked = false;
+            }
+        });
+        if (count == data.length) {
+            this.setState({
+                _maincheck: true
+            })
+        } else {
+            this.setState({
+                _maincheck: false
+            })
+        }
+        this.setState({
+            paginationdata: data
+        });
+        var array = [];
+        for (var i = 0; i < this.state.paginationdata.length; i++) {
+            if (this.state.paginationdata[i]._rowChecked == true) {
+                array.push({ userRoleID: this.state.paginationdata[i].id });
+            }
+        }
+        EventEmitter.dispatch('deletepagedata', array);
+    }
+
+    handleChange(item, e) {
+        let _id = item.id;
+        let ind = this.state.paginationdata.findIndex((x) => x.id == _id);
+        let data = this.state.paginationdata;
+        if (ind > -1) {
+            let newState = !item._rowChecked;
+            data[ind]._rowChecked = newState;
+            if (!newState) {
+                data[ind]._rowChecked = false;
+
+            } else {
+                data[ind]._rowChecked = true;
+            }
+
+            this.setState({
+                paginationdata: data
+            });
+        }
+        this.checkMaster(data);
     }
 
 
@@ -274,6 +327,7 @@ export default class TableRole extends React.Component {
                                                             type="checkbox"
                                                             id="exampleCustomCheckbox"
                                                             onClick={this.checkAllHandler}
+                                                            checked={this.state._maincheck}
                                                         />
                                                     </th>
                                                     <th className="action">Action</th>
@@ -286,26 +340,14 @@ export default class TableRole extends React.Component {
                                                     this.state.paginationdata.map((data, index) =>
                                                         <tr key={index}>
                                                             <th scope="row" className="center">
-                                                                {
-                                                                    this.state.check == true ? (
-                                                                        <span className="margin-t">
-                                                                            <Input
-                                                                                type="checkbox"
-                                                                                id={index}
-                                                                                checked={data._rowChecked == true ? true : false }
-                                                                            />
-                                                                        </span>
-                                                                    ) : (
-                                                                            <span className="margin-t">
-                                                                                <Input
-                                                                                    type="checkbox"
-                                                                                    id={index}
-                                                                                   
-                                                                                //   onChange={this.handleChangeStatus.bind(this, index)}
-                                                                                />
-                                                                            </span>
-                                                                        )
-                                                                }
+                                                                <span className="margin-t">
+                                                                    <Input
+                                                                        type="checkbox"
+                                                                        id={index}
+                                                                        checked={data._rowChecked == true ? true : false}
+                                                                        onChange={(e) => this.handleChange(data, e)}
+                                                                    />
+                                                                </span>
                                                             </th>
                                                             <td className="action">
                                                                 <span className="padding">
@@ -365,6 +407,7 @@ export default class TableRole extends React.Component {
                                                                 type="checkbox"
                                                                 id="exampleCustomCheckbox"
                                                                 onClick={this.checkAllHandler}
+                                                                checked={this.state._maincheck}
                                                             />
                                                         </th>
                                                         <th className="action">Action</th>
@@ -377,25 +420,14 @@ export default class TableRole extends React.Component {
                                                         this.state.searchData.map((data, index) =>
                                                             <tr key={index}>
                                                                 <th scope="row" className="center">
-                                                                    {
-                                                                        this.state.check == true ? (
-                                                                            <span className="margin-t">
-                                                                                <Input
-                                                                                    type="checkbox"
-                                                                                    id={index}
-                                                                                    checked={this.state.paginationdata[index]['_rowChecked'] == true}
-                                                                                />
-                                                                            </span>
-                                                                        ) : (
-                                                                                <span className="margin-t">
-                                                                                    <Input
-                                                                                        type="checkbox"
-                                                                                        id={index}
-                                                                                    //   onChange={this.handleChangeStatus.bind(this, index)}
-                                                                                    />
-                                                                                </span>
-                                                                            )
-                                                                    }
+                                                                    <span className="margin-t">
+                                                                        <Input
+                                                                            type="checkbox"
+                                                                            id={index}
+                                                                            checked={data._rowChecked == true ? true : false}
+                                                                            onChange={(e) => this.handleChange(data, e)}
+                                                                        />
+                                                                    </span>
                                                                 </th>
                                                                 <td className="action">
                                                                     <span className="padding">

@@ -119,6 +119,29 @@ export const getUserRoleId = (data) => {
 };
 
 
+export const removeImage = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'User/removeUserImage',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["REMOVEUSERIMAGE_REQUEST", "REMOVEUSERIMAGE_SUCCESS", "REMOVEUSERIMAGE_FAILURE"],
+    }
+  };
+};
+
+export const updateProfileData = () => {
+  return {
+    types: ["UPDATEPROFILE"]
+  };
+};
+
+
+
+
+
 export const logout = () => {
   return {
     [CALL_API]: {

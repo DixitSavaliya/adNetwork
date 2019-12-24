@@ -43,21 +43,12 @@ class Profile extends Component {
       email_id: '',
       selectedFile: null
     }
-    console.log("this.props", this.props);
     this.UpdateProfile = this.UpdateProfile.bind(this);
+    this.removeIcon = this.removeIcon.bind(this);
   }
 
 
-
-  //   EventEmitter.subscribe('picture', (data) => {
-  //     this.dataImage = data; 
-  //     console.log("data",this.dataImage);
-  //     this.render();
-  // });
-
-
   UpdateProfile() {
-    console.log("state", this.state);
 
     const data = {
       first_name: this.state.first_name,
@@ -76,7 +67,7 @@ class Profile extends Component {
     let auth = this.props.auth.auth_data;
     axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
     axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
-
+    let _this = this;
     let data = new FormData();
     data.append('file_name', event.target.files[0]);
     data.append('user_id', this.props.auth.auth_data.id)
@@ -86,31 +77,32 @@ class Profile extends Component {
         this.setState({
           selectedFile: this.state.selectedFile = response.data.data
         })
+        // _this.props.updateProfileData().then((res) =>{
+        //   console.log("res",res);
+        // })
+        EventEmitter.dispatch('updateImage', this.state.selectedFile);
       }).catch(error => {
         console.log("error", error);
       });
   }
 
-  // Profile(e) {
-  //   e.preventDefault();
-  //   const state = this.state
-  //   state[e.target.name] = e.target.value;
-  //   this.setState(state);
-  //   // this.props.profile.first_name = e.target.value.trim();
-  //   // this.props.profile.last_name = e.target.value.trim();
-  //   // this.props.profile.mobile_no = e.target.value.trim();
-  //   // this.props.profile.email_id = e.target.value.trim();
 
-  //   console.log("props",state);
-  // }
+  removeIcon(data) {
+    const obj = {
+      id: this.props.auth.auth_data.id,
+      image_path: data
+    }
+    this.props.removeImage(obj).then((res) => {
+      console.log("removeImage res", this.props);
 
-  // UpdateProfile(e) {
-  //   console.log("props",this.props);
-  //   this.props.profile.first_name = e.target.value.trim();
-  //   console.log("name", this.props.profile.first_name)
-  // }
-
-
+      this.props.profile.avatar = "";
+      this.setState({
+        selectedFile:this.state.selectedFile = null
+      })
+      console.log("this.selectedfile",this.state.selectedFile);
+      EventEmitter.dispatch('removeImage', this.state.selectedFile);
+    })
+  }
 
 
   render() {
@@ -131,19 +123,19 @@ class Profile extends Component {
             <Card>
               <CardHeader>
                 <strong>My Profile</strong>
-                <small> Form</small>
               </CardHeader>
               <CardBody>
                 <Row>
                   <Col xs="6">
                     <FormGroup className="img-upload">
                       {
-                        this.state.selectedFile ? (
+                        this.state.selectedFile != null ? (
                           <div>
                             {
                               this.state.selectedFile ? (
                                 <div>
                                   <img className="pic" src={config.REMOTE_URL + this.state.selectedFile} />
+                                  <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                 </div>
                               ) : (null)
                             }
@@ -154,22 +146,26 @@ class Profile extends Component {
                                 this.props.profile.avatar ? (
                                   <div>
                                     <img className="pic" src={config.REMOTE_URL + this.props.profile.avatar} />
+                                    <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                   </div>
-                                ) : (null)
+                                ) : (
+                                    <div>
+                                      <p>Select File:</p>
+                                      <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
+                                      <Input
+                                        id="file-input"
+                                        type="file"
+                                        className="form-control"
+                                        name="file"
+                                        onChange={this.onChangeHandler.bind(this)}
+                                      />
+                                    </div>
+                                  )
                               }
                             </div>
                           )
                       }
 
-                      <p>Select File:</p>
-                      <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
-                      <Input
-                        id="file-input"
-                        type="file"
-                        className="form-control"
-                        name="file"
-                        onChange={this.onChangeHandler.bind(this)}
-                      />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -217,14 +213,15 @@ class Profile extends Component {
                 <Row>
                   <Col xs="6">
                     <FormGroup>
-                      <Label htmlFor="email">E-Mail</Label>
+                      <Label htmlFor="profile">E-Mail</Label>
                       <Input
                         type="email"
-                        id="email"
+                        id="profile"
                         name="email_id"
-                        className="form-control"
+                        className="profile form-control"
                         defaultValue={this.state.email_id}
                         // onChange={this.Profile.bind(this)}
+
                         onChange={(e) =>
                           this.state.email_id = e.target.value
                         }

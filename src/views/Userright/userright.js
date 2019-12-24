@@ -43,7 +43,8 @@ class UserRight extends Component {
             rightId: '',
             searchData: '',
             delete: false,
-            deletedata: ''
+            deletedata: '',
+            isDisplay: false
         }
         this.userRightData = this.userRightData.bind(this);
         this.UpdateUserRightData = this.UpdateUserRightData.bind(this);
@@ -54,6 +55,11 @@ class UserRight extends Component {
     }
 
     componentDidMount() {
+        EventEmitter.subscribe('rightIsDisplay', (value) => {
+            this.setState({ isDisplay: this.state.isDisplay = true });
+        });
+
+
         EventEmitter.subscribe('deletepageRightdata', (data) => {
             this.setState({
                 deletedata: this.state.deletedata = data,
@@ -231,7 +237,6 @@ class UserRight extends Component {
                         <Card>
                             <CardHeader>
                                 <strong>UserRole</strong>
-                                <small> Form</small>
                             </CardHeader>
                             <CardBody>
                                 <Row>
@@ -348,52 +353,59 @@ class UserRight extends Component {
                             </CardHeader>
                             <CardBody>
                                 <div>
-                                    <Row>
-                                        <Col xs="2">
-                                            <div>
-                                                <Button
-                                                    type="button"
-                                                    size="md"
-                                                    color="danger"
-                                                    onClick={this.deleteAllUserRightData}
-                                                    disabled={!this.state.delete}
-                                                >
-                                                    Delete
-                                                 </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs="7">
-                                            <div className="search">
-                                                <input
-                                                    className="form-control"
-                                                    type="text"
-                                                    placeholder="Search"
-                                                    aria-label="Search"
-                                                    onKeyUp={this.searchUserRightDataKeyUp}
-                                                />
-                                            </div>
-                                        </Col>
-                                        <Col xs="3">
-                                           
-                                                <Row>
-                                                    <Col xs="4">
-                                                        {/* <span className="size">page</span> */}
-                                                    </Col>
-                                                    <Col xs="8">
-                                                        <Input
-                                                            type="select"
-                                                            id="exampleCustomSelect"
-                                                            name="customSelect"
-                                                            onChange={this.handleChangeEvent}
+                                    {
+                                        this.state.isDisplay == true ? (
+                                            <Row>
+                                                <Col xs="2">
+                                                    <div>
+                                                        <Button
+                                                            type="button"
+                                                            size="md"
+                                                            color="danger"
+                                                            onClick={this.deleteAllUserRightData}
+                                                            disabled={!this.state.delete}
                                                         >
-                                                            <option value="5">5</option>
-                                                            <option value="10">10</option>
-                                                        </Input>
-                                                    </Col>
-                                                </Row>
-                                            
-                                        </Col>
-                                    </Row>
+                                                            Delete
+                                                 </Button>
+                                                    </div>
+                                                </Col>
+                                                <Col xs="7">
+                                                    <div className="search">
+                                                        <input
+                                                            className="form-control"
+                                                            type="text"
+                                                            placeholder="Search"
+                                                            aria-label="Search"
+                                                            onKeyUp={this.searchUserRightDataKeyUp}
+                                                        />
+                                                    </div>
+                                                </Col>
+                                                <Col xs="3">
+
+                                                    <Row>
+                                                        <Col xs="4">
+                                                            {/* <span className="size">page</span> */}
+                                                        </Col>
+                                                        <Col xs="8">
+                                                            <Input
+                                                                type="select"
+                                                                id="exampleCustomSelect"
+                                                                name="customSelect"
+                                                                onChange={this.handleChangeEvent}
+                                                            >
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                            </Input>
+                                                        </Col>
+                                                    </Row>
+
+                                                </Col>
+                                            </Row>
+                                        ) : (
+                                                null
+                                            )
+                                    }
+
                                 </div>
                                 <br />
                                 <TableRight auth={auth} rightCountData={rightCountData} RightPGData={RightPGData} deleteRightData={deleteRightData} />

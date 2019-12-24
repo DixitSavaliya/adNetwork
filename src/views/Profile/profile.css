@@ -8,3 +8,6 @@ img.pic {
 .imag i.fa.fa-upload.fa-lg {
     font-size: 38px;
 }
+input#profile {
+    pointer-events: none;
+}

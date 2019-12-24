@@ -12,3 +12,6 @@ button.btn.btn-primary.btn-sm {
 i.fa.fa-upload.fa-lg {
     font-size: 50px;
 }
+.main .container-fluid {
+    padding: 0 20px !important;
+}

@@ -98,29 +98,33 @@ class MonetizationNetwork extends React.Component {
         }
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
-                this.setState({
-                    mainAds: this.state.mainAds = res.response.data.data.fb_ads == false && res.response.data.data.admob_ads == false && res.response.data.data.mopub_ads == false ? false : true,
-                    id: this.state.id = res.response.data.id,
-                    updateMonetization: this.state.updateMonetization = true,
-                    fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
-                    admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
-                    fb_banner: this.state.fb_banner = res.response.data.data.fb_banner,
-                    fb_native: this.state.fb_native = res.response.data.data.fb_native,
-                    mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
-                    admob_appid: this.state.admob_appid = res.response.data.data.admob_appid,
-                    mopub_video: this.state.mopub_video = res.response.data.data.mopub_video,
-                    admob_banner: this.state.admob_banner = res.response.data.data.admob_banner,
-                    mopub_banner: this.state.mopub_banner = res.response.data.data.mopub_banner,
-                    mopub_native: this.state.mopub_native = res.response.data.data.mopub_native,
-                    admob_rewarded: this.state.admob_rewarded = res.response.data.data.admob_rewarded,
-                    fb_interstitial: this.state.fb_interstitial = res.response.data.data.fb_interstitial,
-                    fb_native_banner: this.state.fb_native_banner = res.response.data.data.fb_native_banner,
-                    admob_interstitial: this.state.admob_interstitial = res.response.data.data.admob_interstitial,
-                    mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.mopub_interstitial,
-                    mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.mopub_reward_video,
-                    admob_native_banner: this.state.admob_native_banner = res.response.data.data.admob_native_banner,
-                    mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.mopub_native_banner
-                })
+                if (res.response.message == "No Monetisations Found For This Application!") {
+                    console.log("no data monetization");
+                } else {
+                    this.setState({
+                        mainAds: this.state.mainAds = res.response.data.data.fb_ads == false && res.response.data.data.admob_ads == false && res.response.data.data.mopub_ads == false ? false : true,
+                        id: this.state.id = res.response.data.id,
+                        updateMonetization: this.state.updateMonetization = true,
+                        fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
+                        admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
+                        fb_banner: this.state.fb_banner = res.response.data.data.fb_banner,
+                        fb_native: this.state.fb_native = res.response.data.data.fb_native,
+                        mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
+                        admob_appid: this.state.admob_appid = res.response.data.data.admob_appid,
+                        mopub_video: this.state.mopub_video = res.response.data.data.mopub_video,
+                        admob_banner: this.state.admob_banner = res.response.data.data.admob_banner,
+                        mopub_banner: this.state.mopub_banner = res.response.data.data.mopub_banner,
+                        mopub_native: this.state.mopub_native = res.response.data.data.mopub_native,
+                        admob_rewarded: this.state.admob_rewarded = res.response.data.data.admob_rewarded,
+                        fb_interstitial: this.state.fb_interstitial = res.response.data.data.fb_interstitial,
+                        fb_native_banner: this.state.fb_native_banner = res.response.data.data.fb_native_banner,
+                        admob_interstitial: this.state.admob_interstitial = res.response.data.data.admob_interstitial,
+                        mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.mopub_interstitial,
+                        mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.mopub_reward_video,
+                        admob_native_banner: this.state.admob_native_banner = res.response.data.data.admob_native_banner,
+                        mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.mopub_native_banner
+                    })
+                }
             }
         })
     }

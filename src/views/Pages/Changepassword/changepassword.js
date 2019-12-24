@@ -54,7 +54,7 @@ class ChangePassword extends Component {
                         <Card>
                             <CardHeader>
                                 <strong>Change Password</strong>
-                                <small> Form</small>
+                             
                             </CardHeader>
                             <CardBody>
                                 <Row>

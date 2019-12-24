@@ -15,11 +15,11 @@ th.center {
     width: 50px;
 }
 .left select#exampleCustomSelect {
-    width: 70px;
+    width: 62px;
     /* margin-left: 8px; */
 } 
 .left {
-    text-align: end;
+    text-align: right !important;
 } 
 .badge-success {
     color: #fff;

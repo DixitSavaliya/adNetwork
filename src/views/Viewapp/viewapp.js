@@ -41,10 +41,10 @@ class ViewApp extends React.Component {
             application: [],
             searchData: '',
             App: [],
-            id:'',
-            fb_ads:false,
-            mopub_ads:false,
-            admob_ads:false
+            id: '',
+            fb_ads: false,
+            mopub_ads: false,
+            admob_ads: false
         }
         this.handleChangeFBAds = this.handleChangeFBAds.bind(this);
         this.handleChangeAdMobAds = this.handleChangeAdMobAds.bind(this);
@@ -64,7 +64,7 @@ class ViewApp extends React.Component {
                 })
             })
         }
-    
+
         this.getAppMonetisation();
     }
 
@@ -75,11 +75,15 @@ class ViewApp extends React.Component {
         }
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
-                this.setState({
-                   fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
-                   admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
-                   mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
-                })
+                if (res.response.message == "No Monetisations Found For This Application!") {
+                    console.log("no data monetization");
+                } else {
+                    this.setState({
+                        fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
+                        admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
+                        mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
+                    })
+                }
             }
         })
     }
@@ -164,7 +168,6 @@ class ViewApp extends React.Component {
                                             )
                                         }
                                     </Col>
-
                                     <br />
                                     <Col md="6">
                                         {

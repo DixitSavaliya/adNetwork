@@ -45,22 +45,28 @@ class UserRole extends Component {
             searchData: '',
             delete: false,
             updateRoleBtn: false,
-            deletedata:''
+            deletedata: '',
+            isDisplay:false
         }
         this.userRoleData = this.userRoleData.bind(this);
         this.UpdateUserRoleData = this.UpdateUserRoleData.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.searchUserRoleDataKeyUp = this.searchUserRoleDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
-       this.deleteAllUserRoleData = this.deleteAllUserRoleData.bind(this);
+        this.deleteAllUserRoleData = this.deleteAllUserRoleData.bind(this);
     }
 
     componentDidMount() {
-        
+
+        EventEmitter.subscribe('roleIsDisplay', (value) => {
+            this.setState({ isDisplay: this.state.isDisplay = true });
+        });
+
+
         EventEmitter.subscribe('deletepagedata', (data) => {
             this.setState({
-                deletedata:this.state.deletedata = data,
-                delete:this.state.delete = true
+                deletedata: this.state.deletedata = data,
+                delete: this.state.delete = true
             })
         });
 
@@ -208,7 +214,6 @@ class UserRole extends Component {
                         <Card>
                             <CardHeader>
                                 <strong>UserRole</strong>
-                                <small> Form</small>
                             </CardHeader>
                             <CardBody>
                                 <Row>
@@ -240,7 +245,7 @@ class UserRole extends Component {
                                         <br />
                                         <FormGroup check inline>
                                             <Input
-                                              
+
                                                 type="radio"
                                                 id="inline-radio1"
                                                 defaultValue="1"
@@ -258,7 +263,7 @@ class UserRole extends Component {
                                         </FormGroup>
                                         <FormGroup check inline>
                                             <Input
-                                            
+
                                                 type="radio"
                                                 id="inline-radio2"
                                                 defaultValue="0"
@@ -302,9 +307,11 @@ class UserRole extends Component {
                             </CardHeader>
                             <CardBody>
                                 <div>
-                                    <Row>
-                                        <Col xs="2">
-                                            <div className="right">
+                                    {
+                                        this.state.isDisplay == true ? (
+                                            <Row>
+                                            <Col xs="4">
+    
                                                 <Button
                                                     type="button"
                                                     size="md"
@@ -313,35 +320,52 @@ class UserRole extends Component {
                                                     disabled={!this.state.delete}
                                                 >
                                                     Delete
-                                                 </Button>
-                                            </div>
-                                        </Col>
-                                        <Col xs="7">
-                                            <div className="search">
-                                                <input
-                                                    className="form-control"
-                                                    type="text"
-                                                    placeholder="Search"
-                                                    aria-label="Search"
-                                                    onKeyUp={this.searchUserRoleDataKeyUp}
-                                                />
-                                            </div>
-                                        </Col>
-                                        <Col xs="3">
-                                            <div className="left">
-                                                {/* <span className="size">Records per page</span> */}
-                                                <Input
-                                                    type="select"
-                                                    id="exampleCustomSelect"
-                                                    name="customSelect"
-                                                    onChange={this.handleChangeEvent}
-                                                >
-                                                    <option value="5">5</option>
-                                                    <option value="10">10</option>
-                                                </Input>
-                                            </div>
-                                        </Col>
-                                    </Row>
+                                                     </Button>
+    
+                                            </Col>
+                                            <Col xs="8">
+                                                <Row>
+                                                    <Col xs="8">
+                                                        <input
+                                                            className="form-control"
+                                                            type="text"
+                                                            placeholder="Search"
+                                                            aria-label="Search"
+                                                            onKeyUp={this.searchUserRoleDataKeyUp}
+                                                        />
+                                                    </Col>
+                                                    <Col xs="4">
+                                                        <div className="left">
+                                                            <Input
+                                                                type="select"
+                                                                id="exampleCustomSelect"
+                                                                name="customSelect"
+                                                                onChange={this.handleChangeEvent}
+                                                            >
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                            </Input>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                                {/* <div className="search">
+    
+    
+                                                </div> */}
+                                                {/* <div className="left">
+                                                   
+                                                   
+                                                </div> */}
+                                            </Col>
+                                            {/* <Col xs="3">
+                                                
+                                            </Col> */}
+                                        </Row>  
+                                        ) : (
+                                            null
+                                        )
+                                    }
+                                  
                                 </div>
                                 <br />
                                 <TableRole auth={auth} roleCountData={roleCountData} RolePGData={RolePGData} deleteRoleData={deleteRoleData} />

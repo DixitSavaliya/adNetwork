@@ -108,7 +108,7 @@ class CustomAds extends React.Component {
                     <CardHeader>
                         <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
                     </CardHeader>
-                    <CardBody>
+                    <CardBody className="app_list">
                         {
                             this.state.advertiserapp.length > 0 ? (
 
@@ -133,10 +133,10 @@ class CustomAds extends React.Component {
                                                                 </Col>
                                                                 <Col md="8" className="content">
                                                                     <div>
-                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}>App Name: </b>{data.name}</span>
+                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}> Name: </b>{data.name}</span>
                                                                     </div>
                                                                     <div>
-                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}>App package: </b>{data.package}</span>
+                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}> package: </b>{data.package}</span>
                                                                     </div>
                                                                 </Col>
                                                             </Row>

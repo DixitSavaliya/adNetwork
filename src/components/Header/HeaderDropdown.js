@@ -10,18 +10,40 @@ import { Link, withRouter } from 'react-router-dom';
 import { REMOTE_URL } from '../../redux/constants/index';
 import './header.css';
 import Auth from '../../redux/Auth';
-
+import { EventEmitter } from '../../event';
 
 class HeaderDropdown extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dropdownOpen: false
+      dropdownOpen: false,
+      isImage: false,
+      image:''
     };
     this.toggle = this.toggle.bind(this);
     this.Logout = this.Logout.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getUser(this.props.auth.auth_data.id).then((res) => {
+      console.log("obj",res);
+    });
+
+    EventEmitter.subscribe('updateImage', (data) => {
+      this.setState({
+        isImage:this.state.isImage = true,
+        image:this.state.image = data
+      })
+    });
+
+    EventEmitter.subscribe('removeImage', (data) => {
+      this.setState({
+        isImage:this.state.isImage = false
+      })
+    });
+  }
+
 
   toggle() {
     this.setState({
@@ -46,18 +68,35 @@ class HeaderDropdown extends Component {
 
 
   render() {
-
+    console.log("HeaderDropdown data",this.props)
     return (
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
           {
-            this.props.auth.user.avatar ? (
+            this.state.isImage == false ? (
+              <div>
+                {
+                  this.props.auth.user.avatar ? (
 
-              <img src={REMOTE_URL + this.props.auth.user.avatar} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                    <img src={REMOTE_URL + this.props.auth.user.avatar} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                  ) : (
+                      <img src={require('./1.jpg')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                    )
+                }
+              </div>
             ) : (
-                <img src={require('./1.jpg')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                <div>
+                  {
+                    this.state.image ? (
+                      <img src={REMOTE_URL +  this.state.image} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                    ) : (
+                        <img src={require('./1.jpg')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                      )
+                  }
+                </div>
               )
           }
+
           {/* <span className="d-md-down-none">{this.props.auth.user.username}</span> */}
         </DropdownToggle>
         <DropdownMenu right>

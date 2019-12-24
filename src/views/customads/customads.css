@@ -16,3 +16,9 @@ input#no {
     width: 100px;
     height: 48px;
 }
+.app_list{
+    height: 600px;
+    overflow-y: scroll;
+    width: 100%;
+    overflow-x: hidden;
+}

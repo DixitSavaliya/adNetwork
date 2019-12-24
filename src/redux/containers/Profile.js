@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as Profiles from '../actions/profile';
-import { getUser, avatarUpload ,updateprofile } from '../actions/auth';
+import { getUser, avatarUpload ,updateprofile,removeImage ,updateProfileData} from '../actions/auth';
 
 import Profile from '../../views/Profile/profile';
 import Auth from '../Auth';
@@ -28,10 +28,10 @@ class PorfileContainer extends Component {
     }
 
     render() {
-        const { auth, profile, avatarUpload ,avtar,updateprofile} = this.props;
+        const { auth, profile, avatarUpload ,avtar,updateprofile,removeImage,updateProfileData} = this.props;
         console.log("render() this.props", this.props)
         return (
-            <Profile auth={auth} profile={profile} avtar={avtar} avatarUpload={avatarUpload} updateprofile={updateprofile}/>
+            <Profile auth={auth} profile={profile} avtar={avtar} updateProfileData={updateProfileData} avatarUpload={avatarUpload} updateprofile={updateprofile} removeImage={removeImage}/>
         );
     }
 }
@@ -45,7 +45,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
     getUser: (data) => dispatch(getUser(data)),
     avatarUpload: (data) => dispatch(avatarUpload(data)),
-    updateprofile:(data) => dispatch(updateprofile(data))
+    updateprofile:(data) => dispatch(updateprofile(data)),
+    removeImage:(data) => dispatch(removeImage(data)),
+    updateProfileData:() => dispatch(updateProfileData())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PorfileContainer);

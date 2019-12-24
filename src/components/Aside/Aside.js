@@ -43,7 +43,7 @@ class Aside extends Component {
             </NavLink>
           </NavItem>
         </Nav>
-        <TabContent activeTab={this.state.activeTab}>
+        {/* <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <div className="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
               <small><b>Today</b></small>
@@ -300,7 +300,7 @@ class Aside extends Component {
             <Progress className="progress-xs" color="success" value="10"/>
             <small className="text-muted">25GB/256GB</small>
           </TabPane>
-        </TabContent>
+        </TabContent> */}
       </aside>
     )
   }

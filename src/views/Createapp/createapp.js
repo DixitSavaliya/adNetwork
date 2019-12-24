@@ -354,7 +354,7 @@ class CreateApp extends React.Component {
                         <Card>
                             <CardHeader>
                                 <strong>CreateApp</strong>
-                                <small> Form</small>
+                               
                             </CardHeader>
                             <CardBody>
                                 <Row>

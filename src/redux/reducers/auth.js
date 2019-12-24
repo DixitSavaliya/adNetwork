@@ -97,6 +97,16 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
+        //UPDATE PROFILE DATA   
+        case ACTION.UPDATEPROFILE:
+            console.log("case ACTION.UPDATEPROFILE: called", action)
+            // Auth.authenticateUser(action.data);
+            return {
+                ...state,
+                fetching: false,
+                user: action.data
+            };
+
         //Upload Image
         case ACTION.AVATAR_REQUEST:
             return {
@@ -116,6 +126,29 @@ const auth = (state = initialState, action) => {
                 avatar: {},
                 error: action.error
             };
+
+
+
+        //REMOVE Image
+        case ACTION.REMOVEUSERIMAGE_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.REMOVEUSERIMAGE_SUCCESS:
+            Swal.fire("User Image Removed Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.REMOVEUSERIMAGE_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
 
 
         //Update Profile
@@ -835,26 +868,26 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
-             //INACTIVEAPPMONETIZATION
+        //INACTIVEAPPMONETIZATION
         case ACTION.INACTIVEAPPMONETIZATION_REQUEST:
-                return {
-                    ...state,
-                    fetching: true,
-                };
-            case ACTION.INACTIVEAPPMONETIZATION_SUCCESS:
-                Swal.fire("AppMonetization Active Successfully!", "", "success");
-                return {
-                    ...state,
-                    fetching: false
-                };
-            case ACTION.INACTIVEAPPMONETIZATION_FAILURE:
-                Swal.fire("Something went wrong!", "", "warning");
-                return {
-                    ...state,
-                    fetching: false,
-                    error: action.error
-                };
-    
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.INACTIVEAPPMONETIZATION_SUCCESS:
+            Swal.fire("AppMonetization Active Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.INACTIVEAPPMONETIZATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
 
 
 

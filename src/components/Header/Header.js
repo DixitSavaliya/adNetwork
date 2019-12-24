@@ -40,7 +40,7 @@ class Header extends Component {
     document.body.classList.toggle('aside-menu-hidden');
   }
   render() {
-    const { auth, logout } = this.props;
+    const { auth, logout,getUser } = this.props;
     return (
       <header className="app-header navbar">
         <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
@@ -71,7 +71,7 @@ class Header extends Component {
           <NavItem className="d-md-down-none">
             <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
           </NavItem> */}
-          <HeaderDropdown auth={auth} logout={logout} {...this.props}/>
+          <HeaderDropdown auth={auth} logout={logout} getUser={getUser} {...this.props}/>
         </Nav>
         <NavbarToggler className="d-md-down-none" onClick={this.asideToggle}>
           <span className="navbar-toggler-icon"></span>

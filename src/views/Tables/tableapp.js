@@ -21,6 +21,7 @@ export default class TableApp extends React.Component {
             count: '',
             currentPage: "1",
             items_per_page: "5",
+            render_per_page:"5",
             perpage: '',
             paginationdata: '',
             isFetch: false,
@@ -112,6 +113,7 @@ export default class TableApp extends React.Component {
                     paginationdata: res.response.data,
                     isFetch: true
                 })
+                EventEmitter.dispatch('isDisplay',1);
             })
         } else {
             const obj = {
@@ -127,12 +129,13 @@ export default class TableApp extends React.Component {
                     paginationdata: res.response.data,
                     isFetch: true
                 })
+                EventEmitter.dispatch('isDisplay',1);
             })
         }
     }
 
     editAppData(id) {
-        this.props.history.push("/editapp/"+id)
+        this.props.history.push("/editapp/" + id)
     }
 
     deleteAppData(data) {
@@ -165,7 +168,9 @@ export default class TableApp extends React.Component {
         if (this.props.auth.auth_data.user_group == "publisher") {
             if (this.state.currentPage <= '' + event.target.id) {
                 this.setState({
-                    currentPage: this.state.currentPage + 1
+                    currentPage: this.state.currentPage + 1,
+                    onClickPage: +this.state.onClickPage + +this.state.items_per_page
+                    // render_per_page:
                 })
             } else {
                 this.setState({
@@ -216,7 +221,7 @@ export default class TableApp extends React.Component {
 
     appData(data) {
         const id = data.id;
-        this.props.history.push("/viewapp/"+id)
+        this.props.history.push("/viewapp/" + id)
         // window.location.href = "/#/viewapp/" + id;
     }
 
@@ -258,7 +263,7 @@ export default class TableApp extends React.Component {
     }
 
     render() {
-        console.log("props",this.props);
+        console.log("props", this.props);
         let auth = this.props.auth.auth_data;
         var pageNumbers = [];
         for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {
@@ -354,10 +359,6 @@ export default class TableApp extends React.Component {
                                                                             </span>
                                                                         ) : (
                                                                                 <span className="padding">
-                                                                                    {/* {'auth.id' + auth.id}
-                                                                            {'data.user_id' + data.user_id}
-                                                                            {'auth.user_group' + auth.user_group}
-                                                                            {'data.owner' + data.owner} */}
                                                                                     No Access
                                                                         </span>
                                                                             )}
@@ -429,7 +430,7 @@ export default class TableApp extends React.Component {
                                                 )
                                         }
                                         {/* <div>
-                                            showing {this.state.onClickPage} to {this.state.items_per_page} of {this.state.count} entries
+                                            showing {this.state.onClickPage} to {this.state.render_per_page} of {this.state.count} entries
                                         </div> */}
                                     </div>
                                 ) : (
