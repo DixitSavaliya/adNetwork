@@ -404,7 +404,6 @@ class MonetizationNetwork extends React.Component {
                                     <Row>
                                         <Col md="8">
                                             <span style={{ color: 'black', fontSize: '20px' }}>Inactive Ads:</span>
-
                                         </Col>
                                         <Col md="4">
                                             <Switch onChange={this.handleChangeMainAds} checked={this.state.mainAds} />
@@ -452,7 +451,6 @@ class MonetizationNetwork extends React.Component {
                                 null
                             )
                     }
-
                 </Row>
 
                 {/* Monetization setup */}

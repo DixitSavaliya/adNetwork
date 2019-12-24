@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Container, Row, Col, CardGroup, Card, CardBody, Button, Input, FormGroup, InputGroup, InputGroupAddon } from 'reactstrap';
-
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
@@ -67,15 +67,20 @@ class Login extends Component {
         usernameerror: this.state.usernameerror = ''
       })
       const obj = {
-        username:this.state.username,
-        password:this.state.password,
-        user_group:this.state.customSelectName
+        username: this.state.username,
+        password: this.state.password,
+        user_group: this.state.customSelectName
       }
       if (this.state.username && this.state.password && this.state.customSelectName) {
         this.state['user_group'] = this.state.customSelectName;
         this.props.login(obj).then((res) => {
-          if(res.response.status == 1) {
+          if (res.response.status == 1) {
             this.props.getUser(res.response.data.id);
+          } else {
+            Swal.fire({
+              text: res.response.message,
+              icon: 'warning'
+            });
           }
         });
       }
@@ -118,7 +123,7 @@ class Login extends Component {
                         autoComplete="current-password"
                       />
                     </InputGroup>
-                    <div  className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.passworderror}
                     </div>
                     <InputGroup>

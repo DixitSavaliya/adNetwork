@@ -132,7 +132,7 @@ export default class TableApp extends React.Component {
     }
 
     editAppData(id) {
-        window.location.href = "/#/editapp/" + id;
+        this.props.history.push("/editapp/"+id)
     }
 
     deleteAppData(data) {
@@ -216,7 +216,8 @@ export default class TableApp extends React.Component {
 
     appData(data) {
         const id = data.id;
-        window.location.href = "/#/viewapp/" + id;
+        this.props.history.push("/viewapp/"+id)
+        // window.location.href = "/#/viewapp/" + id;
     }
 
 
@@ -241,7 +242,7 @@ export default class TableApp extends React.Component {
                     id: data.ad_id
                 }
                 this.props.activeAppAds(obj).then((res) => {
-                    window.location.reload();
+                    this.getApplicationPageData();
                 })
             }
         } else {
@@ -250,13 +251,14 @@ export default class TableApp extends React.Component {
                     id: data.ad_id
                 }
                 this.props.InactiveAppAds(obj).then((res) => {
-                    window.location.reload();
+                    this.getApplicationPageData();
                 })
             }
         }
     }
 
     render() {
+        console.log("props",this.props);
         let auth = this.props.auth.auth_data;
         var pageNumbers = [];
         for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {

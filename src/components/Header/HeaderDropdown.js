@@ -33,11 +33,14 @@ class HeaderDropdown extends Component {
     if (this.props.auth.auth_data.user_group == "admin" || this.props.auth.auth_data.user_group == "admin_staff") {
       Auth.removeAuthenticateUser('ad_network_user');
       Auth.removeAuth('ad_network_auth');
-      this.props.history.push(this.props.from || { pathname: '/#/admin/' });
+      this.props.history.push("/#/admin/");
+
+      // this.props.history.push(this.props.from || { pathname: '/#/admin/' });
     } else {
       Auth.removeAuthenticateUser('ad_network_user');
       Auth.removeAuth('ad_network_auth');
-      this.props.history.push(this.props.from || { pathname: '/#/login' });
+      this.props.history.push("/#/login");
+      // this.props.history.push(this.props.from || { pathname: '/#/login' });
     }
   }
 

@@ -171,7 +171,7 @@ class ListApp extends React.Component {
                                             </Row>
                                         </div>
                                         <br />
-                                        <TableApp InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                        <TableApp {...this.props} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                     </CardBody>
                                 </Card>
                             </Col>
@@ -234,7 +234,7 @@ class ListApp extends React.Component {
                                                 </Row>
                                             </div>
                                             <br />
-                                            <TableApp InactiveAppAds={InactiveAppAds} auth={auth} applicationCount={applicationCount} activeAppAds={activeAppAds} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                            <TableApp {...this.props} InactiveAppAds={InactiveAppAds} auth={auth} applicationCount={applicationCount} activeAppAds={activeAppAds} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                         </CardBody>
                                     </Card>
                                 </Col>

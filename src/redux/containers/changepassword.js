@@ -26,7 +26,6 @@ class ChangePasswordContainer extends Component {
 
     render() {
       const { auth, changepassword } = this.props;
-      console.log("props",this.props);
       return (
         <ChangePassword auth={auth} changepassword={changepassword}/>
       );

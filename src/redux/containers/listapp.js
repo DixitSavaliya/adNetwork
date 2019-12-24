@@ -28,7 +28,7 @@ class ListAppContainer extends Component {
     render() {
       const {auth ,applicationCount,applicationPGData,deleteApp,searchApplicationData,activeAppAds,InactiveAppAds} = this.props;
       return (
-        <ListApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} searchApplicationData={searchApplicationData} />
+        <ListApp auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} searchApplicationData={searchApplicationData} {...this.props} />
       );
     }
 }

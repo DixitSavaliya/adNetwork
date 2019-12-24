@@ -23,7 +23,7 @@ const routes = {
   '/createapp': 'CreateApp',
   '/listapp': 'ListApp',
   '/editapp': 'EditApp',
-  '/viewapp': 'ViewApp',
+  '/viewapp/:id': 'ViewApp',
   '/application': 'Profile',
   '/advertiser' : 'Advertiser',
   '/publisher' : 'Publisher',
