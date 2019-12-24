@@ -16,7 +16,7 @@ export default class TableRight extends React.Component {
             searchData: '',
             count: '',
             currentPage: "1",
-            items_per_page: "2",
+            items_per_page: "5",
             perpage: "1",
             paginationdata: '',
             isFetch: false,
@@ -37,6 +37,9 @@ export default class TableRight extends React.Component {
         this.btnDecrementClick = this.btnDecrementClick.bind(this);
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
 
+    }
+
+    componentDidMount() {
         EventEmitter.subscribe('searchRightData', (data) => {
             console.log("data", data);
             this.setState({
@@ -47,27 +50,6 @@ export default class TableRight extends React.Component {
         });
 
 
-
-        // EventEmitter.subscribe('isDeleted', (value) => {
-        //   console.log("value", value);
-        //   API.deleteUserRoleAllData({ value: true })
-        //     .then((findresponse) => {
-        //       if (findresponse) {
-        //         console.log("deleteUserRoleAllData response===", findresponse);
-        //         this.setState({
-        //           allRecords: findresponse.data.data
-        //         })
-        //         console.log("allRecords", this.state.allRecords);
-        //       } else {
-        //         Swal.fire("Something went wrong!", "", "warning");
-        //       }
-        //     }).catch((err) => {
-        //       Swal.fire("Something went wrong!", "", "warning");
-        //     });
-        // });
-    }
-
-    componentDidMount() {
         EventEmitter.subscribe('per_page_changed', (value) => {
             //localStorage.setItem('role_per_page_changed', '' + value);
             this.setState({ items_per_page: value });
@@ -114,23 +96,31 @@ export default class TableRight extends React.Component {
     checkAllHandler(event) {
         console.log("data", event.target.checked, event.target.id);
         if (event.target.checked == true) {
+            console.log("true");
             this.setState({
-                check: this.state.check = true
+                check:this.state.check = true,
+                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: true }))
             })
-        } else if (event.target.checked == false) {
+            var array = [];
+            for(var i=0;i<this.state.paginationdata.length;i++) {
+                array.push({userRightID:this.state.paginationdata[i].id});
+            }
+            console.log("array",array);
+            EventEmitter.dispatch('deletepageRightdata', array);
+        } else {
+            console.log("fasle");
             this.setState({
-                check: this.state.check = false
+                check:this.state.check = false,
+                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: false }))
             })
         }
     }
-
 
     editUserRightData(data) {
         EventEmitter.dispatch('editRightData', data);
     }
 
     deleteUserRightData(data) {
-        console.log("data", data);
         const obj = {
             userRightID: data.id
         }

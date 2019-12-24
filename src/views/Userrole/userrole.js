@@ -44,13 +44,25 @@ class UserRole extends Component {
             roleId: '',
             searchData: '',
             delete: false,
-            updateRoleBtn: false
+            updateRoleBtn: false,
+            deletedata:''
         }
         this.userRoleData = this.userRoleData.bind(this);
         this.UpdateUserRoleData = this.UpdateUserRoleData.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.searchUserRoleDataKeyUp = this.searchUserRoleDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
+       this.deleteAllUserRoleData = this.deleteAllUserRoleData.bind(this);
+    }
+
+    componentDidMount() {
+        
+        EventEmitter.subscribe('deletepagedata', (data) => {
+            this.setState({
+                deletedata:this.state.deletedata = data,
+                delete:this.state.delete = true
+            })
+        });
 
         EventEmitter.subscribe('editData', (data) => {
             this.setState({
@@ -150,6 +162,27 @@ class UserRole extends Component {
 
     handleChangeEvent(e) {
         EventEmitter.dispatch('per_page_changed', e.target.value);
+    }
+
+    deleteAllUserRoleData() {
+        const role = {
+            data: this.state.deletedata
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.props.deleteRoleData(role);
+                setTimeout(() => {
+                    this.userRoleData();
+                }, 1200)
+            }
+        })
     }
 
 
@@ -303,8 +336,8 @@ class UserRole extends Component {
                                                     name="customSelect"
                                                     onChange={this.handleChangeEvent}
                                                 >
-                                                    <option value="2">2</option>
-                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
                                                 </Input>
                                             </div>
                                         </Col>

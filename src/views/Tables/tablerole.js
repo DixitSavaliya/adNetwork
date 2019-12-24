@@ -17,7 +17,7 @@ export default class TableRole extends React.Component {
             searchData: '',
             count: '',
             currentPage: "1",
-            items_per_page: "2",
+            items_per_page: "5",
             perpage: "1",
             paginationdata: '',
             isFetch: false,
@@ -37,7 +37,9 @@ export default class TableRole extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.btnDecrementClick = this.btnDecrementClick.bind(this);
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
+    }
 
+    componentDidMount() {
         EventEmitter.subscribe('searchData', (data) => {
             console.log("data", data);
             this.setState({
@@ -48,27 +50,6 @@ export default class TableRole extends React.Component {
         });
 
 
-
-        // EventEmitter.subscribe('isDeleted', (value) => {
-        //   console.log("value", value);
-        //   API.deleteUserRoleAllData({ value: true })
-        //     .then((findresponse) => {
-        //       if (findresponse) {
-        //         console.log("deleteUserRoleAllData response===", findresponse);
-        //         this.setState({
-        //           allRecords: findresponse.data.data
-        //         })
-        //         console.log("allRecords", this.state.allRecords);
-        //       } else {
-        //         Swal.fire("Something went wrong!", "", "warning");
-        //       }
-        //     }).catch((err) => {
-        //       Swal.fire("Something went wrong!", "", "warning");
-        //     });
-        // });
-    }
-
-    componentDidMount() {
         EventEmitter.subscribe('per_page_changed', (value) => {
             //localStorage.setItem('role_per_page_changed', '' + value);
             this.setState({ items_per_page: value });
@@ -118,22 +99,25 @@ export default class TableRole extends React.Component {
 
     checkAllHandler(event) {
         console.log("data", event.target.checked, event.target.id);
-        console.log("paginationdata", this.state.paginationdata);
-        // if (event.target.checked == true) {
-        //     for (var i = 0; i < this.state.paginationdata.length; i++) {
-        //         this.setState({
-        //             paginationdata: this.state.paginationdata = this.state.paginationdata[i]['_rowChecked'] == true
-        //         })
-           
-        //     }
-        // } else {
-        //     for (var i = 0; i < this.state.paginationdata.length; i++) {
-        //         this.setState({
-        //             paginationdata: this.state.paginationdata = this.state.paginationdata[i]['_rowChecked'] == false
-        //         })
-        //     }
-        // }
-        //      console.log("paginationdata", this.state.paginationdata);
+        if (event.target.checked == true) {
+            console.log("true");
+            this.setState({
+                check:this.state.check = true,
+                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: true }))
+            })
+            var array = [];
+            for(var i=0;i<this.state.paginationdata.length;i++) {
+                array.push({userRoleID:this.state.paginationdata[i].id});
+            }
+            console.log("array",array);
+            EventEmitter.dispatch('deletepagedata', array);
+        } else {
+            console.log("fasle");
+            this.setState({
+                check:this.state.check = false,
+                paginationdata: this.state.paginationdata =  this.state.paginationdata.map(el => ({ ...el, _rowChecked: false }))
+            })
+        }
     }
 
     editUserRoleData(data) {
@@ -308,7 +292,7 @@ export default class TableRole extends React.Component {
                                                                             <Input
                                                                                 type="checkbox"
                                                                                 id={index}
-                                                                                checked={this.state.paginationdata[index]['_rowChecked'] == true}
+                                                                                checked={data._rowChecked == true ? true : false }
                                                                             />
                                                                         </span>
                                                                     ) : (
@@ -316,6 +300,7 @@ export default class TableRole extends React.Component {
                                                                                 <Input
                                                                                     type="checkbox"
                                                                                     id={index}
+                                                                                   
                                                                                 //   onChange={this.handleChangeStatus.bind(this, index)}
                                                                                 />
                                                                             </span>

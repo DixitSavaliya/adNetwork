@@ -41,13 +41,25 @@ class UserRight extends Component {
             group_display_nameerrror: '',
             updateRightBtn: false,
             rightId: '',
-            searchData: ''
+            searchData: '',
+            delete: false,
+            deletedata: ''
         }
         this.userRightData = this.userRightData.bind(this);
         this.UpdateUserRightData = this.UpdateUserRightData.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.searchUserRightDataKeyUp = this.searchUserRightDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
+        this.deleteAllUserRightData = this.deleteAllUserRightData.bind(this);
+    }
+
+    componentDidMount() {
+        EventEmitter.subscribe('deletepageRightdata', (data) => {
+            this.setState({
+                deletedata: this.state.deletedata = data,
+                delete: this.state.delete = true
+            })
+        });
 
         EventEmitter.subscribe('editRightData', (data) => {
             this.setState({
@@ -121,7 +133,7 @@ class UserRight extends Component {
                     userright: this.state.userright = '',
                     displayname: this.state.displayname = '',
                     group_name: this.state.group_name = '',
-                    group_display_name: this.state.group_display_name =  ''
+                    group_display_name: this.state.group_display_name = ''
                 })
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
@@ -133,6 +145,27 @@ class UserRight extends Component {
         this.setState({
             statuscheck1: this.state.statuscheck1 = event.target.checked,
             status: this.state.status = event.target.defaultValue
+        })
+    }
+
+    deleteAllUserRightData() {
+        const role = {
+            data: this.state.deletedata
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.props.deleteRightData(role);
+                setTimeout(() => {
+                    this.userRoleData();
+                }, 1200)
+            }
         })
     }
 
@@ -187,7 +220,6 @@ class UserRight extends Component {
 
     render() {
         const { auth, rightCountData, RightPGData, deleteRightData } = this.props;
-        console.log("props", this.props);
         this.state.searchData = this.props.auth.searchdata;
         // EventEmitter.dispatch('searchData', this.state.searchData);
         const { fetching, error } = auth;
@@ -318,7 +350,7 @@ class UserRight extends Component {
                                 <div>
                                     <Row>
                                         <Col xs="2">
-                                            <div className="right">
+                                            <div>
                                                 <Button
                                                     type="button"
                                                     size="md"
@@ -342,18 +374,24 @@ class UserRight extends Component {
                                             </div>
                                         </Col>
                                         <Col xs="3">
-                                            <div className="left">
-                                                {/* <span className="size">Records per page</span> */}
-                                                <Input
-                                                    type="select"
-                                                    id="exampleCustomSelect"
-                                                    name="customSelect"
-                                                    onChange={this.handleChangeEvent}
-                                                >
-                                                    <option value="2">2</option>
-                                                    <option value="4">4</option>
-                                                </Input>
-                                            </div>
+                                           
+                                                <Row>
+                                                    <Col xs="4">
+                                                        {/* <span className="size">page</span> */}
+                                                    </Col>
+                                                    <Col xs="8">
+                                                        <Input
+                                                            type="select"
+                                                            id="exampleCustomSelect"
+                                                            name="customSelect"
+                                                            onChange={this.handleChangeEvent}
+                                                        >
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                        </Input>
+                                                    </Col>
+                                                </Row>
+                                            
                                         </Col>
                                     </Row>
                                 </div>

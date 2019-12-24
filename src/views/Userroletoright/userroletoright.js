@@ -26,15 +26,11 @@ class UserRoleToRight extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.editUserRoleToRight = this.editUserRoleToRight.bind(this);
         this.onItemSelect = this.onItemSelect.bind(this);
-        console.log("constructor this.props", this.props);
-        console.log("constructor this.state", this.state);
-
     }
 
     componentDidMount() {
         this.getUserRole();
         this.getUserRight();
-
     }
 
     getUserRole() {
@@ -104,7 +100,6 @@ class UserRoleToRight extends React.Component {
             }
             let _this = this;
             this.props.userroletoright(obj).then(function (res) {
-                console.log("promise result res", res.response.data)
                 let data = res.response.data;
 
                 let newData = [];
@@ -220,7 +215,6 @@ class UserRoleToRight extends React.Component {
 
     render() {
         const { auth } = this.props;
-        console.log("render props", this.props);
         return (
             <div>
                 <Row>

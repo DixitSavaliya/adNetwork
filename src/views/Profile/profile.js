@@ -41,7 +41,7 @@ class Profile extends Component {
       last_name: '',
       mobile_no: '',
       email_id: '',
-      selectedFile:null
+      selectedFile: null
     }
     console.log("this.props", this.props);
     this.UpdateProfile = this.UpdateProfile.bind(this);
@@ -60,15 +60,15 @@ class Profile extends Component {
     console.log("state", this.state);
 
     const data = {
-      first_name:this.state.first_name,
-      last_name:this.state.last_name,
-      mobile_no:this.state.mobile_no,
-      email_id:this.state.email_id,
-      create_by:this.props.auth.auth_data.id,
-      id:this.props.auth.auth_data.id,
-      username:this.props.auth.auth_data.username
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      mobile_no: this.state.mobile_no,
+      email_id: this.state.email_id,
+      create_by: this.props.auth.auth_data.id,
+      id: this.props.auth.auth_data.id,
+      username: this.props.auth.auth_data.username
     }
-    console.log("data",data)
+    console.log("data", data)
     this.props.updateprofile(data);
   }
 
@@ -84,7 +84,7 @@ class Profile extends Component {
       .then(response => {
         console.log("uploadUserImage response === > ", response);
         this.setState({
-          selectedFile : this.state.selectedFile = response.data.data
+          selectedFile: this.state.selectedFile = response.data.data
         })
       }).catch(error => {
         console.log("error", error);
@@ -140,10 +140,27 @@ class Profile extends Component {
                       {
                         this.state.selectedFile ? (
                           <div>
-                            <img className="pic" src={config.REMOTE_URL +  this.state.selectedFile} />
+                            {
+                              this.state.selectedFile ? (
+                                <div>
+                                  <img className="pic" src={config.REMOTE_URL + this.state.selectedFile} />
+                                </div>
+                              ) : (null)
+                            }
                           </div>
-                        ) : (null)
+                        ) : (
+                            <div>
+                              {
+                                this.props.profile.avatar ? (
+                                  <div>
+                                    <img className="pic" src={config.REMOTE_URL + this.props.profile.avatar} />
+                                  </div>
+                                ) : (null)
+                              }
+                            </div>
+                          )
                       }
+
                       <p>Select File:</p>
                       <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
                       <Input
