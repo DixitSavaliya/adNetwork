@@ -888,6 +888,67 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
+        //GETCUSTOMADS
+        case ACTION.GETCUSTOMADS_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.GETCUSTOMADS_SUCCESS:
+
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.GETCUSTOMADS_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+        //INSERTCUSTOMADS
+        case ACTION.INSERTCUSTOMADS_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.INSERTCUSTOMADS_SUCCESS:
+            Swal.fire("Custom Ads Inserted Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.INSERTCUSTOMADS_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+        //REMOVECUSTOMADS
+        case ACTION.REMOVECUSTOMADS_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.REMOVECUSTOMADS_SUCCESS:
+            Swal.fire("Custom Ads Removed Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.REMOVECUSTOMADS_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+
 
 
 

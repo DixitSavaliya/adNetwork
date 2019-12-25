@@ -68,7 +68,6 @@ class HeaderDropdown extends Component {
 
 
   render() {
-    console.log("HeaderDropdown data",this.props)
     return (
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>

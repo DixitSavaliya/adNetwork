@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
 import { login,getUser } from '../actions/auth';
+import {userroletoright} from '../actions/userroletoright';
 
 import LoginForm from '../../views/Pages/Login/Login';
 import Auth from '../Auth';
@@ -32,9 +33,9 @@ class Login extends Component {
     }
 
     render() {
-      const { auth, login, getUser } = this.props;
+      const { auth, login, getUser,userroletoright } = this.props;
       return (
-        <LoginForm auth={auth} login={login} getUser={getUser}/>
+        <LoginForm auth={auth} login={login} getUser={getUser} userroletoright={userroletoright}/>
       );
     }
 }
@@ -44,7 +45,8 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = (dispatch) => ({
     login:(info) => dispatch(login(info)),
-    getUser:(info) => dispatch(getUser(info))
+    getUser:(info) => dispatch(getUser(info)),
+    userroletoright:(data) => dispatch(userroletoright(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps) (withRouter(Login));

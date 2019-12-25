@@ -81,6 +81,14 @@ class AdminLogin extends Component {
         this.props.login(obj).then((res) => {
           if(res.response.status == 1) {
             this.props.getUser(res.response.data.id);
+            const obj = {
+              userRole: res.response.data.id
+          }
+          let _this = this;
+          this.props.userroletoright(obj).then(function (res) {
+              let data = res.response.data;
+              console.log("data",data);
+          })
           }
         });
       }

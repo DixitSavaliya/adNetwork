@@ -11,6 +11,12 @@ import SidebarHeader from './../SidebarHeader';
 import SidebarMinimizer from './../SidebarMinimizer';
 
 class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rightdata:''
+    }
+  }
 
   handleClick(e) {
     e.preventDefault();
@@ -23,6 +29,20 @@ class Sidebar extends Component {
 
   }
 
+  componentDidMount() {
+    const obj = {
+      userRole: this.props.auth.auth_data.id
+  }
+  console.log("obj",obj);
+  let _this = this;
+  this.props.userroletoright(obj).then(function (res) {
+      let data = res.response.data;
+      _this.setState({
+        rightdata:_this.state.rightdata = data
+      })
+  })
+  }
+
   // todo Sidebar nav secondLevel
   // secondLevelActive(routeName) {
   //   return this.props.location.pathname.indexOf(routeName) > -1 ? "nav nav-second-level collapse in" : "nav nav-second-level collapse";
@@ -32,6 +52,7 @@ class Sidebar extends Component {
   render() {
     if (this.props.auth.auth_data.user_group == "admin") {
       this.props.sidebar.nav = nav.items;
+
     } else if (this.props.auth.auth_data.user_group == "advertiser") {
       this.props.sidebar.nav = navRight.items;
     } else if (this.props.auth.auth_data.user_group == "publisher") {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {getPublisherApplication} from '../actions/monetization'
-// import { createApp,getAppDataById,editApp} from '../actions/createapp';
+import {getCustomAds,insertCustomAds,deleteCustomAds} from '../actions/customads';
 import CustomAds from '../../views/customads/customads';
 
 class CustomAdsContainer extends Component {
@@ -25,10 +25,10 @@ class CustomAdsContainer extends Component {
     }
 
     render() {
-      const {auth,getPublisherApplication} = this.props;
+      const {auth,getPublisherApplication,getCustomAds,insertCustomAds,deleteCustomAds} = this.props;
     //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <CustomAds auth={auth} getPublisherApplication={getPublisherApplication}/>
+        <CustomAds auth={auth} getPublisherApplication={getPublisherApplication} getCustomAds={getCustomAds} insertCustomAds={insertCustomAds} deleteCustomAds={deleteCustomAds}/>
       );
     }
 }
@@ -38,7 +38,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getPublisherApplication:(data) => dispatch(getPublisherApplication(data))
+    getPublisherApplication:(data) => dispatch(getPublisherApplication(data)),
+    getCustomAds:(data) => dispatch(getCustomAds(data)),
+    insertCustomAds:(data) => dispatch(insertCustomAds(data)),
+    deleteCustomAds:(data) => dispatch(deleteCustomAds(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomAdsContainer));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import {userroletoright} from '../actions/userroletoright';
 import { list } from '../actions/sidebar';
 
 import Sidebar from '../../components/Sidebar/Sidebar';
@@ -24,8 +24,8 @@ const mapStateToProps = state => ({
     sidebar: state.sidebar, auth: state.auth
 });
 
-/* const mapDispatchToProps = (dispatch) => ({
-    list:() => dispatch(list()), nav:(info) => dispatch(nav(info))
-}); */
+const mapDispatchToProps = (dispatch) => ({
+    userroletoright:(data) => dispatch(userroletoright(data))
+});
 
-export default connect(mapStateToProps)(SidebarContainer);
+export default connect(mapStateToProps,mapDispatchToProps)(SidebarContainer);
