@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Auth from '../Auth';
+import Intercept from '../../auth';
 
 import Full from '../../containers/Full/Full';
 

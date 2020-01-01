@@ -326,7 +326,7 @@ export default class TableRole extends React.Component {
                                                         <Input
                                                             type="checkbox"
                                                             id="exampleCustomCheckbox"
-                                                            onClick={this.checkAllHandler}
+                                                            onChange={this.checkAllHandler}
                                                             checked={this.state._maincheck}
                                                         />
                                                     </th>
@@ -406,7 +406,7 @@ export default class TableRole extends React.Component {
                                                             <Input
                                                                 type="checkbox"
                                                                 id="exampleCustomCheckbox"
-                                                                onClick={this.checkAllHandler}
+                                                                onChange={this.checkAllHandler}
                                                                 checked={this.state._maincheck}
                                                             />
                                                         </th>

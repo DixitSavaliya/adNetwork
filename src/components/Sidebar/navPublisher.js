@@ -39,6 +39,12 @@ export default {
           },
         ]
       },
+
+      {
+        name: 'Notifications',
+        url: '/notifications',
+        icon: 'fa fa-bell'
+      }
   
     //   {
     //     name: 'Publisher',

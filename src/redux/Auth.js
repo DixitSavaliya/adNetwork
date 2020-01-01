@@ -27,7 +27,7 @@ class Auth {
    * @returns {boolean}
    */
   static isUserAuthenticated() {
-    return localStorage.getItem('ad_network_auth') !== null;
+    return localStorage.getItem('ad_network_auth') !== null && localStorage.getItem('ad_network_user') !== null;
   }
 
   static removeAuthenticateUser() {

@@ -291,27 +291,25 @@ class CustomAds extends React.Component {
                                         this.state.advertiserapp.map((data, index) =>
                                             <Col md="4" key={index}>
                                                 <Form>
-                                                    <Card>
+                                                    <Card className="shadow_card">
                                                         {/* <CardHeader>
                                                             <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
                                                         </CardHeader> */}
                                                         <CardBody className="padding">
                                                             <Row>
                                                                 <Col md="2">
-                                                                    <Input
-                                                                        type="checkbox"
-                                                                        id="no"
-                                                                        onChange={() => this.handleChange(data)}
-                                                                        checked={this.state.advertiserapp[index]['_rowChecked'] == true}
-                                                                    />
                                                                     <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
                                                                 </Col>
                                                                 <Col md="10" className="content">
-                                                                    <div>
-                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}> Name: </b>{data.name}</span>
-                                                                    </div>
-                                                                    <div>
-                                                                        <span><b style={{ color: '#20a8d8', fontSize: '10px' }}> package: </b>{data.package}</span>
+                                                                    <div className="app_detail">
+                                                                        <Input
+                                                                            type="checkbox"
+                                                                            id="no"
+                                                                            onChange={() => this.handleChange(data)}
+                                                                            checked={this.state.advertiserapp[index]['_rowChecked'] == true}
+                                                                        />
+                                                                        <h6>Name: <p>{data.name}</p></h6>
+                                                                        <h6>Package: <p>{data.package}</p></h6>
                                                                     </div>
                                                                 </Col>
                                                             </Row>

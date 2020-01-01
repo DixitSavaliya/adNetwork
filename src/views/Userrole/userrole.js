@@ -106,22 +106,20 @@ class UserRole extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userrole: '',
-                userroleerror: '',
-                status: '',
-                statuserror: ''
+                userrole: this.state.userrole = '',
+                userroleerror: this.state.userroleerror = '',
+                status: this.state.status = '',
+                statuserror: this.state.statuserror = '',
+                statuscheck1: this.state.statuscheck1 = true
             })
             if (this.state.userrole && this.state.status) {
                 const data = {
                     name: this.state.userrole,
                     status: this.state.status
                 }
-                this.props.addUserRole(data);
-                EventEmitter.dispatch('role_added', 1);
-                this.setState({
-                    userrole: this.state.userrole = '',
-                    status: this.state.status = ''
-                })
+                this.props.addUserRole(data).then((res) => {
+                    EventEmitter.dispatch('role_added', 1);
+                });
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
             }
@@ -139,10 +137,11 @@ class UserRole extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userrole: '',
-                userroleerror: '',
-                status: '',
-                statuserror: ''
+                userrole: this.state.userrole = '',
+                userroleerror: this.state.userroleerror = '',
+                status: this.state.status = '',
+                statuserror: this.state.statuserror = '',
+                statuscheck1: this.state.statuscheck1 = true
             })
             if (this.state.userrole && this.state.status) {
                 this.setState({
@@ -153,13 +152,12 @@ class UserRole extends Component {
                     status: this.state.status = this.state.status,
                     id: this.state.roleId
                 }
-                this.props.updateRole(obj);
-                EventEmitter.dispatch('role_updated', 1);
-                this.setState({
-                    userrole: this.state.userrole = '',
-                    status: this.state.status = '',
-                    updateRoleBtn: this.state.updateRoleBtn = false
-                })
+                this.props.updateRole(obj).then((res) => {
+                    EventEmitter.dispatch('role_updated', 1);
+                    this.setState({
+                        updateRoleBtn: this.state.updateRoleBtn = false
+                    })
+                });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
             }

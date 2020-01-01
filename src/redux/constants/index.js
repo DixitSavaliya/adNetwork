@@ -1,4 +1,5 @@
-export const REMOTE_URL = 'https://192.241.153.53:3005/';
+export const REMOTE_URL = 'http://159.65.152.143:3004/';
+// export const REMOTE_URL = 'https://192.241.153.53:3005/';
 
 // let requestData = {
 //     id: "2",

@@ -17,11 +17,15 @@ class Login extends Component {
     }
 
     componentWillMount() {
-        this.transferToDashboardIfLoggedIn();
+        if (this.props.auth.auth_data.access_token){
+            this.transferToDashboardIfLoggedIn();
+        }
     }
     
     componentDidUpdate() {        
-        this.transferToDashboardIfLoggedIn();
+        if (this.props.auth.auth_data.access_token){
+            this.transferToDashboardIfLoggedIn();
+        }
     }
 
     componentDidMount() {

@@ -28,6 +28,7 @@ const routes = {
   '/advertiser' : 'Advertiser',
   '/publisher' : 'Publisher',
   '/custom-ads' : 'CustomAds',
-  '/monetization-network' : 'MonetizationNetwork'
+  '/monetization-network' : 'MonetizationNetwork',
+  '/notifications' : 'Notifications',
 };
 export default routes;

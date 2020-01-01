@@ -116,14 +116,14 @@ class UserRight extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userright: '',
-                userrighterror: '',
-                displayname: '',
-                displaynameerror: '',
-                group_name: '',
-                group_nameerror: '',
-                group_display_name: '',
-                group_display_nameerrror: ''
+                userright: this.state.userright = '',
+                userrighterror: this.state.userrighterror = '',
+                displayname: this.state.displayname = '',
+                displaynameerror: this.state.displaynameerror = '',
+                group_name: this.state.group_name = '',
+                group_nameerror: this.state.group_nameerror = '',
+                group_display_name: this.state.group_display_name = '',
+                group_display_nameerrror: this.state.group_display_nameerrror = ''
             })
 
             if (this.state.userright && this.state.displayname && this.state.group_name && this.state.group_display_name) {
@@ -133,14 +133,9 @@ class UserRight extends Component {
                     group_name: this.state.group_name,
                     group_display_name: this.state.group_display_name
                 }
-                this.props.addUserRight(data);
-                EventEmitter.dispatch('right_added', 1);
-                this.setState({
-                    userright: this.state.userright = '',
-                    displayname: this.state.displayname = '',
-                    group_name: this.state.group_name = '',
-                    group_display_name: this.state.group_display_name = ''
-                })
+                this.props.addUserRight(data).then((res) => {
+                    EventEmitter.dispatch('right_added', 1);
+                });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
             }
@@ -179,14 +174,14 @@ class UserRight extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userright: '',
-                userrighterror: '',
-                displayname: '',
-                displaynameerror: '',
-                group_name: '',
-                group_nameerror: '',
-                group_display_name: '',
-                group_display_nameerrror: ''
+                userright: this.state.userright = '',
+                userrighterror: this.state.userrighterror = '',
+                displayname: this.state.displayname = '',
+                displaynameerror: this.state.displaynameerror = '',
+                group_name: this.state.group_name = '',
+                group_nameerror: this.state.group_nameerror = '',
+                group_display_name: this.state.group_display_name = '',
+                group_display_nameerrror: this.state.group_display_nameerrror = ''
             })
             if (this.state.userright && this.state.displayname && this.state.group_name && this.state.group_display_name) {
                 const obj = {
@@ -196,15 +191,12 @@ class UserRight extends Component {
                     group_display_name: this.state.group_display_name,
                     id: this.state.rightId
                 }
-                this.props.updateRight(obj);
-                EventEmitter.dispatch('right_updated', 1);
-                this.setState({
-                    userright: this.state.userright = '',
-                    displayname: this.state.displayname = '',
-                    group_name: this.state.group_name = '',
-                    group_display_name: this.state.group_display_name = '',
-                    updateRightBtn: this.state.updateRightBtn = false,
-                })
+                this.props.updateRight(obj).then((res) => {
+                    EventEmitter.dispatch('right_updated', 1);
+                    this.setState({
+                        updateRightBtn: this.state.updateRightBtn = false,
+                    })
+                });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
             }
@@ -227,7 +219,6 @@ class UserRight extends Component {
     render() {
         const { auth, rightCountData, RightPGData, deleteRightData } = this.props;
         this.state.searchData = this.props.auth.searchdata;
-        // EventEmitter.dispatch('searchData', this.state.searchData);
         const { fetching, error } = auth;
 
         return (

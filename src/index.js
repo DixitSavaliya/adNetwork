@@ -24,18 +24,18 @@ const store = createStore(
 );
 
 import Auth from './redux/Auth'
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//     <Route {...rest} render={props => (
-//         Auth.isUserAuthenticated() ? (
-//             <Component {...props} />
-//         ) : (
-//                 <Redirect to={{
-//                     pathname: '/login',
-//                     state: { from: props.location }
-//                 }} />
-//             )
-//     )} />
-// )
+/* const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={props => (
+        Auth.isUserAuthenticated() ? (
+            <Component {...props} />
+        ) : (
+                <Redirect to={{
+                    pathname: '/login',
+                    state: { from: props.location }
+                }} />
+            )
+    )} />
+) */
 
 // Styles
 // Import Font Awesome Icons Set

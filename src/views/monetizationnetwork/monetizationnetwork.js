@@ -133,36 +133,36 @@ class MonetizationNetwork extends React.Component {
         this.setState({
             fb_ads: this.state.fb_ads = checkedvalue
         })
-        if (this.state.fb_ads == true) {
-            this.setState({
-                admob_ads: this.state.admob_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.fb_ads == true) {
+        //     this.setState({
+        //         admob_ads: this.state.admob_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeAdMobAds(checkedvalue) {
         this.setState({
             admob_ads: this.state.admob_ads = checkedvalue
         })
-        if (this.state.admob_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.admob_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeMopubAds(checkedvalue) {
         this.setState({
             mopub_ads: this.state.mopub_ads = checkedvalue
         })
-        if (this.state.mopub_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                admob_ads: this.state.admob_ads = false
-            })
-        }
+        // if (this.state.mopub_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         admob_ads: this.state.admob_ads = false
+        //     })
+        // }
     }
 
     handleChangeMainAds(checkedvalue) {

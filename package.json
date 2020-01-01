@@ -1,10 +1,10 @@
 {
-  "name": "@coreui/react",
-  "version": "1.0.6",
-  "description": "Open Source Bootstrap Admin Template",
-  "author": "Łukasz Holeczek",
-  "homepage": "http://localhost/ad_netwrok/build_demo/",
-  "copyright": "Copyright 2017 creativeLabs Łukasz Holeczek",
+  "name": "ad_network",
+  "version": "1.0.0",
+  "description": "Advertisement Management System",
+  "author": "Rk Web Technology",
+  "homepage": ".",
+  "copyright": "Copyright 2019 @ Rk Web Technology",
   "license": "MIT",
   "private": true,
   "devDependencies": {
@@ -34,6 +34,7 @@
   "dependencies": {
     "bootstrap": "4.0.0-beta.2",
     "chart.js": "^2.9.3",
+    "fetch-intercept": "^2.3.1",
     "font-awesome": "4.7.0",
     "history": "4.7.2",
     "lodash": "^4.17.4",
