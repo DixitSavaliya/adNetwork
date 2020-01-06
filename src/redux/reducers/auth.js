@@ -948,6 +948,25 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
+             //SENDPUSHNOTIFICATION                       
+        case ACTION.SENDPUSHNOTIFICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.SENDPUSHNOTIFICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.SENDPUSHNOTIFICATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
 
 
 

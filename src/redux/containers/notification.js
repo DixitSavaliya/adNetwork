@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {getPublisherApplication} from '../actions/monetization';
-
+import {sendNotification} from '../actions/notification';
+import {removeImage} from '../actions/auth';
 import Notifications from '../../views/notifications/notifications';
 import Auth from '../Auth';
 
@@ -26,9 +27,9 @@ class NotificationContainer extends Component {
     }
 
     render() {
-        const { auth,getPublisherApplication } = this.props;
+        const { auth,getPublisherApplication,sendNotification,removeImage } = this.props;
         return (
-            <Notifications auth={auth} getPublisherApplication={getPublisherApplication} {...this.props}/>
+            <Notifications auth={auth} getPublisherApplication={getPublisherApplication} {...this.props} sendNotification={sendNotification} removeImage={removeImage}/>
         );
     }
 }
@@ -39,7 +40,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getPublisherApplication: (data) => dispatch(getPublisherApplication(data)),
-   
+    sendNotification:(data) => dispatch(sendNotification(data)),
+    removeImage:(data) => dispatch(removeImage(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationContainer);
