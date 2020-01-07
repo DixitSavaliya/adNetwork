@@ -3,7 +3,7 @@ import { config } from './config';
 let oldRequest;
 let reqCount = 0;
 axios.interceptors.request.use((req) => {
-    let auth =  JSON.parse(localStorage.getItem('ad_network_auth'))
+    let auth =  JSON.parse(window.sessionStorage.getItem('ad_network_auth'))
     req.headers['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
     req.headers['content-md5'] = auth ? auth.secret_key : '';
     if(req.data && req.url != config.baseApiUrl + "User/getAuthTokens"){
@@ -29,7 +29,7 @@ axios.interceptors.request.use((req) => {
 
 
 axios.interceptors.response.use((response) => {
-    let auth =  JSON.parse(localStorage.getItem('ad_network_auth'))
+    let auth =  JSON.parse(window.sessionStorage.getItem('ad_network_auth'))
     let res = {};
     let oldCount = 0;
     if(response.data.token != undefined){
@@ -38,7 +38,7 @@ axios.interceptors.response.use((response) => {
             //console.log("response", response)
             axios.post(config.baseApiUrl + "User/getAccessTokenByRefreshToken",{refresh_token:auth.refresh_token,username:auth.username ? auth.username : auth.email_id})
             .then(result => {
-                localStorage.setItem('ad_network_auth', JSON.stringify(result.data.data))
+                window.sessionStorage.setItem('ad_network_auth', JSON.stringify(result.data.data))
                 //oldRequest
                 if(oldCount == 0){
                     oldCount = 1;
@@ -68,7 +68,7 @@ axios.interceptors.response.use((response) => {
 
 }, function (error) {
     const originalRequest = error.config;
-    let auth = JSON.parse(localStorage.getItem('ad_network_auth'))
+    let auth = JSON.parse(window.sessionStorage.getItem('ad_network_auth'))
     if (error.response.status === 401) {
         window.location.href = "/login";
         return Promise.reject(error);

@@ -14,7 +14,7 @@ export default class TableApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            auth: JSON.parse(localStorage.getItem('ad_network_auth')),
+            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
             check: false,
             isData: false,
             searchData: '',

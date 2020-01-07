@@ -10,7 +10,6 @@ import Auth from '../Auth';
 class PorfileContainer extends Component {
 
     transferToDashboardIfLogout() {
-        console.log("props", this.props);
         if (!this.props.auth.auth_data.access_token) {
             this.props.history.push(this.props.from || {pathname: '/login'});
         }
@@ -23,13 +22,13 @@ class PorfileContainer extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser(this.props.auth.auth_data.id);
-      
+        if(this.props.auth.auth_data){
+            this.props.getUser(this.props.auth.auth_data.id);
+        }
     }
 
     render() {
         const { auth, profile, avatarUpload ,avtar,updateprofile,removeImage,updateProfileData} = this.props;
-        console.log("render() this.props", this.props)
         return (
             <Profile auth={auth} profile={profile} avtar={avtar} updateProfileData={updateProfileData} avatarUpload={avatarUpload} updateprofile={updateprofile} removeImage={removeImage}/>
         );

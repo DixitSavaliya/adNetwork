@@ -24,9 +24,9 @@ const store = createStore(
 );
 
 import Auth from './redux/Auth'
-/* const PrivateRoute = ({ component: Component, ...rest }) => (
+ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        Auth.isUserAuthenticated() ? (
+        Auth.isUserAuthenticated() == true ? (
             <Component {...props} />
         ) : (
                 <Redirect to={{
@@ -35,7 +35,7 @@ import Auth from './redux/Auth'
                 }} />
             )
     )} />
-) */
+)
 
 // Styles
 // Import Font Awesome Icons Set
@@ -55,6 +55,17 @@ import AdminLogin from './redux/containers/adminlogin'
 import Register from './redux/containers/register'
 import ForgotPassword from './redux/containers/forgot'
 
+// function requireLogin() {
+//     console.log("msg")
+//     console.log(" Auth.isUserAuthenticated()", Auth.isUserAuthenticated());
+//     console.log("props",this.props)
+//     if (Auth.isUserAuthenticated() == false) {
+//         this.props.history.push(this.props.from || {pathname: '/login'});
+//         // browserHistory.push('#/login');
+//         // hashHistory.push('/login');
+//     }
+// }
+
 ReactDOM.render((
     <Provider store={store}>
         <Router>
@@ -63,13 +74,7 @@ ReactDOM.render((
                 <Route exact path="/admin/" name="AdminLogin Page" component={AdminLogin} />
                 <Route exact path="/register" name="Register Page" component={Register} />
                 <Route exact path="/forgot-password" name="Forgot Password" component={ForgotPassword} />
-                {
-                    Auth.isUserAuthenticated ? (
-                        <Route path="/" name="Home" component={Full} />
-                    ) : (
-                        <Route exact path="/login" name="Login Page" component={Login} />
-                    )
-                }
+                <PrivateRoute path="/" name="Home"  component={Full}/>
             </Switch>
         </Router>
     </Provider>

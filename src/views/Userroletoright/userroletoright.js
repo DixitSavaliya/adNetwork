@@ -20,7 +20,7 @@ class UserRoleToRight extends React.Component {
             selectroledata: '',
             _maincheck: false,
             noData: false,
-            auth: JSON.parse(localStorage.getItem('ad_network_auth'))
+            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth'))
         }
         this.handleMainChange = this.handleMainChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -29,8 +29,10 @@ class UserRoleToRight extends React.Component {
     }
 
     componentDidMount() {
-        this.getUserRole();
-        this.getUserRight();
+        if(this.props.auth) {
+            this.getUserRole();
+            this.getUserRight();
+        }
     }
 
     getUserRole() {

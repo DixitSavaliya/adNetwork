@@ -46,7 +46,6 @@ function callApi(endpoint, init, token) {
   return fetch(endpoint, init)
     .then(response => response.json().then(json => {
       console.log("json ",json);
-      //console.log("response",response);
       if (!response.ok) {
         return Promise.reject(json);
       } else if (!json.status) {

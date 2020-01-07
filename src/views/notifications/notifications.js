@@ -361,7 +361,7 @@ class Notifications extends Component {
                                                         {
                                                             this.state.selectedFile ? (
                                                                 <div>
-                                                                    <img className="pic" src={config.REMOTE_URL + this.state.selectedFile} />
+                                                                    <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
                                                                     <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
                                                                 </div>
                                                             ) : (null)

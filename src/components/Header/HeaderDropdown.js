@@ -11,6 +11,12 @@ import { REMOTE_URL } from '../../redux/constants/index';
 import './header.css';
 import Auth from '../../redux/Auth';
 import { EventEmitter } from '../../event';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 
 class HeaderDropdown extends Component {
 
@@ -26,9 +32,11 @@ class HeaderDropdown extends Component {
   }
 
   componentDidMount() {
-    this.props.getUser(this.props.auth.auth_data.id).then((res) => {
-      console.log("obj",res);
-    });
+    if(this.props.auth.auth_data) {
+      this.props.getUser(this.props.auth.auth_data.id).then((res) => {
+        console.log("obj",res);
+      });
+    }
 
     EventEmitter.subscribe('updateImage', (data) => {
       this.setState({
@@ -55,14 +63,11 @@ class HeaderDropdown extends Component {
     if (this.props.auth.auth_data.user_group == "admin" || this.props.auth.auth_data.user_group == "admin_staff") {
       Auth.removeAuthenticateUser('ad_network_user');
       Auth.removeAuth('ad_network_auth');
-      this.props.history.push("/#/admin/");
-
-      // this.props.history.push(this.props.from || { pathname: '/#/admin/' });
+      this.props.history.push(this.props.from || { pathname: '/admin/' });
     } else {
       Auth.removeAuthenticateUser('ad_network_user');
       Auth.removeAuth('ad_network_auth');
-      this.props.history.push("/#/login");
-      // this.props.history.push(this.props.from || { pathname: '/#/login' });
+      this.props.history.push(this.props.from || { pathname: '/login' });
     }
   }
 

@@ -11,15 +11,17 @@ import Auth from '../Auth';
 class Login extends Component {
     
     transferToDashboardIfLoggedIn(){
-        if (this.props.auth.auth_data.access_token){
+        if (!this.props.auth.auth_data.access_token){
+            this.props.history.push(this.props.from || {pathname: '/login'});
+        } else {
             this.props.history.push(this.props.from || {pathname: '/'});
         }
     }
 
     componentWillMount() {
-        if (this.props.auth.auth_data.access_token){
-            this.transferToDashboardIfLoggedIn();
-        }
+        // if (this.props.auth.auth_data.access_token){
+        //     this.transferToDashboardIfLoggedIn();
+        // }
     }
     
     componentDidUpdate() {        
@@ -30,10 +32,10 @@ class Login extends Component {
 
     componentDidMount() {
         const { login } = this.props;
-        // const auth = Auth.getAuth();
-        // if (auth && auth.access_token) {
-        //     login();
-        // }
+        const auth = Auth.getAuth();
+        if (auth && auth.access_token) {
+            login();
+        }
     }
 
     render() {

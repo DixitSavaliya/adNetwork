@@ -10,7 +10,7 @@ export default class TableRight extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            auth: JSON.parse(localStorage.getItem('ad_network_auth')),
+            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
             check: false,
             isData: false,
             searchData: '',
@@ -53,7 +53,7 @@ export default class TableRight extends React.Component {
 
 
         EventEmitter.subscribe('per_page_changed', (value) => {
-            //localStorage.setItem('role_per_page_changed', '' + value);
+            //window.sessionStorage.setItem('role_per_page_changed', '' + value);
             this.setState({ items_per_page: value });
             this.getRightCountData();
             setTimeout(() => {

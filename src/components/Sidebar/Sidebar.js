@@ -30,17 +30,19 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
-    const obj = {
-      userRole: this.props.auth.auth_data.id
-  }
-  console.log("obj",obj);
-  let _this = this;
-  this.props.userroletoright(obj).then(function (res) {
-      let data = res.response.data;
-      _this.setState({
-        rightdata:_this.state.rightdata = data
-      })
-  })
+    if(this.props.auth.auth_data) {
+      const obj = {
+        userRole: this.props.auth.auth_data.id
+    }
+  
+    let _this = this;
+    this.props.userroletoright(obj).then(function (res) {
+        let data = res.response.data;
+        _this.setState({
+          rightdata:_this.state.rightdata = data
+        })
+    })
+    }
   }
 
   // todo Sidebar nav secondLevel

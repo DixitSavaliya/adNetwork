@@ -5,20 +5,19 @@ class Auth {
    * @param {object} token
    */
   static setAuth(token) {
-    localStorage.setItem('ad_network_auth', JSON.stringify(token));
+    window.sessionStorage.setItem('ad_network_auth', JSON.stringify(token));
   }
 
   static removeAuth() {
-    localStorage.removeItem('ad_network_auth');
+    window.sessionStorage.removeItem('ad_network_auth');
   }
 
   static getAuth() {
-    return localStorage.getItem('ad_network_auth');
+    return window.sessionStorage.getItem('ad_network_auth');
   }
 
   static authenticateUser(user) {
-    console.log("user",user);
-    localStorage.setItem('ad_network_user', JSON.stringify(user));
+    window.sessionStorage.setItem('ad_network_user', JSON.stringify(user));
   }
 
   /**
@@ -27,16 +26,23 @@ class Auth {
    * @returns {boolean}
    */
   static isUserAuthenticated() {
-    return localStorage.getItem('ad_network_auth') !== null && localStorage.getItem('ad_network_user') !== null;
+    var flag = false;
+    if(window.sessionStorage.getItem('ad_network_auth') !== null) {
+      let auth =  JSON.parse(window.sessionStorage.getItem('ad_network_auth'));
+      if(auth.id){
+        flag = true;
+      }
+    }
+    return flag;
+    // return window.sessionStorage.getItem('ad_network_auth') !== null && window.sessionStorage.getItem('ad_network_user') !== null;
   }
 
   static removeAuthenticateUser() {
-    localStorage.removeItem('ad_network_user');
+    window.sessionStorage.removeItem('ad_network_user');
   }
 
   static getUser() {
-    const user = localStorage.getItem('ad_network_user');
-    console.log("user",user);
+    const user = window.sessionStorage.getItem('ad_network_user');
     return user ? JSON.parse(user) : null;
   }
 }

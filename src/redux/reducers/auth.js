@@ -81,7 +81,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.PROFILE_SUCCESS:
-            console.log("case ACTION.PROFILE_SUCCESS: called", action)
             Auth.authenticateUser(action.response.data);
             return {
                 ...state,

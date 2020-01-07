@@ -13,7 +13,9 @@ class Login extends Component {
       password: '',
       passworderror: "",
       username: '',
-      usernameerror: ""
+      usernameerror: "",
+      email_id:'',
+      email_iderror:''
     }
     this.onItemSelect = this.onItemSelect.bind(this);
     this.handleChangeEvent = this.handleChangeEvent.bind(this);
@@ -30,9 +32,12 @@ class Login extends Component {
     let passworderror = "";
     let usernameerror = "";
     let customSelectNameerror = "";
-
+    
+    const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!this.state.username) {
       usernameerror = "please enter username";
+    } else if (!reg.test(this.state.username)) {
+      usernameerror = "invalid username";
     }
 
     if (!this.state.password) {
@@ -44,7 +49,7 @@ class Login extends Component {
     }
 
     if (usernameerror || passworderror || customSelectNameerror) {
-      this.setState({ usernameerror, passworderror, customSelectNameerror });
+      this.setState({ usernameerror, passworderror, customSelectNameerror});
       return false;
     }
     return true;

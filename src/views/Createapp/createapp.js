@@ -246,6 +246,7 @@ class CreateApp extends React.Component {
                 selectedFile: null,
                 selectedFileerror: '',
             })
+         
             if (this.state.name && this.state.description && this.state.package && this.state.selectedFile && this.state.customSelect) {
                 const obj = {
                     name: this.state.name,
@@ -283,11 +284,12 @@ class CreateApp extends React.Component {
                 selectedFile: null,
                 selectedFileerror: '',
             })
+            console.log(this.state.description.replace(/\\\//g, "/"));
             if (this.state.name && this.state.description && this.state.package && this.state.selectedFile && this.state.customSelect) {
                 const obj = {
                     name: this.state.name,
                     status: this.state.status,
-                    description: this.state.description,
+                    description: this.state.description.replace(/\\\//g, "/"),
                     package: this.state.package,
                     icon: this.state.selectedFile,
                     type: this.state.customSelect,
