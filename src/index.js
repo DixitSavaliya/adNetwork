@@ -66,6 +66,7 @@ import Login from './redux/containers/login';
 import AdminLogin from './redux/containers/adminlogin'
 import Register from './redux/containers/register'
 import ForgotPassword from './redux/containers/forgot'
+// import PageNotFound from './views/Pages/Page404/Page404';
 
 // function requireLogin() {
 //     console.log("msg")

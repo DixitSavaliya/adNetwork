@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {Container, Row, Col, Button, Input, InputGroupAddon, InputGroup, InputGroupButton} from 'reactstrap';
+import React, { Component } from 'react';
+import { Container, Row, Col, Button, Input, InputGroupAddon, InputGroup, InputGroupButton } from 'reactstrap';
+import Link from 'react-router-dom/Link';
 
 class Page404 extends Component {
   render() {
@@ -14,11 +15,14 @@ class Page404 extends Component {
                 <p className="text-muted float-left">The page you are looking for was not found.</p>
               </div>
               <InputGroup className="input-prepend">
-                <InputGroupAddon><i className="fa fa-search"></i></InputGroupAddon>
-                <Input size="16" type="text" placeholder="What are you looking for?"/>
-                <InputGroupButton>
-                  <Button color="info">Search</Button>
-                </InputGroupButton>
+                <Link to='/dashboard'>
+                <Button
+                  color="primary"
+                  className="mb-2"
+                >
+                  Go Back
+                </Button>
+                </Link>
               </InputGroup>
             </Col>
           </Row>

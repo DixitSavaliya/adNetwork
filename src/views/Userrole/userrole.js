@@ -46,7 +46,7 @@ class UserRole extends Component {
             delete: false,
             updateRoleBtn: false,
             deletedata: '',
-            isDisplay:false
+            isDisplay: false
         }
         this.userRoleData = this.userRoleData.bind(this);
         this.UpdateUserRoleData = this.UpdateUserRoleData.bind(this);
@@ -106,9 +106,9 @@ class UserRole extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userrole: this.state.userrole = '',
+
                 userroleerror: this.state.userroleerror = '',
-                status: this.state.status = '',
+
                 statuserror: this.state.statuserror = '',
                 statuscheck1: this.state.statuscheck1 = true
             })
@@ -118,7 +118,18 @@ class UserRole extends Component {
                     status: this.state.status
                 }
                 this.props.addUserRole(data).then((res) => {
-                    EventEmitter.dispatch('role_added', 1);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('role_added', 1);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 });
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
@@ -137,9 +148,9 @@ class UserRole extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userrole: this.state.userrole = '',
+
                 userroleerror: this.state.userroleerror = '',
-                status: this.state.status = '',
+
                 statuserror: this.state.statuserror = '',
                 statuscheck1: this.state.statuscheck1 = true
             })
@@ -153,10 +164,21 @@ class UserRole extends Component {
                     id: this.state.roleId
                 }
                 this.props.updateRole(obj).then((res) => {
-                    EventEmitter.dispatch('role_updated', 1);
-                    this.setState({
-                        updateRoleBtn: this.state.updateRoleBtn = false
-                    })
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('role_updated', 1);
+                        this.setState({
+                            updateRoleBtn: this.state.updateRoleBtn = false
+                        })
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
@@ -181,10 +203,23 @@ class UserRole extends Component {
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteRoleData(role);
-                setTimeout(() => {
-                    this.userRoleData();
-                }, 1200)
+                this.props.deleteRoleData(role).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        setTimeout(() => {
+                            this.userRoleData();
+                        }, 1200)
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                });
+               
             }
         })
     }
@@ -200,7 +235,7 @@ class UserRole extends Component {
 
     render() {
         const { auth, roleCountData, RolePGData, deleteRoleData } = this.props;
-        console.log("props", this.props);
+
         this.state.searchData = this.props.auth.searchdata;
         // EventEmitter.dispatch('searchData', this.state.searchData);
         const { fetching, error } = auth;
@@ -308,62 +343,62 @@ class UserRole extends Component {
                                     {
                                         this.state.isDisplay == true ? (
                                             <Row>
-                                            <Col xs="4">
-    
-                                                <Button
-                                                    type="button"
-                                                    size="md"
-                                                    color="danger"
-                                                    onClick={this.deleteAllUserRoleData}
-                                                    disabled={!this.state.delete}
-                                                >
-                                                    Delete
+                                                <Col xs="4">
+
+                                                    <Button
+                                                        type="button"
+                                                        size="md"
+                                                        color="danger"
+                                                        onClick={this.deleteAllUserRoleData}
+                                                        disabled={!this.state.delete}
+                                                    >
+                                                        Delete
                                                      </Button>
-    
-                                            </Col>
-                                            <Col xs="8">
-                                                <Row>
-                                                    <Col xs="8">
-                                                        <input
-                                                            className="form-control"
-                                                            type="text"
-                                                            placeholder="Search"
-                                                            aria-label="Search"
-                                                            onKeyUp={this.searchUserRoleDataKeyUp}
-                                                        />
-                                                    </Col>
-                                                    <Col xs="4">
-                                                        <div className="left">
-                                                            <Input
-                                                                type="select"
-                                                                id="exampleCustomSelect"
-                                                                name="customSelect"
-                                                                onChange={this.handleChangeEvent}
-                                                            >
-                                                                <option value="5">5</option>
-                                                                <option value="10">10</option>
-                                                            </Input>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                {/* <div className="search">
+
+                                                </Col>
+                                                <Col xs="8">
+                                                    <Row>
+                                                        <Col xs="8">
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                placeholder="Search"
+                                                                aria-label="Search"
+                                                                onKeyUp={this.searchUserRoleDataKeyUp}
+                                                            />
+                                                        </Col>
+                                                        <Col xs="4">
+                                                            <div className="left">
+                                                                <Input
+                                                                    type="select"
+                                                                    id="exampleCustomSelect"
+                                                                    name="customSelect"
+                                                                    onChange={this.handleChangeEvent}
+                                                                >
+                                                                    <option value="5">5</option>
+                                                                    <option value="10">10</option>
+                                                                </Input>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    {/* <div className="search">
     
     
                                                 </div> */}
-                                                {/* <div className="left">
+                                                    {/* <div className="left">
                                                    
                                                    
                                                 </div> */}
-                                            </Col>
-                                            {/* <Col xs="3">
+                                                </Col>
+                                                {/* <Col xs="3">
                                                 
                                             </Col> */}
-                                        </Row>  
+                                            </Row>
                                         ) : (
-                                            null
-                                        )
+                                                null
+                                            )
                                     }
-                                  
+
                                 </div>
                                 <br />
                                 <TableRole auth={auth} roleCountData={roleCountData} RolePGData={RolePGData} deleteRoleData={deleteRoleData} />

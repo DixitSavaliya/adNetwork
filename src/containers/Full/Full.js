@@ -25,6 +25,7 @@ import CustomAds from '../../redux/containers/customads';
 import Notifications from '../../redux/containers/notification';
 import ListNotifications from '../../redux/containers/listnotifications';
 import ViewNotifications from '../../redux/containers/viewnotifications';
+import PageNotFound from '../../views/Pages/Page404/Page404';
 
 // Components
 import Buttons from '../../views/Components/Buttons/';
@@ -86,6 +87,13 @@ class Full extends Component {
                   <Route path="/notifications" name="Notifications" component={Notifications} />
                   <Route path="/list-notifications" name="ListNotifications" component={ListNotifications} />
                   <Route path="/view-notification/:id" name="ViewNotifications" component={ViewNotifications} />
+                  {
+                    this.props.history.location.pathname != '/' ? (
+                      <Route path="*" component={PageNotFound}/>
+                    ) : (
+                      ""
+                    )
+                  }
                   <Redirect from="/" to="/dashboard" />
                 </Switch>
               </Router>

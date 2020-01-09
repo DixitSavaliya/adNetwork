@@ -98,7 +98,6 @@ const auth = (state = initialState, action) => {
 
         //UPDATE PROFILE DATA   
         case ACTION.UPDATEPROFILE:
-            console.log("case ACTION.UPDATEPROFILE: called", action)
             // Auth.authenticateUser(action.data);
             return {
                 ...state,
@@ -135,7 +134,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REMOVEUSERIMAGE_SUCCESS:
-            Swal.fire("User Image Removed Successfully!", "", "success");
+           
             return {
                 ...state,
                 fetching: false
@@ -157,7 +156,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATE_PROFILE_SUCCESS:
-            Swal.fire("Update Profile Successfully!", "", "success");
+           
             return {
                 ...state,
                 fetching: false,
@@ -222,7 +221,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REGISTER_USERROLE_SUCCESS:
-            Swal.fire("UserRole Added Successfully!", "", "success");
+           
             return {
                 ...state,
                 fetching: false,
@@ -288,7 +287,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.DELETEUSERROLE_SUCCESS:
-            Swal.fire("UserRole Deleted Successfully!", "", "success");
+         
             return {
                 ...state,
                 fetching: false,
@@ -311,7 +310,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATEUSERROLE_SUCCESS:
-            Swal.fire("UserRole Updated Successfully!", "", "success");
+          
             return {
                 ...state,
                 fetching: false,
@@ -356,7 +355,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REGISTER_USERRIGHT_SUCCESS:
-            Swal.fire("UserRight Added Successfully!", "", "success");
+          
             return {
                 ...state,
                 fetching: false,
@@ -422,7 +421,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.DELETEUSERRIGHT_SUCCESS:
-            Swal.fire("UserRight Deleted Successfully!", "", "success");
+           
             return {
                 ...state,
                 fetching: false,
@@ -444,7 +443,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATEUSERRIGHT_SUCCESS:
-            Swal.fire("UserRole Updated Successfully!", "", "success");
+          
             return {
                 ...state,
                 fetching: false,
@@ -553,7 +552,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATEUSERROLETORIGHT_SUCCESS:
-            Swal.fire("Rights Allocated Successfully!", "", "success");
+         
             return {
                 ...state,
                 fetching: false,
@@ -575,8 +574,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.CREATEAPP_SUCCESS:
-            Swal.fire("App Created Successfully!", "", "success");
-            window.location.href = "/#/ListApp"
             return {
                 ...state,
                 fetching: false
@@ -666,8 +663,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.UPDATEAPP_SUCCESS:
-            Swal.fire("App Updated Successfully!", "", "success");
-            window.location.href = "/#/ListApp"
             return {
                 ...state,
                 fetching: false,
@@ -690,7 +685,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.DELETEAPP_SUCCESS:
-            Swal.fire("App InActiveted Successfully!", "", "success");
             return {
                 ...state,
                 fetching: false,
@@ -776,7 +770,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.INSERTAPPMONETIZATION_SUCCESS:
-            Swal.fire("AppMonetization Inserted Successfully!", "", "success");
+         
             return {
                 ...state,
                 fetching: false
@@ -834,7 +828,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REMOVEAPPMONETIZATION_SUCCESS:
-            Swal.fire("AppMonetization Removed Successfully!", "", "success");
+      
             return {
                 ...state,
                 fetching: false
@@ -914,7 +908,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.INSERTCUSTOMADS_SUCCESS:
-            Swal.fire("Custom Ads Inserted Successfully!", "", "success");
             return {
                 ...state,
                 fetching: false
@@ -934,7 +927,7 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REMOVECUSTOMADS_SUCCESS:
-            Swal.fire("Custom Ads Removed Successfully!", "", "success");
+          
             return {
                 ...state,
                 fetching: false
@@ -1014,7 +1007,6 @@ const auth = (state = initialState, action) => {
                 fetching: true,
             };
         case ACTION.REMOVENOTIFICATION_SUCCESS:
-            Swal.fire("Notification Cancelled Successfully!", "", "success");
             return {
                 ...state,
                 fetching: false

@@ -6,6 +6,7 @@ import { CALL_API } from '../../redux/middleware/api';
 import * as ACTION from '../../redux/constants/auth';
 import './profile.css';
 import { EventEmitter } from '../../event';
+import Swal from 'sweetalert2';
 import {
   Row,
   Col,
@@ -41,7 +42,8 @@ class Profile extends Component {
       last_name: '',
       mobile_no: '',
       email_id: '',
-      selectedFile: null
+      selectedFile: null,
+      filename: ''
     }
     this.UpdateProfile = this.UpdateProfile.bind(this);
     this.removeIcon = this.removeIcon.bind(this);
@@ -59,8 +61,19 @@ class Profile extends Component {
       id: this.props.auth.auth_data.id,
       username: this.props.auth.auth_data.username
     }
-    console.log("data", data)
-    this.props.updateprofile(data);
+    this.props.updateprofile(data).then((res) => {
+      if (res.response.status == 1) {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'success'
+        });
+      } else {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'warning'
+        });
+      }
+    })
   }
 
   onChangeHandler(event) {
@@ -73,12 +86,10 @@ class Profile extends Component {
     data.append('user_id', this.props.auth.auth_data.id)
     axios.post(REMOTE_URL + "User/uploadUserImage", data)
       .then(response => {
-        console.log("uploadUserImage response === > ", response);
         this.setState({
           selectedFile: this.state.selectedFile = response.data.data
         })
         // _this.props.updateProfileData().then((res) =>{
-        //   console.log("res",res);
         // })
         EventEmitter.dispatch('updateImage', this.state.selectedFile);
       }).catch(error => {
@@ -86,35 +97,80 @@ class Profile extends Component {
       });
   }
 
+  onURLChangeHandler(event) {
+    let auth = this.props.auth.auth_data;
+    axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
+    axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
+    let _this = this;
+    let data = {
+      data: {
+        module_name: 'User',
+        primary_id: this.props.auth.auth_data.id,
+      },
+      imageURL: this.state.filename
+    }
+
+    if(this.state.imageURL) {
+      axios.post(REMOTE_URL + "AP/uploadImageByURL", data)
+          .then(response => {
+              if (response.data.status == 1) {
+                  Swal.fire({
+                      text: response.data.message,
+                      icon: 'success'
+                  });
+                  this.setState({
+                      selectedFile: this.state.selectedFile = response.data.data
+                  })
+              } else {
+                  Swal.fire({
+                      text: response.data.message,
+                      icon: 'warning'
+                  });
+              }
+              // _this.props.updateProfileData().then((res) =>{
+              // })
+          }).catch(error => {
+              console.log("error", error);
+          });
+  } else {
+      Swal.fire("PLease Enter URL!", "", "warning");
+  }
+  }
+
 
   removeIcon(data) {
+    console.log("props",this.props)
     const obj = {
       id: this.props.auth.auth_data.id,
-      image_path: data
+      image_path: this.props.auth.user.avatar
     }
     this.props.removeImage(obj).then((res) => {
-      console.log("removeImage res", this.props);
-
-      this.props.profile.avatar = "";
-      this.setState({
-        selectedFile:this.state.selectedFile = null
-      })
-      console.log("this.selectedfile",this.state.selectedFile);
-      EventEmitter.dispatch('removeImage', this.state.selectedFile);
+      if (res.response.status == 1) {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'success'
+        });
+        this.props.profile.avatar = "";
+        this.setState({
+          selectedFile: this.state.selectedFile = null
+        })
+        EventEmitter.dispatch('removeImage', this.state.selectedFile);
+      } else {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'warning'
+        });
+      }
     })
   }
 
 
   render() {
-    console.log("Profile view this.props", this.props)
     const { auth, profile } = this.props;
     this.state.first_name = this.props.profile.first_name;
     this.state.last_name = this.props.profile.last_name;
     this.state.mobile_no = this.props.profile.mobile_no;
     this.state.email_id = this.props.profile.email_id;
-
-    //const { user } = this.props.auth.user;
-    const { fetching, error } = auth;
 
     return (
       <div className="animated fadeIn">
@@ -126,7 +182,7 @@ class Profile extends Component {
               </CardHeader>
               <CardBody>
                 <Row>
-                  <Col xs="6">
+                  <Col xs="12">
                     <FormGroup className="img-upload">
                       {
                         this.state.selectedFile != null ? (
@@ -151,7 +207,22 @@ class Profile extends Component {
                                 ) : (
                                     <div>
                                       <p>Select File:</p>
-                                      <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
+                                      <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                      <span style={{ marginLeft: '20px' }}> <b>Or</b> Enter URL</span>
+                                      <Input
+                                        type="url"
+                                        id="image"
+                                        name="filename"
+                                        className="form-control"
+                                        defaultValue={this.state.filename}
+                                        onChange={(e) =>
+                                          this.state.filename = e.target.value
+                                        }
+                                        style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                        placeholder="Please Enter URL"
+                                        required
+                                      />
+                                      <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
                                       <Input
                                         id="file-input"
                                         type="file"
@@ -159,6 +230,7 @@ class Profile extends Component {
                                         name="file"
                                         onChange={this.onChangeHandler.bind(this)}
                                       />
+
                                     </div>
                                   )
                               }

@@ -145,21 +145,35 @@ export default class TableApp extends React.Component {
         var array = [];
         array.push(obj);
         const data1 = {
-            data: array
+            data: array,
+            user_id:this.props.auth.auth_data.id
         }
         Swal.fire({
             title: 'Are you sure?',
-            text: 'Are you sure you want to delete?',
+            text: 'Are you sure you want to inactive?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Yes, inactive it!',
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteApp(data1);
-                setTimeout(() => {
-                    this.getApplicationPageData();
-                }, 1200)
+                this.props.deleteApp(data1).then((res) => {
+                    if (res.response.status == 1) {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'success'
+                    });
+                    setTimeout(() => {
+                        this.getApplicationPageData();
+                    }, 1200)
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+                });
+              
             }
         })
     }
@@ -222,7 +236,6 @@ export default class TableApp extends React.Component {
     appData(data) {
         const id = data.id;
         this.props.history.push("/viewapp/" + id)
-        // window.location.href = "/#/viewapp/" + id;
     }
 
 
@@ -263,7 +276,6 @@ export default class TableApp extends React.Component {
     }
 
     render() {
-        console.log("props", this.props);
         let auth = this.props.auth.auth_data;
         var pageNumbers = [];
         for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {

@@ -62,28 +62,20 @@ class Notifications extends Component {
             daily: false,
             weekly: false,
             monthly: false,
-            MonthlyScedulestatuscheck1: false,
-            MonthlyShedulestatus: '',
-            OnceScedulestatuscheck1: true,
-            OnceShedulestatus: 1,
-            DailyScedulestatuscheck1: false,
-            DailyShedulestatus: '',
-            WeeklyScedulestatuscheck1: false,
-            WeeklyShedulestatus: '',
             time_type: 1,
-            sheduleType: 1
-
+            sheduleType: 1,
+            inputProps: {
+                placeholder: "Please Select Date & Time"
+            },
+            filename:''
         }
+
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.sendNotifications = this.sendNotifications.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.handleSheduleType = this.handleSheduleType.bind(this);
-        // this.handleChangeMonthlySheduleStatus = this.handleChangeMonthlySheduleStatus.bind(this);
-        // this.handleChangeOnceSheduleStatus = this.handleChangeOnceSheduleStatus.bind(this);
-        // this.handleChangeDailySheduleStatus = this.handleChangeDailySheduleStatus.bind(this);
-        // this.handleChangeWeeklySheduleStatus= this.handleChangeWeeklySheduleStatus.bind(this);
     }
 
     componentDidMount() {
@@ -232,17 +224,70 @@ class Notifications extends Component {
             });
     }
 
+    onURLChangeHandler(event) {
+        let auth = this.props.auth.auth_data;
+        axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
+        axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
+        let _this = this;
+        let data = {
+            data:{
+              module_name: 'Notification',
+              primary_id: "",
+            },
+            imageURL:this.state.filename
+        }
+
+        if(this.state.imageURL) {
+            axios.post(REMOTE_URL + "AP/uploadImageByURL", data)
+                .then(response => {
+                    if (response.data.status == 1) {
+                        Swal.fire({
+                            text: response.data.message,
+                            icon: 'success'
+                        });
+                        this.setState({
+                            selectedFile: this.state.selectedFile = response.data.data
+                        })
+                    } else {
+                        Swal.fire({
+                            text: response.data.message,
+                            icon: 'warning'
+                        });
+                    }
+                    // _this.props.updateProfileData().then((res) =>{
+                    // })
+                }).catch(error => {
+                    console.log("error", error);
+                });
+        } else {
+            Swal.fire("PLease Enter URL!", "", "warning");
+        }
+    }
+
     removeIcon(data) {
         const obj = {
-            id: this.props.auth.auth_data.id,
-            image_path: data
+          id: this.props.auth.auth_data.id,
+          image_path: data
         }
         this.props.removeImage(obj).then((res) => {
+          if (res.response.status == 1) {
+            Swal.fire({
+              text: res.response.message,
+              icon: 'success'
+            });
+          
             this.setState({
-                selectedFile: this.state.selectedFile = null
+              selectedFile: this.state.selectedFile = null
             })
+         
+          } else {
+            Swal.fire({
+              text: res.response.message,
+              icon: 'warning'
+            });
+          }
         })
-    }
+      }
 
 
     validate() {
@@ -300,22 +345,13 @@ class Notifications extends Component {
                     }
                 }
             }
-            console.log("obj", obj);
             this.props.sendNotification(obj).then((res) => {
-                console.log("res", res);
                 if (res.response.status == 1) {
                     Swal.fire({
                         text: res.response.message,
                         icon: 'success'
                     });
-                    this.setState({
-                        title: this.state.title = null,
-                        url: this.state.url = null,
-                        message: this.state.message = null,
-                        selectedFile: this.state.selectedFile = null,
-                        click_action: this.state.click_action = null,
-                        isVisible: this.state.isVisible = false
-                    })
+                    this.props.history.push(this.props.from || { pathname: '/list-notifications' });
                 } else {
                     Swal.fire({
                         text: res.response.message,
@@ -443,7 +479,22 @@ class Notifications extends Component {
                                                 ) : (
                                                         <div>
                                                             <p>Select File:</p>
-                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
+                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                                            <span style={{ marginLeft: '20px' }}> <b>Or</b> Enter URL</span>
+                                                            <Input
+                                                                type="url"
+                                                                id="image"
+                                                                name="filename"
+                                                                className="form-control"
+                                                                defaultValue={this.state.filename}
+                                                                onChange={(e) =>
+                                                                  this.state.filename = e.target.value
+                                                                }
+                                                                style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                placeholder="Please Enter URL"
+                                                                required
+                                                            />
+                                                            <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
                                                             <Input
                                                                 id="file-input"
                                                                 type="file"
@@ -451,6 +502,7 @@ class Notifications extends Component {
                                                                 name="file"
                                                                 onChange={this.onChangeHandler.bind(this)}
                                                             />
+
                                                         </div>
                                                     )
                                             }
@@ -555,10 +607,11 @@ class Notifications extends Component {
                                                         timeFormat="h:mm A"
                                                         onChange={this.onChange}
                                                         utc={false}
+                                                        inputProps={this.state.inputProps}
                                                     />
                                                 </Col>
                                             </Row>
-                                            <Row style={{ marginTop: '10px' }}>
+                                            {/* <Row style={{ marginTop: '10px' }}>
                                                 <Col xs="6">
                                                     <Label><b>Select shedule Time_Type:</b></Label>
                                                     <br />
@@ -624,7 +677,7 @@ class Notifications extends Component {
                                              </Label>
                                                     </FormGroup>
                                                 </Col>
-                                            </Row>
+                                            </Row> */}
                                         </div>
                                     ) : (
                                             null

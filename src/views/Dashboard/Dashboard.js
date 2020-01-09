@@ -434,6 +434,13 @@ class Dashboard extends Component {
       <div className="animated fadeIn">
         <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
         <h5>Welcome To Dashboard</h5>
+        {
+          this.props.auth.auth_data.user_group == "publisher" ? (
+            <p>Your Publisher ID is: {this.props.auth.auth_data.id}</p>
+          ) : (
+              ""
+            )
+        }
         {/* <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-primary">

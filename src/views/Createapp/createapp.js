@@ -65,7 +65,8 @@ class CreateApp extends React.Component {
             customSelectName: '',
             app_id: '',
             updateRightBtn: false,
-            App: []
+            App: [],
+            filename: ''
         }
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -212,6 +213,46 @@ class CreateApp extends React.Component {
             });
     }
 
+    onURLChangeHandler(event) {
+        let auth = this.props.auth.auth_data;
+        axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
+        axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
+        let _this = this;
+        let data = {
+            data: {
+                module_name: 'Application',
+                primary_id: "",
+            },
+            imageURL: this.state.filename
+        }
+
+       if(this.state.imageURL) {
+            axios.post(REMOTE_URL + "AP/uploadImageByURL", data)
+                .then(response => {
+                    if (response.data.status == 1) {
+                        Swal.fire({
+                            text: response.data.message,
+                            icon: 'success'
+                        });
+                        this.setState({
+                            selectedFile: this.state.selectedFile = response.data.data
+                        })
+                    } else {
+                        Swal.fire({
+                            text: response.data.message,
+                            icon: 'warning'
+                        });
+                    }
+                    // _this.props.updateProfileData().then((res) =>{
+                    // })
+                }).catch(error => {
+                    console.log("error", error);
+                });
+        } else {
+            Swal.fire("PLease Enter URL!", "", "warning");
+    }
+}
+
     handleChangeStatus(event) {
         this.setState({
             statuscheck1: this.state.statuscheck1 = event.target.checked,
@@ -229,6 +270,31 @@ class CreateApp extends React.Component {
         })
     }
 
+    removeIcon(data) {
+        const obj = {
+            id: this.props.auth.auth_data.id,
+            image_path: data
+        }
+        this.props.removeImage(obj).then((res) => {
+            if (res.response.status == 1) {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'success'
+                });
+
+                this.setState({
+                    selectedFile: this.state.selectedFile = null
+                })
+
+            } else {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'warning'
+                });
+            }
+        })
+    }
+
     CreateApp() {
         const isValid = this.validate();
         if (isValid) {
@@ -239,7 +305,7 @@ class CreateApp extends React.Component {
                 customSelecterror: '',
                 selectedFileerror: '',
             })
-         
+
             if (this.state.name && this.state.description && this.state.package && this.state.selectedFile && this.state.customSelect) {
                 const obj = {
                     name: this.state.name,
@@ -253,7 +319,20 @@ class CreateApp extends React.Component {
                     user_group: this.props.auth.auth_data.user_group
 
                 }
-                this.props.createApp(obj);
+                this.props.createApp(obj).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        this.props.history.push(this.props.from || { pathname: '/listapp' });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                });
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
             }
@@ -283,7 +362,22 @@ class CreateApp extends React.Component {
                     user_id: this.props.auth.auth_data.id,
                     user_group: this.props.auth.auth_data.user_group
                 }
-                this.props.editApp(obj);
+                this.props.editApp(obj).then((res) => {
+                   
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    
+                        this.props.history.push(this.props.from || { pathname: '/listapp' });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                });
             } else {
                 Swal.fire("PLease Enter Field First!", "", "warning");
             }
@@ -341,7 +435,7 @@ class CreateApp extends React.Component {
                         <Card>
                             <CardHeader>
                                 <strong>CreateApp</strong>
-                               
+
                             </CardHeader>
                             <CardBody>
                                 <Row>
@@ -454,6 +548,53 @@ class CreateApp extends React.Component {
                                     <Col xs="6">
                                         <FormGroup className="img-upload">
                                             {
+                                                this.state.selectedFile != null ? (
+                                                    <div>
+                                                        {
+                                                            this.state.selectedFile ? (
+                                                                <div>
+                                                                    <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
+                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
+                                                                </div>
+                                                            ) : (null)
+                                                        }
+                                                    </div>
+                                                ) : (
+                                                        <div>
+                                                            <p>Select File:</p>
+                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                                            <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
+                                                            <Input
+                                                                type="url"
+                                                                id="image"
+                                                                name="filename"
+                                                                className="form-control"
+                                                                defaultValue={this.state.filename}
+                                                                onChange={(e) =>
+                                                                    this.state.filename = e.target.value
+                                                                }
+                                                                style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                placeholder="Please Enter URL"
+                                                                required
+                                                            />
+                                                            <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
+                                                            <Input
+                                                                id="file-input"
+                                                                type="file"
+                                                                className="form-control"
+                                                                name="file"
+                                                                onChange={this.onChangeHandler.bind(this)}
+                                                            />
+
+                                                        </div>
+                                                    )
+                                            }
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.selectedFileerror}
+                                            </div>
+                                        </FormGroup>
+                                        {/* <FormGroup className="img-upload">
+                                            {
                                                 this.state.selectedFile ? (
                                                     <div>
                                                         <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
@@ -473,7 +614,7 @@ class CreateApp extends React.Component {
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.selectedFileerror}
                                             </div>
-                                        </FormGroup>
+                                        </FormGroup> */}
                                     </Col>
 
                                     <Col xs="6">
@@ -523,7 +664,7 @@ class CreateApp extends React.Component {
                                 <Row>
                                     <Col xs="6">
                                         <Label>
-                                            Switch:
+                                            IsLive:
                                         </Label>
                                         <br />
                                         <Switch onChange={this.handleChange} checked={this.state.checked} />

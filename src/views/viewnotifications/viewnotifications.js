@@ -52,16 +52,12 @@ class ViewNotifications extends React.Component {
                 user_id: this.props.auth.auth_data.id
             }
             this.props.getViewNotificationsDetailsById(obj).then((res) => {
-                console.log("getViewNotificationsDetailsById", res);
                 this.setState({
                     App: this.state.App = res.response.data
                 })
-                console.log("App", this.state.App)
-                console.log("data[0].time_type == 1",this.state.App[0].time_type)
                 this.setState({
                     appviewArray: this.state.appviewArray = this.state.App[0].app_list
                 })
-                console.log("appviewArray", this.state.appviewArray)
             })
         }
     }
@@ -70,148 +66,252 @@ class ViewNotifications extends React.Component {
     render() {
         return (
             <div>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Link to="/list-notifications">
-                            <Button className="mb-2 mr-2" color="primary">
-                                Go back
-                                </Button>
-                        </Link>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Card className="main-card mb-3">
-                            <CardHeader>
-                                <CardTitle
-                                    className="font"
-                                >
-                                    Notification Detail
-                                            </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                {
-                                    this.state.App.length > 0 ? (
-                                        <Row>
-                                            <Col md="4">
-                                                <div>
-                                                    <h5>Title:</h5>
-                                                    <p className="blue">{this.state.App[0].title}</p>
-                                                </div>
-
-                                            </Col>
-                                            <Col md="4">
-                                                <div >
-                                                    <h5>Message:</h5>
-                                                    <p className="blue">{this.state.App[0].message}</p>
-                                                </div>
-
-                                            </Col>
-                                            <Col md="4">
-
-                                                <div>
-                                                    <h5 >URL:</h5>
-                                                    <a target="_blank" href={this.state.App[0].data.notification.url} aria-current="page">
-                                                        <p className="blue">{this.state.App[0].data.notification.url}</p>
-                                                    </a>
-                                                </div>
-
-                                            </Col>
-                                            <Col md="4">
-
-                                                <div>
-                                                    <h5>Icon:</h5>
-                                                    <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
-                                                </div>
-
-                                            </Col>
-                                            <Col md="4" style={{ marginTop: '5px' }}>
-                                                <div>
-                                                    <h5>Type:</h5>
-                                                    <div className="btn_size">
-                                                        {
-                                                            this.state.App[0].type == 1 ? (
-                                                                <div>
-                                                                    <span className="badge badge-success">{this.state.App[0].type == 1 ? 'Sheduled' : ''}</span>
-                                                                    <p><b>Sheduled Time:</b> {this.state.App[0].time}</p>
-                                                                    <p><b>Sheduled Type:</b> {this.state.App[0].time_type == 1 ? 'Once' : (this.state.App[0].time_type == 2 ? 'Daily' : (this.state.App[0].time_type == 3 ? 'Weekly' : (this.state.App[0].time_type == 4 ? 'Monthly' : null)) )}</p>
-                                                                </div>
-                                                            ) : (
-                                                                    <span className="badge badge-danger">{this.state.App[0].type == 0 ? 'Immediate' : ''}</span>
-                                                                )
-                                                        }
-                                                    </div>
-                                                </div>
-
-                                            </Col>
-                                            <Col md="4">
-
-                                                <div>
-                                                    <h5>Click_Action:</h5>
-                                                    <a target="_blank" href={this.state.App[0].data.notification.click_action} aria-current="page">
-                                                        <p className="blue">{this.state.App[0].data.notification.click_action}</p>
-                                                    </a>
-                                                </div>
-
-                                            </Col>
-
-                                        </Row>
-                                    ) : (
-                                            null
-                                        )
-                                }
-
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Card className="main-card mb-3">
-                            <CardHeader>
-                                <CardTitle
-                                    className="font"
-                                >
-                                    Notification App List
-                                </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                {
-                                    this.state.appviewArray.length > 0 ? (
-                                        <Row>
+                {
+                    this.state.appviewArray != null ? (
+                        <div>
+                            <Row>
+                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                    <Link to="/list-notifications">
+                                        <Button className="mb-2 mr-2" color="primary">
+                                            Go back
+                                    </Button>
+                                    </Link>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                    <Card className="main-card mb-3">
+                                        <CardHeader>
+                                            <CardTitle
+                                                className="font"
+                                            >
+                                                Notification Detail
+                                                </CardTitle>
+                                        </CardHeader>
+                                        <CardBody>
                                             {
-                                                this.state.appviewArray.map((data, index) =>
-                                                    <Col md="4" key={index}>
-                                                        <Form>
-                                                            <Card className="shadow_card">
+                                                this.state.App.length > 0 ? (
+                                                    <Row>
+                                                        <Col md="4">
+                                                            <div>
+                                                                <h5>Title:</h5>
+                                                                <p className="blue">{this.state.App[0].title}</p>
+                                                            </div>
 
-                                                                <CardBody className="padding">
-                                                                    <Row>
-                                                                        <Col md="2">
-                                                                            <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                        </Col>
-                                                                        <Col md="10" className="content">
-                                                                            <div className="app_detail">
-                                                                                <h6>Name: <p>{data.name}</p></h6>
-                                                                                <h6>Package: <p>{data.package}</p></h6>
+                                                        </Col>
+                                                        <Col md="4">
+                                                            <div >
+                                                                <h5>Message:</h5>
+                                                                <p className="blue">{this.state.App[0].message}</p>
+                                                            </div>
+
+                                                        </Col>
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5 >URL:</h5>
+
+                                                                <p className="blue">{this.state.App[0].data.notification.url}</p>
+
+                                                            </div>
+
+                                                        </Col>
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5>Icon:</h5>
+                                                                <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                            </div>
+
+                                                        </Col>
+                                                        <Col md="4" style={{ marginTop: '5px' }}>
+                                                            <div>
+                                                                <h5>Type:</h5>
+                                                                <div className="btn_size">
+                                                                    {
+                                                                        this.state.App[0].type == 1 ? (
+                                                                            <div>
+                                                                                <span className="badge badge-success">{this.state.App[0].type == 1 ? 'Sheduled' : ''}</span>
+                                                                                <p><b>Sheduled Time:</b> {this.state.App[0].time}</p>
+                                                                                <p><b>Sheduled Type:</b> {this.state.App[0].time_type == 1 ? 'Once' : (this.state.App[0].time_type == 2 ? 'Daily' : (this.state.App[0].time_type == 3 ? 'Weekly' : (this.state.App[0].time_type == 4 ? 'Monthly' : null)))}</p>
                                                                             </div>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Form>
-                                                    </Col>
-                                                )
+                                                                        ) : (
+                                                                                <span className="badge badge-danger">{this.state.App[0].type == 0 ? 'Immediate' : ''}</span>
+                                                                            )
+                                                                    }
+                                                                </div>
+                                                            </div>
+
+                                                        </Col>
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5>Click_Action:</h5>
+
+                                                                <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+
+                                                            </div>
+
+                                                        </Col>
+
+                                                    </Row>
+                                                ) : (
+                                                        null
+                                                    )
                                             }
-                                        </Row>
-                                    ) : (
-                                            null
-                                        )
-                                }
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                    <Card className="main-card mb-3">
+                                        <CardHeader>
+                                            <CardTitle
+                                                className="font"
+                                            >
+                                                Notification App List
+                                    </CardTitle>
+                                        </CardHeader>
+                                        <CardBody>
+                                            {
+                                                this.state.appviewArray.length > 0 ? (
+                                                    <Row>
+                                                        {
+                                                            this.state.appviewArray.map((data, index) =>
+                                                                <Col md="4" key={index}>
+                                                                    <Form>
+                                                                        <Card className="shadow_card">
+
+                                                                            <CardBody className="padding">
+                                                                                <Row>
+                                                                                    <Col md="2">
+                                                                                        <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                                                    </Col>
+                                                                                    <Col md="10" className="content">
+                                                                                        <div className="app_detail">
+                                                                                            <h6>Name: <p>{data.name}</p></h6>
+                                                                                            <h6>Package: <p>{data.package}</p></h6>
+                                                                                        </div>
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </CardBody>
+                                                                        </Card>
+                                                                    </Form>
+                                                                </Col>
+                                                            )
+                                                        }
+                                                    </Row>
+                                                ) : (
+                                                        null
+                                                    )
+                                            }
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </div>
+                    ) : (
+                            <div>
+                                <Row>
+                                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                        <Link to="/list-notifications">
+                                            <Button className="mb-2 mr-2" color="primary">
+                                                Go back
+                                    </Button>
+                                        </Link>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                        <Card className="main-card mb-3">
+                                            <CardHeader>
+                                                <CardTitle
+                                                    className="font"
+                                                >
+                                                    Notification Detail
+                                                </CardTitle>
+                                            </CardHeader>
+                                            <CardBody>
+                                                {
+                                                    this.state.App.length > 0 ? (
+                                                        <Row>
+                                                            <Col md="4">
+                                                                <div>
+                                                                    <h5>Title:</h5>
+                                                                    <p className="blue">{this.state.App[0].title}</p>
+                                                                </div>
+
+                                                            </Col>
+                                                            <Col md="4">
+                                                                <div >
+                                                                    <h5>Message:</h5>
+                                                                    <p className="blue">{this.state.App[0].message}</p>
+                                                                </div>
+
+                                                            </Col>
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5 >URL:</h5>
+                                                                    
+                                                                        <p className="blue">{this.state.App[0].data.notification.url}</p>
+                                                                 
+                                                                </div>
+
+                                                            </Col>
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5>Icon:</h5>
+                                                                    <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                </div>
+
+                                                            </Col>
+                                                            <Col md="4" style={{ marginTop: '5px' }}>
+                                                                <div>
+                                                                    <h5>Type:</h5>
+                                                                    <div className="btn_size">
+                                                                        {
+                                                                            this.state.App[0].type == 1 ? (
+                                                                                <div>
+                                                                                    <span className="badge badge-success">{this.state.App[0].type == 1 ? 'Sheduled' : ''}</span>
+                                                                                    <p><b>Sheduled Time:</b> {this.state.App[0].time}</p>
+                                                                                    <p><b>Sheduled Type:</b> {this.state.App[0].time_type == 1 ? 'Once' : (this.state.App[0].time_type == 2 ? 'Daily' : (this.state.App[0].time_type == 3 ? 'Weekly' : (this.state.App[0].time_type == 4 ? 'Monthly' : null)))}</p>
+                                                                                </div>
+                                                                            ) : (
+                                                                                    <span className="badge badge-danger">{this.state.App[0].type == 0 ? 'Immediate' : ''}</span>
+                                                                                )
+                                                                        }
+                                                                    </div>
+                                                                </div>
+
+                                                            </Col>
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5>Click_Action:</h5>
+                                                                  
+                                                                        <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+                                                                  
+                                                                </div>
+
+                                                            </Col>
+
+                                                        </Row>
+                                                    ) : (
+                                                            null
+                                                        )
+                                                }
+
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </div>
+                        )
+                }
             </div>
         );
     }

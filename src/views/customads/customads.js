@@ -151,20 +151,18 @@ class CustomAds extends React.Component {
         }
 
         this.props.getCustomAds(obj).then((res) => {
-            console.log("res", res);
-            if (res.response.data.app_list.length>0) {
+            if (res.response.data.app_list.length > 0) {
                 this.setState({
                     isDelete: this.state.isDelete = true
                 })
             }
             let obj = res.response.data.app_list;
-            console.log("obj", obj);
             for (var i = 0; i < this.state.advertiserapp.length; i++) {
                 for (var j = 0; j < obj.length; j++) {
-                    if(this.state.advertiserapp[i].id == obj[j].app_id) {
-                        if(this.state.advertiserapp[i]._rowChecked == true && (obj[j].row_checked == 1) ? true : false ) {
+                    if (this.state.advertiserapp[i].id == obj[j].app_id) {
+                        if (this.state.advertiserapp[i]._rowChecked == true && (obj[j].row_checked == 1) ? true : false) {
                             this.setState({
-                                _maincheck : this.state._maincheck = true
+                                _maincheck: this.state._maincheck = true
                             })
                         }
                     }
@@ -174,11 +172,9 @@ class CustomAds extends React.Component {
                     }
                 }
             }
-            console.log("advertiserapp", this.state.advertiserapp);
             this.setState({
-                advertiserapp:this.state.advertiserapp = this.state.advertiserapp
+                advertiserapp: this.state.advertiserapp = this.state.advertiserapp
             })
-            console.log("advertiserapp", this.state.advertiserapp);
         })
     }
 
@@ -195,8 +191,17 @@ class CustomAds extends React.Component {
             app_list: selectedAppArray,
         }
         this.props.insertCustomAds(appList).then((res) => {
-            console.log("res", res);
-
+            if (res.response.status == 1) {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'success'
+                });
+            } else {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'warning'
+                });
+            }
         })
     }
 
@@ -205,17 +210,27 @@ class CustomAds extends React.Component {
             app_id: this.state.app_id
         }
         this.props.deleteCustomAds(appList).then((res) => {
-            this.getAdvertiserApplication();
-            this.setState({
-                isDelete:this.state.isDelete = false
-            })
+            if (res.response.status == 1) {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'success'
+                });
+                this.getAdvertiserApplication();
+                this.setState({
+                    isDelete: this.state.isDelete = false
+                })
+            } else {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'warning'
+                });
+            }
         })
     }
 
 
     render() {
         const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
-
         return (
             <div>
                 <Row>
@@ -233,7 +248,7 @@ class CustomAds extends React.Component {
                                     <option value="">Select MyApp:</option>
                                     {
                                         this.state.publisherapp.length > 0 ? this.state.publisherapp.map((data, index) =>
-                                            <option id={data.package} key={data.id} value={data.id}>{data.name}</option>
+                                            <option key={data.id} value={data.id}>{data.name} - ({data.package})</option>
                                         ) : ''
                                     }
                                 </Input>
@@ -292,9 +307,6 @@ class CustomAds extends React.Component {
                                             <Col md="4" key={index}>
                                                 <Form>
                                                     <Card className="shadow_card">
-                                                        {/* <CardHeader>
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
-                                                        </CardHeader> */}
                                                         <CardBody className="padding">
                                                             <Row>
                                                                 <Col md="2">

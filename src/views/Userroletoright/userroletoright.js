@@ -62,11 +62,11 @@ class UserRoleToRight extends React.Component {
         let count = 0;
         data.forEach(element => {
             if (element.read == true && element.write == true && element.delete == true && element.import == true && element.export == true) {
-                console.log("inside all true")
+             
                 element._rowChecked = true;
                 count++;
             } else {
-                console.log("inside all false")
+                
                 element._rowChecked = false;
             }
         });
@@ -212,7 +212,19 @@ class UserRoleToRight extends React.Component {
             userRole: this.state.userid,
             right: this.state.selectroledata
         }
-        this.props.edituserroletoright(obj) 
+        this.props.edituserroletoright(obj).then((res) => {
+            if (res.response.status == 1) {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'success'
+                });
+            } else {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'warning'
+                });
+            }
+        }) 
    }
 
     render() {

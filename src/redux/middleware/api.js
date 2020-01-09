@@ -45,7 +45,7 @@ function callApi(endpoint, init, token) {
   }
   return fetch(endpoint, init)
     .then(response => response.json().then(json => {
-      console.log("json ",json);
+      // console.log("json ",json);
       if (!response.ok) {
         return Promise.reject(json);
       } else if (!json.status) {
@@ -66,7 +66,6 @@ export default store => next => action => {
   }
 
   let { endpoint, init = {}, types } = callAPI;
-  // console.log("endpoint",endpoint)
   const [ requestType, successType, errorType ] = types;
   next({ type: requestType });
 

@@ -99,7 +99,6 @@ class MonetizationNetwork extends React.Component {
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
                 if (res.response.message == "No Monetisations Found For This Application!") {
-                    console.log("no data monetization");
                 } else {
                     this.setState({
                         mainAds: this.state.mainAds = res.response.data.data.fb_ads == false && res.response.data.data.admob_ads == false && res.response.data.data.mopub_ads == false ? false : true,
@@ -133,36 +132,18 @@ class MonetizationNetwork extends React.Component {
         this.setState({
             fb_ads: this.state.fb_ads = checkedvalue
         })
-        // if (this.state.fb_ads == true) {
-        //     this.setState({
-        //         admob_ads: this.state.admob_ads = false,
-        //         mopub_ads: this.state.mopub_ads = false
-        //     })
-        // }
     }
 
     handleChangeAdMobAds(checkedvalue) {
         this.setState({
             admob_ads: this.state.admob_ads = checkedvalue
         })
-        // if (this.state.admob_ads == true) {
-        //     this.setState({
-        //         fb_ads: this.state.fb_ads = false,
-        //         mopub_ads: this.state.mopub_ads = false
-        //     })
-        // }
     }
 
     handleChangeMopubAds(checkedvalue) {
         this.setState({
             mopub_ads: this.state.mopub_ads = checkedvalue
         })
-        // if (this.state.mopub_ads == true) {
-        //     this.setState({
-        //         fb_ads: this.state.fb_ads = false,
-        //         admob_ads: this.state.admob_ads = false
-        //     })
-        // }
     }
 
     handleChangeMainAds(checkedvalue) {
@@ -212,7 +193,17 @@ class MonetizationNetwork extends React.Component {
                 }
 
                 this.props.AddAppMonetization(obj).then((res) => {
-                    console.log("addAppMonetization response", res);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 })
 
             } else {
@@ -250,7 +241,17 @@ class MonetizationNetwork extends React.Component {
                 }
 
                 this.props.AddAppMonetization(obj).then((res) => {
-                    console.log("addAppMonetization response", res);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 })
 
             } else {
@@ -292,7 +293,17 @@ class MonetizationNetwork extends React.Component {
                 }
 
                 this.props.updateAppMonetization(obj).then((res) => {
-                    console.log("updateAppMonetization response", res);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 })
 
             } else {
@@ -330,7 +341,17 @@ class MonetizationNetwork extends React.Component {
                 }
 
                 this.props.updateAppMonetization(obj).then((res) => {
-                    console.log("updateAppMonetization response", res);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 })
 
             } else {
@@ -370,7 +391,17 @@ class MonetizationNetwork extends React.Component {
                 }
             }
             this.props.RemoveAppMonetization(obj).then((res) => {
-                console.log("RemoveAppMonetization response", res);
+                if (res.response.status == 1) {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             })
         }
     }
@@ -393,7 +424,7 @@ class MonetizationNetwork extends React.Component {
                                     <option value="">Select MyApp:</option>
                                     {
                                         this.state.publisherapp.length > 0 ? this.state.publisherapp.map((data, index) =>
-                                            <option key={data.id} value={data.id}>{data.name}</option>
+                                    <option key={data.id} value={data.id}>{data.name} - ({data.package})</option>
                                         ) : ''
                                     }
                                 </Input>
@@ -473,7 +504,19 @@ class MonetizationNetwork extends React.Component {
                                                 <Col xs="12" sm="12">
                                                     <Card>
                                                         <CardHeader>
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Facebook Ads Settings</strong>
+                                                            <Row>
+                                                                <Col xs="6">
+                                                                    <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Facebook Ads Settings</strong>
+                                                                </Col>
+                                                                <Col xs="6" style={{ textAlign: 'right' }}>
+                                                                    <FormGroup>
+                                                                        {/* <Label>
+                                                                        <b>Facebook Ads</b>
+                                                                    </Label> */}
+                                                                        <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
+                                                                    </FormGroup>
+                                                                </Col>
+                                                            </Row>
                                                         </CardHeader>
                                                         <CardBody>
                                                             <Row>
@@ -548,7 +591,7 @@ class MonetizationNetwork extends React.Component {
                                                                     </FormGroup>
                                                                 </Col>
                                                             </Row>
-                                                            <Row>
+                                                            {/* <Row>
                                                                 <Col xs="6">
                                                                     <FormGroup>
                                                                         <Label>
@@ -558,7 +601,7 @@ class MonetizationNetwork extends React.Component {
                                                                         <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
                                                                     </FormGroup>
                                                                 </Col>
-                                                            </Row>
+                                                            </Row> */}
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -569,8 +612,21 @@ class MonetizationNetwork extends React.Component {
                                                 <Col xs="12" sm="12">
                                                     <Card>
                                                         <CardHeader>
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>AdMob Ads Settings</strong>
+                                                            <Row>
+                                                                <Col xs="6">
+                                                                    <strong style={{ color: '#20a8d8', fontSize: '20px' }}>AdMob Ads Settings</strong>
+                                                                </Col>
+                                                                <Col xs="6" style={{ textAlign: 'right' }}>
+                                                                    <FormGroup>
+                                                                        {/* <Label>
+                                                                        <b>Facebook Ads</b>
+                                                                    </Label> */}
+                                                                        <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
+                                                                    </FormGroup>
+                                                                </Col>
+                                                            </Row>
                                                         </CardHeader>
+
                                                         <CardBody>
                                                             <Row>
                                                                 <Col xs="6">
@@ -662,7 +718,7 @@ class MonetizationNetwork extends React.Component {
                                                                         />
                                                                     </FormGroup>
                                                                 </Col>
-                                                                <Col xs="6">
+                                                                {/* <Col xs="6">
                                                                     <FormGroup>
                                                                         <Label>
                                                                             <b>AdMob Ads</b>
@@ -670,7 +726,7 @@ class MonetizationNetwork extends React.Component {
                                                                         <br />
                                                                         <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
                                                                     </FormGroup>
-                                                                </Col>
+                                                                </Col> */}
                                                             </Row>
                                                         </CardBody>
                                                     </Card>
@@ -682,8 +738,21 @@ class MonetizationNetwork extends React.Component {
                                                 <Col xs="12" sm="12">
                                                     <Card>
                                                         <CardHeader>
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Mopub Ads Settings</strong>
+                                                            <Row>
+                                                                <Col xs="6">
+                                                                    <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Mopub Ads Settings</strong>
+                                                                </Col>
+                                                                <Col xs="6" style={{ textAlign: 'right' }}>
+                                                                    <FormGroup>
+                                                                        {/* <Label>
+                                                                        <b>Facebook Ads</b>
+                                                                    </Label> */}
+                                                                        <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
+                                                                    </FormGroup>
+                                                                </Col>
+                                                            </Row>
                                                         </CardHeader>
+
                                                         <CardBody>
                                                             <Row>
                                                                 <Col xs="6">
@@ -775,7 +844,7 @@ class MonetizationNetwork extends React.Component {
                                                                         />
                                                                     </FormGroup>
                                                                 </Col>
-                                                                <Col xs="6">
+                                                                {/* <Col xs="6">
                                                                     <FormGroup>
                                                                         <Label>
                                                                             <b>Mopub Ads</b>
@@ -783,7 +852,7 @@ class MonetizationNetwork extends React.Component {
                                                                         <br />
                                                                         <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
                                                                     </FormGroup>
-                                                                </Col>
+                                                                </Col> */}
                                                             </Row>
                                                         </CardBody>
                                                     </Card>

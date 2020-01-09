@@ -76,7 +76,7 @@ class ViewApp extends React.Component {
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
                 if (res.response.message == "No Monetisations Found For This Application!") {
-                    console.log("no data monetization");
+                  
                 } else {
                     this.setState({
                         fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,

@@ -43,17 +43,17 @@ export default class TableRole extends React.Component {
 
     componentDidMount() {
         EventEmitter.subscribe('searchData', (data) => {
-            console.log("data", data);
+            
             this.setState({
                 searchData: data,
                 isData: true
             })
-            console.log("datasearch====", this.state.searchData, this.state.isData);
+           
         });
 
 
         EventEmitter.subscribe('per_page_changed', (value) => {
-            //window.sessionStorage.setItem('role_per_page_changed', '' + value);
+           
             this.setState({ items_per_page: value });
             this.getRoleCountData();
             setTimeout(() => {
@@ -101,9 +101,9 @@ export default class TableRole extends React.Component {
     }
 
     checkAllHandler(event) {
-        console.log("data", event.target.checked, event.target.id);
+       
         if (event.target.checked == true) {
-            console.log("true");
+         
             this.setState({
                 _maincheck: this.state._maincheck = true,
                 check: this.state.check = true,
@@ -111,7 +111,7 @@ export default class TableRole extends React.Component {
             })
             this.checkMaster(this.state.paginationdata);
         } else {
-            console.log("fasle");
+          
             this.setState({
                 _maincheck: this.state._maincheck = false,
                 check: this.state.check = false,
@@ -152,7 +152,7 @@ export default class TableRole extends React.Component {
     }
 
     handleClick(event) {
-        console.log("event current page number", '' + event.target.id);
+       
 
         // this.setState({
         //     perpage: +this.state.perpage + +this.state.items_per_page,

@@ -163,7 +163,6 @@ class Advertiser extends Component {
 
     render() {
         const { auth } = this.props;
-        console.log("props", this.props);
 
         return (
             <div className="animated fadeIn">

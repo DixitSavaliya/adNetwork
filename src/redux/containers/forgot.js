@@ -30,7 +30,7 @@ class ForgotContainer extends Component {
 
     render() {
       const { auth, ForgotPassword } = this.props;
-      console.log("props",this.props);
+     
       return (
         <Forgot auth={auth} ForgotPassword={ForgotPassword}/>
       );

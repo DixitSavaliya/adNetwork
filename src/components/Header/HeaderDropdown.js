@@ -34,7 +34,7 @@ class HeaderDropdown extends Component {
   componentDidMount() {
     if(this.props.auth.auth_data) {
       this.props.getUser(this.props.auth.auth_data.id).then((res) => {
-        console.log("obj",res);
+    
       });
     }
 

@@ -163,8 +163,6 @@ class Publisher extends Component {
 
     render() {
         const { auth } = this.props;
-        console.log("props", this.props);
-
         return (
             <div className="animated fadeIn">
                <h1>Publisher</h1>

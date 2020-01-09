@@ -116,13 +116,13 @@ class UserRight extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userright: this.state.userright = '',
+
                 userrighterror: this.state.userrighterror = '',
-                displayname: this.state.displayname = '',
+
                 displaynameerror: this.state.displaynameerror = '',
-                group_name: this.state.group_name = '',
+
                 group_nameerror: this.state.group_nameerror = '',
-                group_display_name: this.state.group_display_name = '',
+
                 group_display_nameerrror: this.state.group_display_nameerrror = ''
             })
 
@@ -134,7 +134,19 @@ class UserRight extends Component {
                     group_display_name: this.state.group_display_name
                 }
                 this.props.addUserRight(data).then((res) => {
-                    EventEmitter.dispatch('right_added', 1);
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('right_added', 1);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+
                 });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");
@@ -162,10 +174,22 @@ class UserRight extends Component {
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteRightData(role);
-                setTimeout(() => {
-                    this.userRoleData();
-                }, 1200)
+                this.props.deleteRightData(role).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        setTimeout(() => {
+                            this.userRightData();
+                        }, 1200)
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                })
             }
         })
     }
@@ -174,13 +198,13 @@ class UserRight extends Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                userright: this.state.userright = '',
+
                 userrighterror: this.state.userrighterror = '',
-                displayname: this.state.displayname = '',
+
                 displaynameerror: this.state.displaynameerror = '',
-                group_name: this.state.group_name = '',
+
                 group_nameerror: this.state.group_nameerror = '',
-                group_display_name: this.state.group_display_name = '',
+
                 group_display_nameerrror: this.state.group_display_nameerrror = ''
             })
             if (this.state.userright && this.state.displayname && this.state.group_name && this.state.group_display_name) {
@@ -192,10 +216,23 @@ class UserRight extends Component {
                     id: this.state.rightId
                 }
                 this.props.updateRight(obj).then((res) => {
-                    EventEmitter.dispatch('right_updated', 1);
-                    this.setState({
-                        updateRightBtn: this.state.updateRightBtn = false,
-                    })
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('right_updated', 1);
+                        this.setState({
+                            updateRightBtn: this.state.updateRightBtn = false,
+                        })
+
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+
                 });
             } else {
                 Swal.fire("Please enter filed first!", "", "warning");

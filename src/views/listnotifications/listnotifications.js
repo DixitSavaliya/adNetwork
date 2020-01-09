@@ -46,9 +46,7 @@ class ListNotifications extends React.Component {
             delete: false
         }
 
-        // this.searchApplicationDataKeyUp = this.searchApplicationDataKeyUp.bind(this);
-        // this.handleChangeEvent = this.handleChangeEvent.bind(this);
-        // this.handleChangeAppEvent = this.handleChangeAppEvent.bind(this);
+        this.handleChangeEvent = this.handleChangeEvent.bind(this);
         this.deleteNotificationData = this.deleteNotificationData.bind(this);
 
     }
@@ -66,42 +64,6 @@ class ListNotifications extends React.Component {
         EventEmitter.dispatch('per_page_notification_value', e.target.value);
     }
 
-    // handleChangeAppEvent(e) {
-    //     EventEmitter.dispatch('select_app', e.target.value);
-    //     this.setState({
-    //         ownership: this.state.ownership = e.target.value
-    //     })
-    // }
-
-    // searchApplicationDataKeyUp(e) {
-    //     if (this.props.auth.auth_data.user_group == "publisher") {
-    //         const obj = {
-    //             search_string: e.target.value,
-    //             user_id: this.props.auth.auth_data.id,
-    //             user_group: this.props.auth.auth_data.user_group,
-    //             ownership: this.state.ownership
-    //         }
-    //         this.props.searchApplicationData(obj).then((res) => {
-    //             this.setState({
-    //                 searchData: this.state.searchData = res.response.data
-    //             })
-    //             EventEmitter.dispatch('searchDataApp', this.state.searchData);
-    //         });
-    //     } else {
-    //         const obj = {
-    //             search_string: e.target.value,
-    //             user_id: this.props.auth.auth_data.id,
-    //             user_group: this.props.auth.auth_data.user_group,
-    //             ownership: this.state.ownership = ""
-    //         }
-    //         this.props.searchApplicationData(obj).then((res) => {
-    //             this.setState({
-    //                 searchData: this.state.searchData = res.response.data
-    //             })
-    //             EventEmitter.dispatch('searchDataApp', this.state.searchData);
-    //         });
-    //     }
-    // }
 
     deleteNotificationData() {
         const remove = {
@@ -116,10 +78,19 @@ class ListNotifications extends React.Component {
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteNotificationData(remove);
-                setTimeout(() => {
-                    // this.userRoleData();
-                }, 1200)
+                this.props.deleteNotificationData(remove).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                });
             }
         })
     }
@@ -146,47 +117,45 @@ class ListNotifications extends React.Component {
                                     <Row>
                                         <Col md="4">
                                             <Row>
-                                                <Col md="6">
-                                                    <div className="rightapp">
-                                                        <Link to="/notifications">
-                                                            <Button
-                                                                className="mb-2 mr-2"
-                                                                color="primary"
-                                                            >
-                                                                Add
+                                                <Col md="4">
+                                                    <Row>
+                                                        <Col md="6">
+                                                            <div className="rightapp">
+                                                                <Link to="/notifications">
+                                                                    <Button
+                                                                        className="mb-2 mr-2"
+                                                                        color="primary"
+                                                                    >
+                                                                        Add
                                                                     </Button>
-                                                        </Link>
-                                                    </div>
-                                                </Col>
-                                                <Col md="6">
-                                                    <div className="rightapp">
-                                                        <Link to="/list-notifications">
-                                                            <Button
-                                                                className="mb-2 mr-2"
-                                                                color="danger"
-                                                                onClick={this.deleteNotificationData}
-                                                                disabled={!this.state.delete}
-                                                            >
-                                                                Delete
+                                                                </Link>
+
+                                                            </div>
+                                                        </Col>
+                                                        <Col md="6">
+                                                            <div className="rightapp">
+                                                                <Button
+                                                                    className="mb-2 mr-2"
+                                                                    color="danger"
+                                                                    onClick={this.deleteNotificationData}
+                                                                    disabled={!this.state.delete}
+                                                                >
+                                                                    Delete
                                                                     </Button>
-                                                        </Link>
-                                                    </div>
+
+                                                            </div>
+                                                        </Col>
+
+                                                    </Row>
+
                                                 </Col>
+
                                             </Row>
 
                                         </Col>
                                         <Col md="8">
                                             <div className="pull-right">
                                                 <Row>
-                                                    {/* <Col md="8">
-                                                                <input
-                                                                    className="form-control"
-                                                                    type="text"
-                                                                    placeholder="Search"
-                                                                    aria-label="Search"
-                                                                    onKeyUp={this.searchApplicationDataKeyUp}
-                                                                />
-                                                            </Col> */}
                                                     <span style={{ marginTop: '8px' }}>Records per page</span>
                                                     <Col md="2">
                                                         <Input

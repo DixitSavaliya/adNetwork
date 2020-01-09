@@ -77,7 +77,7 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationCount(obj).then((res) => {
-            console.log("res", res);
+            
             _this.setState({
                 count: _this.state.count = res.response.data
             })
@@ -94,7 +94,7 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {
-            console.log("notificationPGData", res.response.data)
+          
             _this.setState({
                 paginationdata: res.response.data,
                 isFetch: true
@@ -165,9 +165,9 @@ export default class TableNotifications extends React.Component {
     }
 
     checkAllHandler(event) {
-        console.log("data", event.target.checked, event.target.id);
+       
         if (event.target.checked == true) {
-            console.log("true");
+         
             this.setState({
                 _maincheck: this.state._maincheck = true,
                 check: this.state.check = true,
@@ -175,7 +175,7 @@ export default class TableNotifications extends React.Component {
             })
             this.checkMaster(this.state.paginationdata);
         } else {
-            console.log("fasle");
+          
             this.setState({
                 _maincheck: this.state._maincheck = false,
                 check: this.state.check = false,

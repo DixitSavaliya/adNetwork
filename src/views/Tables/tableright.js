@@ -43,17 +43,17 @@ export default class TableRight extends React.Component {
 
     componentDidMount() {
         EventEmitter.subscribe('searchRightData', (data) => {
-            console.log("data", data);
+            
             this.setState({
                 searchData: data,
                 isData: true
             })
-            console.log("datasearch====", this.state.searchData, this.state.isData);
+            
         });
 
 
         EventEmitter.subscribe('per_page_changed', (value) => {
-            //window.sessionStorage.setItem('role_per_page_changed', '' + value);
+         
             this.setState({ items_per_page: value });
             this.getRightCountData();
             setTimeout(() => {
@@ -149,7 +149,6 @@ export default class TableRight extends React.Component {
     }
 
     handleClick(event) {
-        console.log("event current page number", '' + event.target.id);
 
         // this.setState({
         //     perpage: +this.state.perpage + +this.state.items_per_page,
@@ -181,11 +180,11 @@ export default class TableRight extends React.Component {
         let count = 0;
         data.forEach(element => {
             if (element._rowChecked == true) {
-                console.log("inside all true")
+              
                 element._rowChecked = true;
                 count++;
             } else {
-                console.log("inside all false")
+               
                 element._rowChecked = false;
             }
         });

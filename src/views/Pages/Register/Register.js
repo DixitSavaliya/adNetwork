@@ -96,7 +96,6 @@ class Register extends Component {
   }
 
   handleChangeStatus(event) {
-    console.log("event", event.target.value)
     if (event.target.value == 1) {
       this.setState({
         statuscheck1: this.state.statuscheck1 = event.target.checked,
@@ -135,17 +134,16 @@ class Register extends Component {
   handleRegister(e) {
     const isValid = this.validate();
     if (isValid) {
-      console.log(this.state);
       this.setState({
-        password: '',
+      
         passworderror: "",
-        first_name: '',
+     
         first_nameerror: "",
-        last_name: '',
+     
         last_nameerror: '',
-        email_id: '',
+      
         email_iderror: '',
-        mobile_no: '',
+     
         mobile_noerror: ''
       })
       if (this.state.first_name && this.state.password && this.state.last_name && this.state.email_id && this.state.mobile_no) {
@@ -164,10 +162,9 @@ class Register extends Component {
         this.props.register(obj).then((res) => {
           if (res.response.status == 1) {
             Swal.fire("Users Login Details Created Successfully", "", "success");
-            this.props.history.push(this.props.from || { pathname: '/#/login' });
+            this.props.history.push(this.props.from || { pathname: '/login' });
           }
         });
-        // this.state['user_group'] = this.state.customSelectName;
       }
     };
   }
@@ -190,7 +187,7 @@ class Register extends Component {
                         name="first_name"
                         className="form-control"
                         onChange={this.handleChangeEvent}
-                        placeholder="first_name"
+                        placeholder="FirstName"
                         autoComplete="first_name"
                       />
                     </InputGroup>
@@ -204,7 +201,7 @@ class Register extends Component {
                         name="last_name"
                         className="form-control"
                         onChange={this.handleChangeEvent}
-                        placeholder="last_name"
+                        placeholder="LastName"
                         autoComplete="last_name"
                       />
                     </InputGroup>
@@ -218,7 +215,7 @@ class Register extends Component {
                         name="email_id"
                         className="form-control"
                         onChange={this.handleChangeEvent}
-                        placeholder="email_id"
+                        placeholder="EmailId"
                         autoComplete="email_id"
                       />
                     </InputGroup>
@@ -232,7 +229,7 @@ class Register extends Component {
                         name="password"
                         className="form-control"
                         onChange={this.handleChangeEvent}
-                        placeholder="password"
+                        placeholder="Password"
                         autoComplete="password"
                       />
                     </InputGroup>
@@ -246,7 +243,7 @@ class Register extends Component {
                         name="mobile_no"
                         className="form-control"
                         onChange={this.handleChangeEvent}
-                        placeholder="mobile_no"
+                        placeholder="MobileNo"
                         autoComplete="mobile_no"
                       />
                     </InputGroup>

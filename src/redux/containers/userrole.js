@@ -26,7 +26,7 @@ class UserRoleContainer extends Component {
 
     render() {
       const {auth,addUserRole,roleCountData,RolePGData,deleteRoleData ,updateRole,searchRole} = this.props;
-      console.log("props",this.props);
+     
       return (
         <UserRole auth={auth} addUserRole={addUserRole} roleCountData={roleCountData} RolePGData={RolePGData} deleteRoleData={deleteRoleData} updateRole={updateRole} searchRole={searchRole}/>
       );

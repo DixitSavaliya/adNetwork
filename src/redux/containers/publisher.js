@@ -25,7 +25,7 @@ class PublisherContainer extends Component {
 
     render() {
       const {auth} = this.props;
-      console.log("props",this.props);
+      
     //   this.id = this.props.location.pathname.split('/')[2];
       return (
         <Publisher auth={auth}/>

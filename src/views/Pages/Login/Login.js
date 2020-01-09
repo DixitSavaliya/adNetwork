@@ -87,7 +87,6 @@ class Login extends Component {
           let _this = this;
           this.props.userroletoright(obj).then(function (res) {
               let data = res.response.data;
-              console.log("data",data);
           })
           } else {
             Swal.fire({

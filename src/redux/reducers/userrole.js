@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const userrole = (state = initialState, action) => {
-    console.log("action",action);
+  
     switch (action.type) {
 
         // //REGISTER USERROLE
