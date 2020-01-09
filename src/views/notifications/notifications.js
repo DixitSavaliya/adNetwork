@@ -29,10 +29,7 @@ import {
     Row,
 } from 'reactstrap';
 import { REMOTE_URL } from '../../redux/constants/index';
-// import DateTimePicker from 'react-datetime-picker';
-// import DateTimeField from "react-bootstrap-datetimepicker";
 import Datetime from 'react-datetime';
-
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -60,13 +57,33 @@ class Notifications extends Component {
             selectedFileerror: '',
             app_list: '',
             time: '',
-            inputFormat: "YY-MM-DD h:mm A"
+            inputFormat: "YY-MM-DD h:mm A",
+            once: true,
+            daily: false,
+            weekly: false,
+            monthly: false,
+            MonthlyScedulestatuscheck1: false,
+            MonthlyShedulestatus: '',
+            OnceScedulestatuscheck1: true,
+            OnceShedulestatus: 1,
+            DailyScedulestatuscheck1: false,
+            DailyShedulestatus: '',
+            WeeklyScedulestatuscheck1: false,
+            WeeklyShedulestatus: '',
+            time_type: 1,
+            sheduleType: 1
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.sendNotifications = this.sendNotifications.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.handleSheduleType = this.handleSheduleType.bind(this);
+        // this.handleChangeMonthlySheduleStatus = this.handleChangeMonthlySheduleStatus.bind(this);
+        // this.handleChangeOnceSheduleStatus = this.handleChangeOnceSheduleStatus.bind(this);
+        // this.handleChangeDailySheduleStatus = this.handleChangeDailySheduleStatus.bind(this);
+        // this.handleChangeWeeklySheduleStatus= this.handleChangeWeeklySheduleStatus.bind(this);
     }
 
     componentDidMount() {
@@ -137,6 +154,46 @@ class Notifications extends Component {
         if (this.state.status == 1) {
             this.setState({
                 isVisible: this.state.isVisible = true
+            })
+        } else {
+            this.setState({
+                isVisible: this.state.isVisible = false
+            })
+        }
+    }
+
+    handleSheduleType(event) {
+        this.setState({
+            sheduleType: this.state.sheduleType = event.target.defaultValue,
+            time_type: this.state.time_type = event.target.defaultValue
+        })
+        if (this.state.time_type == 1) {
+            this.setState({
+                once: this.state.once = true,
+                daily: this.state.daily = false,
+                weekly: this.state.weekly = false,
+                monthly: this.state.monthly = false
+            })
+        } else if (this.state.time_type == 2) {
+            this.setState({
+                once: this.state.once = false,
+                daily: this.state.daily = true,
+                weekly: this.state.weekly = false,
+                monthly: this.state.monthly = false
+            })
+        } else if (this.state.time_type == 3) {
+            this.setState({
+                once: this.state.once = false,
+                daily: this.state.daily = false,
+                weekly: this.state.weekly = true,
+                monthly: this.state.monthly = false
+            })
+        } else if (this.state.time_type == 4) {
+            this.setState({
+                once: this.state.once = false,
+                daily: this.state.daily = false,
+                weekly: this.state.weekly = false,
+                monthly: this.state.monthly = true
             })
         }
     }
@@ -218,9 +275,11 @@ class Notifications extends Component {
         if (isValid) {
             const obj = {
                 id: "",
+                user_id: this.props.auth.auth_data.id,
                 type: this.state.status,
                 status: 1,
                 time: this.state.time,
+                time_type: this.state.time_type,
                 data: {
                     notification: {
                         title: this.state.title,
@@ -232,7 +291,13 @@ class Notifications extends Component {
                     app_list: this.state.app_list,
                     status: 1,
                     type: this.state.status,
-                    time: this.state.time
+                    time: this.state.time,
+                    time_type: {
+                        once: this.state.once,
+                        daily: this.state.daily,
+                        weekly: this.state.weekly,
+                        monthly: this.state.monthly
+                    }
                 }
             }
             console.log("obj", obj);
@@ -243,6 +308,14 @@ class Notifications extends Component {
                         text: res.response.message,
                         icon: 'success'
                     });
+                    this.setState({
+                        title: this.state.title = null,
+                        url: this.state.url = null,
+                        message: this.state.message = null,
+                        selectedFile: this.state.selectedFile = null,
+                        click_action: this.state.click_action = null,
+                        isVisible: this.state.isVisible = false
+                    })
                 } else {
                     Swal.fire({
                         text: res.response.message,
@@ -381,24 +454,6 @@ class Notifications extends Component {
                                                         </div>
                                                     )
                                             }
-
-                                            {/* {
-                                                this.state.selectedFile ? (
-                                                    <div>
-                                                        <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
-                                                        <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
-                                                    </div>
-                                                ) : (null)
-                                            }
-                                            <p><b>Select File:</b></p>
-                                            <Label for="file-input"><i className="fa fa-upload fa-lg"  ></i></Label>
-                                            <Input
-                                                id="file-input"
-                                                type="file"
-                                                className="form-control"
-                                                name="file"
-                                                onChange={this.onChangeHandler}
-                                            /> */}
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.selectedFileerror}
                                             </div>
@@ -492,14 +547,83 @@ class Notifications extends Component {
                                 {
                                     this.state.isVisible == true ? (
                                         <div>
-                                            <Label htmlFor="userrole"><b>Select shedule Time & Date:</b></Label>
                                             <Row>
-                                                <Datetime
-                                                    dateFormat="YYYY-MM-DD"
-                                                    timeFormat="h:mm A"
-                                                    onChange={this.onChange}
-                                                    utc={false}
-                                                />
+                                                <Col xs="6">
+                                                    <Label><b>Select shedule Time & Date:</b></Label>
+                                                    <Datetime
+                                                        dateFormat="YYYY-MM-DD"
+                                                        timeFormat="h:mm A"
+                                                        onChange={this.onChange}
+                                                        utc={false}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row style={{ marginTop: '10px' }}>
+                                                <Col xs="6">
+                                                    <Label><b>Select shedule Time_Type:</b></Label>
+                                                    <br />
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            name="shedule"
+                                                            defaultValue="1"
+                                                            onChange={this.handleSheduleType}
+                                                            checked={this.state.sheduleType == 1 ? true : false}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="radio5"
+                                                        >
+                                                            Once
+                                             </Label>
+
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            name="shedule"
+                                                            defaultValue="2"
+                                                            onChange={this.handleSheduleType}
+                                                            checked={this.state.sheduleType == 2 ? true : false}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="radio6"
+                                                        >
+                                                            Daily
+                                             </Label>
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            name="shedule"
+                                                            defaultValue="3"
+                                                            onChange={this.handleSheduleType}
+                                                            checked={this.state.sheduleType == 3 ? true : false}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            htmlFor="radio3"
+                                                        >
+                                                            Weekly
+                                             </Label>
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            name="shedule"
+                                                            defaultValue="4"
+                                                            onChange={this.handleSheduleType}
+                                                            checked={this.state.sheduleType == 4 ? true : false}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="radio4"
+                                                        >
+                                                            Monthly
+                                             </Label>
+                                                    </FormGroup>
+                                                </Col>
                                             </Row>
                                         </div>
                                     ) : (
@@ -509,7 +633,7 @@ class Notifications extends Component {
                                 <Row style={{ marginTop: '5px' }}>
                                     <Button
                                         color="primary"
-                                        className="mb-2 mr-2"
+                                        className="mb-2 ml-3"
                                         onClick={this.sendNotifications}
                                     >
                                         Send Notification
@@ -519,7 +643,6 @@ class Notifications extends Component {
                         </Card>
                     </Col>
                 </Row>
-
             </div>
         );
     }

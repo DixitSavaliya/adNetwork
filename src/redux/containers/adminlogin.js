@@ -10,18 +10,25 @@ import Auth from '../Auth';
 
 class AdminLoginContainer extends Component {
     
+    
     transferToDashboardIfLoggedIn(){
-        if (this.props.auth.auth_data.access_token){
+        if (!this.props.auth.auth_data.access_token){
+            this.props.history.push(this.props.from || {pathname: '/admin/'});
+        } else {
             this.props.history.push(this.props.from || {pathname: '/'});
         }
     }
 
     componentWillMount() {
-        this.transferToDashboardIfLoggedIn();
+        // if (this.props.auth.auth_data.access_token){
+        //     this.transferToDashboardIfLoggedIn();
+        // }
     }
     
     componentDidUpdate() {        
-        this.transferToDashboardIfLoggedIn();
+        if (this.props.auth.auth_data.access_token){
+            this.transferToDashboardIfLoggedIn();
+        }
     }
 
     componentDidMount() {
@@ -31,6 +38,7 @@ class AdminLoginContainer extends Component {
             login();
         }
     }
+
 
     render() {
       const { auth, login , getUser,userroletoright } = this.props;

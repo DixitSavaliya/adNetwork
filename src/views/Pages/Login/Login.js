@@ -35,9 +35,9 @@ class Login extends Component {
     
     const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!this.state.username) {
-      usernameerror = "please enter username";
+      usernameerror = "please enter email";
     } else if (!reg.test(this.state.username)) {
-      usernameerror = "invalid username";
+      usernameerror = "please enter valid email";
     }
 
     if (!this.state.password) {
@@ -168,7 +168,7 @@ class Login extends Component {
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                <Card className="text-white bg-primary py-5" style={{ width: 44 + '%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>

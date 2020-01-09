@@ -41,10 +41,27 @@ export default {
       },
 
       {
-        name: 'Notifications',
-        url: '/notifications',
-        icon: 'fa fa-bell'
-      }
+        name: 'Notification',
+        icon: 'fa fa-bell',
+        children: [
+          {
+            name: 'Notifications',
+            url: '/notifications',
+            icon: 'fa fa-plus-square',
+          },
+          {
+            name: 'List Notifications',
+            url: '/list-notifications',
+            icon: 'fa fa-reorder',
+          },
+        ]
+      },
+
+      // {
+      //   name: 'Notifications',
+      //   url: '/notifications',
+      //   icon: 'fa fa-bell'
+      // }
   
     //   {
     //     name: 'Publisher',

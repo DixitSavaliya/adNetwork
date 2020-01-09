@@ -233,17 +233,10 @@ class CreateApp extends React.Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                name: '',
                 nameerror: '',
-                description: '',
                 descriptionerror: '',
-                package: '',
                 packageerrror: '',
-                customSelect: '',
                 customSelecterror: '',
-                // status: '',
-                // statuserror: '',
-                selectedFile: null,
                 selectedFileerror: '',
             })
          
@@ -271,20 +264,12 @@ class CreateApp extends React.Component {
         const isValid = this.validate();
         if (isValid) {
             this.setState({
-                name: '',
                 nameerror: '',
-                description: '',
                 descriptionerror: '',
-                package: '',
                 packageerrror: '',
-                customSelect: '',
                 customSelecterror: '',
-                // status: '',
-                // statuserror: '',
-                selectedFile: null,
                 selectedFileerror: '',
             })
-            console.log(this.state.description.replace(/\\\//g, "/"));
             if (this.state.name && this.state.description && this.state.package && this.state.selectedFile && this.state.customSelect) {
                 const obj = {
                     name: this.state.name,

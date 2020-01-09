@@ -5,8 +5,14 @@ import Intercept from '../../auth';
 import Full from '../../containers/Full/Full';
 
 function requireLoginToFull() {
-    if ( Auth.isUserAuthenticated() == false) {
+    console.log("requireLoginToFull",this.props.auth.auth_data.user_group);
+    if ( Auth.isUserAuthenticated() == false && (this.props.auth.auth_data.user_group != "admin" || this.props.auth.auth_data.user_group != "admin_staff")) {
+
         this.props.history.push(this.props.from || {pathname: '/login'});
+    }else {
+        if(Auth.isUserAuthenticated() == false){
+            this.props.history.push(this.props.from || {pathname: '/admin/'});
+        }
     }
 }
 

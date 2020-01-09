@@ -24,15 +24,27 @@ const store = createStore(
 );
 
 import Auth from './redux/Auth'
- const PrivateRoute = ({ component: Component, ...rest }) => (
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        Auth.isUserAuthenticated() == true ? (
-            <Component {...props} />
+        props.location.pathname !== '/admin/' ? (
+            Auth.isUserAuthenticated() == true ? (
+                <Component {...props} />
+            ) : (
+                    <Redirect to={{
+                        pathname: '/login',
+                        state: { from: props.location }
+                    }} />
+                )
         ) : (
-                <Redirect to={{
-                    pathname: '/login',
-                    state: { from: props.location }
-                }} />
+                Auth.isUserAuthenticated() == true ? (
+                    <Component {...props} />
+                ) : (
+                        <Redirect to={{
+                            pathname: '/admin/',
+                            state: { from: props.location }
+                        }} />
+                    )
             )
     )} />
 )
@@ -74,7 +86,7 @@ ReactDOM.render((
                 <Route exact path="/admin/" name="AdminLogin Page" component={AdminLogin} />
                 <Route exact path="/register" name="Register Page" component={Register} />
                 <Route exact path="/forgot-password" name="Forgot Password" component={ForgotPassword} />
-                <PrivateRoute path="/" name="Home"  component={Full}/>
+                <PrivateRoute path="/" name="Home" component={Full} />
             </Switch>
         </Router>
     </Provider>

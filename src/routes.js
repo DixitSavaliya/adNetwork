@@ -30,5 +30,7 @@ const routes = {
   '/custom-ads' : 'CustomAds',
   '/monetization-network' : 'MonetizationNetwork',
   '/notifications' : 'Notifications',
+  '/list-notifications' : 'ListNotifications',
+  '/view-notification/:id' : 'ViewNotifications'
 };
 export default routes;

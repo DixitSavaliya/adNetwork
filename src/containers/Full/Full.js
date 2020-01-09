@@ -23,6 +23,8 @@ import Publisher from '../../redux/containers/publisher';
 import MonetizationNetwork from '../../redux/containers/monetizationnetwork';
 import CustomAds from '../../redux/containers/customads';
 import Notifications from '../../redux/containers/notification';
+import ListNotifications from '../../redux/containers/listnotifications';
+import ViewNotifications from '../../redux/containers/viewnotifications';
 
 // Components
 import Buttons from '../../views/Components/Buttons/';
@@ -82,6 +84,8 @@ class Full extends Component {
                   <Route path="/monetization-network" name="MonetizationNetwork" component={MonetizationNetwork} />
                   <Route path="/custom-ads" name="CustomAds" component={CustomAds} />
                   <Route path="/notifications" name="Notifications" component={Notifications} />
+                  <Route path="/list-notifications" name="ListNotifications" component={ListNotifications} />
+                  <Route path="/view-notification/:id" name="ViewNotifications" component={ViewNotifications} />
                   <Redirect from="/" to="/dashboard" />
                 </Switch>
               </Router>

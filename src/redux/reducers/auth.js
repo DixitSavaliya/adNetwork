@@ -947,7 +947,7 @@ const auth = (state = initialState, action) => {
                 error: action.error
             };
 
-             //SENDPUSHNOTIFICATION                       
+        //SENDPUSHNOTIFICATION                       
         case ACTION.SENDPUSHNOTIFICATION_REQUEST:
             return {
                 ...state,
@@ -967,11 +967,84 @@ const auth = (state = initialState, action) => {
             };
 
 
+        //NOTIFICATIONCOUNT                       
+        case ACTION.NOTIFICATIONCOUNT_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.NOTIFICATIONCOUNT_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.NOTIFICATIONCOUNT_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
 
 
+        //NOTIFICATIONPG                       
+        case ACTION.NOTIFICATIONPG_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.NOTIFICATIONPG_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.NOTIFICATIONPG_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
+              //REMOVENOTIFICATION                       
+        case ACTION.REMOVENOTIFICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.REMOVENOTIFICATION_SUCCESS:
+            Swal.fire("Notification Cancelled Successfully!", "", "success");
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.REMOVENOTIFICATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
+                  //VIEWNOTIFICATION                       
+        case ACTION.VIEWNOTIFICATION_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.VIEWNOTIFICATION_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.VIEWNOTIFICATION_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
 
 

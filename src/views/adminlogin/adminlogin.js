@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Container, Row, Col, CardGroup, Card, CardBody, Button, Input, FormGroup, InputGroup, InputGroupAddon } from 'reactstrap';
-
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 class AdminLogin extends Component {
@@ -62,13 +62,9 @@ class AdminLogin extends Component {
   handleLogin(e) {
     const isValid = this.validate();
     if (isValid) {
-      console.log(this.state);
       this.setState({
-        password: '',
         passworderror: '',
-        username: '',
         usernameerror: '',
-        customSelectName: '',
         customSelectNameerror: ''
       })
       if (this.state.username && this.state.password && this.state.customSelectName) {
@@ -79,7 +75,7 @@ class AdminLogin extends Component {
         }
         
         this.props.login(obj).then((res) => {
-          if(res.response.status == 1) {
+          if (res.response.status == 1) {
             this.props.getUser(res.response.data.id);
             const obj = {
               userRole: res.response.data.id
@@ -89,6 +85,11 @@ class AdminLogin extends Component {
               let data = res.response.data;
               console.log("data",data);
           })
+          } else {
+            Swal.fire({
+              text: res.response.message,
+              icon: 'warning'
+            });
           }
         });
       }
@@ -117,7 +118,7 @@ class AdminLogin extends Component {
                         autoComplete="username"
                       />
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.usernameerror}
                     </div>
                     <InputGroup className="mb-4">
@@ -131,7 +132,7 @@ class AdminLogin extends Component {
                         autoComplete="current-password"
                       />
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.passworderror}
                     </div>
                     <InputGroup className="mb-4">
@@ -148,7 +149,7 @@ class AdminLogin extends Component {
                         <option value="admin_staff">Admin_Staff</option>
                       </Input>
                     </InputGroup>
-                    <div style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
                       {this.state.customSelectNameerror}
                     </div>
                     <Row>
@@ -163,7 +164,7 @@ class AdminLogin extends Component {
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                <Card className="text-white bg-primary py-5 " style={{ width: 44 + '%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
