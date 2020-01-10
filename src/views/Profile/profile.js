@@ -110,7 +110,7 @@ class Profile extends Component {
       imageURL: this.state.filename
     }
 
-    if(this.state.imageURL) {
+    if(data.imageURL) {
       axios.post(REMOTE_URL + "AP/uploadImageByURL", data)
           .then(response => {
               if (response.data.status == 1) {
@@ -121,6 +121,7 @@ class Profile extends Component {
                   this.setState({
                       selectedFile: this.state.selectedFile = response.data.data
                   })
+                  EventEmitter.dispatch('updateImage', this.state.selectedFile);
               } else {
                   Swal.fire({
                       text: response.data.message,
@@ -139,7 +140,6 @@ class Profile extends Component {
 
 
   removeIcon(data) {
-    console.log("props",this.props)
     const obj = {
       id: this.props.auth.auth_data.id,
       image_path: this.props.auth.user.avatar

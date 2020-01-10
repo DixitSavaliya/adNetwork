@@ -54,10 +54,10 @@ class Sidebar extends Component {
   render() {
     if (this.props.auth.auth_data.user_group == "admin") {
       this.props.sidebar.nav = nav.items;
-
     } else if (this.props.auth.auth_data.user_group == "advertiser") {
       this.props.sidebar.nav = navRight.items;
     } else if (this.props.auth.auth_data.user_group == "publisher") {
+    
       this.props.sidebar.nav = navRightPublisher.items;
     }
 

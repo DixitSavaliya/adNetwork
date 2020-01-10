@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Button } from 'reactstrap';
+import Swal from 'sweetalert2';
 import {
     Row, Col,
     Card, CardBody,

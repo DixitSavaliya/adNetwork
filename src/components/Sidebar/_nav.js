@@ -64,17 +64,17 @@ export default {
       icon: 'fa fa-wrench',
       children: [
         {
-          name: 'UserRole',
+          name: 'User Role',
           url: '/userRole',
           icon: 'fa fa-user-secret',
         },
         {
-          name: 'UserRight',
+          name: 'User Right',
           url: '/userRight',
           icon: 'fa fa-tty',
         },
         {
-          name: 'UserRoleToRight',
+          name: 'User Role To Right',
           url: '/userroletoright',
           icon: 'fa fa-handshake-o',
         }

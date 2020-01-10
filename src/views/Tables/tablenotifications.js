@@ -35,8 +35,8 @@ export default class TableNotifications extends React.Component {
             onClickPage: "1",
             ownership: '',
             ads: false,
-            _maincheck:false,
-            delete:''
+            _maincheck: false,
+            delete: ''
         }
 
         this.deleteNotificationData = this.deleteNotificationData.bind(this);
@@ -77,7 +77,7 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationCount(obj).then((res) => {
-            
+
             _this.setState({
                 count: _this.state.count = res.response.data
             })
@@ -94,7 +94,7 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {
-          
+
             _this.setState({
                 paginationdata: res.response.data,
                 isFetch: true
@@ -118,18 +118,29 @@ export default class TableNotifications extends React.Component {
         }
         Swal.fire({
             title: 'Are you sure?',
-            text: 'Are you sure you want to delete?',
+            text: 'Are you sure you want to cancel?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Yes, cancel it!',
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteNotificationData(data1);
-                setTimeout(() => {
-                    this.getNotificationPageData();
-                }, 1200)
+                this.props.deleteNotificationData(data1).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        this.getNotificationPageData();
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                });
             }
+          
         })
     }
 
@@ -165,9 +176,9 @@ export default class TableNotifications extends React.Component {
     }
 
     checkAllHandler(event) {
-       
+
         if (event.target.checked == true) {
-         
+
             this.setState({
                 _maincheck: this.state._maincheck = true,
                 check: this.state.check = true,
@@ -175,7 +186,7 @@ export default class TableNotifications extends React.Component {
             })
             this.checkMaster(this.state.paginationdata);
         } else {
-          
+
             this.setState({
                 _maincheck: this.state._maincheck = false,
                 check: this.state.check = false,
@@ -338,6 +349,7 @@ export default class TableNotifications extends React.Component {
                                             <th>Type</th>
                                             <th>True_Count</th>
                                             <th>False_Count</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -370,6 +382,17 @@ export default class TableNotifications extends React.Component {
                                                     </td>
                                                     <td onClick={() => this.appData(data)}>
                                                         {data.false_count}
+                                                    </td>
+                                                    <td onClick={() => this.appData(data)}>
+                                                        <div className="btn_size">
+                                                            {
+                                                                data.run_state == 1 ? (
+                                                                    <span className="badge badge-success">{data.run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                ) : (
+                                                                        <span className="badge badge-danger">{data.run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                    )
+                                                            }
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             )

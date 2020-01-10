@@ -83,7 +83,6 @@ class Advertiser extends Component {
         }
         let _this = this;
         this.props.usersPGData(obj).then(function (res) {
-            console.log("res", res);
             var data = [];
             for (var i = 0; i < res.response.data.length; i++) {
                 if (res.response.data[i].user_type == 1) {

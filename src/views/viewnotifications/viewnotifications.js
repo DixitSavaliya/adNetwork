@@ -124,6 +124,17 @@ class ViewNotifications extends React.Component {
                                                             </div>
 
                                                         </Col>
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5>Click_Action:</h5>
+
+                                                                <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+
+                                                            </div>
+
+                                                        </Col>
+
                                                         <Col md="4" style={{ marginTop: '5px' }}>
                                                             <div>
                                                                 <h5>Type:</h5>
@@ -143,16 +154,47 @@ class ViewNotifications extends React.Component {
                                                             </div>
 
                                                         </Col>
+
                                                         <Col md="4">
 
                                                             <div>
-                                                                <h5>Click_Action:</h5>
+                                                                <h5>True_Count:</h5>
 
-                                                                <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+                                                                <p className="blue">{this.state.App[0].true_count}</p>
+                                                            </div>
+
+                                                        </Col>
+
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5>False_Count:</h5>
+
+                                                                <p className="blue">{this.state.App[0].false_count}</p>
 
                                                             </div>
 
                                                         </Col>
+
+                                                        <Col md="4">
+
+                                                            <div>
+                                                                <h5>Status:</h5>
+                                                                <div className="btn_size">
+                                                                    {
+                                                                        this.state.App[0].run_state == 1 ? (
+                                                                            <span className="badge badge-success">{this.state.App[0].run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                        ) : (
+                                                                                <span className="badge badge-danger">{this.state.App[0].run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                            )
+                                                                    }
+                                                                </div>
+
+                                                            </div>
+
+                                                        </Col>
+
+
 
                                                     </Row>
                                                 ) : (
@@ -314,6 +356,16 @@ class ViewNotifications extends React.Component {
                                                                 </div>
 
                                                             </Col>
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5>Click_Action:</h5>
+
+                                                                    <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+
+                                                                </div>
+
+                                                            </Col>
                                                             <Col md="4" style={{ marginTop: '5px' }}>
                                                                 <div>
                                                                     <h5>Type:</h5>
@@ -333,12 +385,42 @@ class ViewNotifications extends React.Component {
                                                                 </div>
 
                                                             </Col>
+
+
                                                             <Col md="4">
 
                                                                 <div>
-                                                                    <h5>Click_Action:</h5>
+                                                                    <h5>True_Count:</h5>
 
-                                                                    <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+                                                                    <p className="blue">{this.state.App[0].true_count}</p>
+                                                                </div>
+
+                                                            </Col>
+
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5>False_Count:</h5>
+
+                                                                    <p className="blue">{this.state.App[0].false_count}</p>
+
+                                                                </div>
+
+                                                            </Col>
+
+                                                            <Col md="4">
+
+                                                                <div>
+                                                                    <h5>Status:</h5>
+                                                                    <div className="btn_size">
+                                                                        {
+                                                                            this.state.App[0].run_state == 1 ? (
+                                                                                <span className="badge badge-success">{this.state.App[0].run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                            ) : (
+                                                                                    <span className="badge badge-danger">{this.state.App[0].run_state == "1" ? "Completed" : "Pending"}</span>
+                                                                                )
+                                                                        }
+                                                                    </div>
 
                                                                 </div>
 

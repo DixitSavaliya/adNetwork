@@ -179,7 +179,6 @@ export const searchUsersData = (data) => {
 
 
 
-
 export const logout = () => {
   return {
     [CALL_API]: {

@@ -226,7 +226,7 @@ class CreateApp extends React.Component {
             imageURL: this.state.filename
         }
 
-       if(this.state.imageURL) {
+       if(data.imageURL) {
             axios.post(REMOTE_URL + "AP/uploadImageByURL", data)
                 .then(response => {
                     if (response.data.status == 1) {

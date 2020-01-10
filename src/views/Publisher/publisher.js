@@ -83,7 +83,6 @@ class Publisher extends Component {
         }
         let _this = this;
         this.props.usersPGData(obj).then(function (res) {
-            console.log("res", res);
             var data = [];
             for (var i = 0; i < res.response.data.length; i++) {
                 if (res.response.data[i].user_type == 2) {
@@ -286,7 +285,6 @@ class Publisher extends Component {
                         </CardHeader>
                         <CardBody>
                             <div>
-
                                 <Row>
                                     <Col md="6">
                                         <input
@@ -340,7 +338,6 @@ class Publisher extends Component {
                                                                 <td onClick={() => this.appData(data)}>{data.last_name}</td>
                                                                 <td onClick={() => this.appData(data)}>{data.email_id}</td>
                                                                 <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
-
                                                             </tr>
                                                         )
                                                     }

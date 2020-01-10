@@ -442,7 +442,6 @@ class MonetizationNetwork extends React.Component {
                                             onChange={this.filterList}
                                         />
                                     </fieldset>
-
                                     <ul className="list-group">{
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.id)}>
