@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import './userrole.css';
-// import TableRole from '../Tables/tablerole';
+import '../Tables/table.css';
+import { Link } from 'react-router-dom';
 import { EventEmitter } from '../../event';
 import Swal from 'sweetalert2';
 import {
+    Table,
     Row,
     Col,
     Button,
@@ -15,6 +16,7 @@ import {
     CardHeader,
     CardFooter,
     CardBody,
+    CardTitle,
     Form,
     FormGroup,
     FormText,
@@ -31,143 +33,390 @@ class Advertiser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false,
-            statuscheck1: true,
-            userrole: '',
-            userroleerror: '',
-            status: 1,
-            statuserror: '',
-            isDeleted: false,
-            modal: false,
-            emit: false,
-            user: [],
-            roleId: '',
+            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
+            check: false,
+            isData: false,
             searchData: '',
-            delete: false,
-            updateRoleBtn: false
+            count: '',
+            currentPage: "1",
+            items_per_page: "5",
+            render_per_page: "5",
+            perpage: '',
+            paginationdata: '',
+            isFetch: false,
+            data: '',
+            allRecords: '',
+            upperPageBound: "3",
+            lowerPageBound: "0",
+            pageBound: "3",
+            isPrevBtnActive: 'disabled',
+            isNextBtnActive: '',
+            onClickPage: "1",
+            ownership: '',
+            ads: false
         }
-        // this.userRoleData = this.userRoleData.bind(this);
-        // this.UpdateUserRoleData = this.UpdateUserRoleData.bind(this);
-        // this.handleChangeStatus = this.handleChangeStatus.bind(this);
-        // this.searchUserRoleDataKeyUp = this.searchUserRoleDataKeyUp.bind(this);
-        // this.handleChangeEvent = this.handleChangeEvent.bind(this);
-
-        // EventEmitter.subscribe('editData', (data) => {
-        //     this.setState({
-        //         updateRoleBtn: this.state.updateRoleBtn = true,
-        //         roleId: this.state.roleId = data.id
-        //     })
-        //     this.setState({
-        //         userrole: this.state.userrole = data.name,
-        //         status: this.state.status = 1,
-        //         statuscheck1: this.state.statuscheck1 = (data.status == 1) ? true : false
-        //     })
-        // });
+        this.handleClick = this.handleClick.bind(this);
+        this.btnDecrementClick = this.btnDecrementClick.bind(this);
+        this.btnIncrementClick = this.btnIncrementClick.bind(this);
+        this.handleChangegetAds = this.handleChangegetAds.bind(this);
+        this.searchUserDataKeyUp = this.searchUserDataKeyUp.bind(this);
     }
 
-    // validate() {
-    //     let userroleerror = "";
-    //     let statuserror = "";
+    componentDidMount() {
+        this.countUser();
+    }
 
-    //     if (!this.state.userrole) {
-    //         userroleerror = "please enter userrole";
-    //     }
+    countUser() {
+        let _this = this;
+        this.props.countuser().then((res) => {
+            _this.setState({
+                count: _this.state.count = res.response.data
+            })
+            _this.UsersPageData();
+        })
+    }
 
-    //     if (!this.state.status) {
-    //         statuserror = "please enter status";
-    //     }
-
-    //     if (userroleerror || statuserror) {
-    //         this.setState({ userroleerror, statuserror });
-    //         return false;
-    //     }
-    //     return true;
-    // };
-
-    // userRoleData() {
-    //     const isValid = this.validate();
-    //     if (isValid) {
-    //         this.setState({
-    //             userrole: '',
-    //             userroleerror: '',
-    //             status: '',
-    //             statuserror: ''
-    //         })
-    //         if (this.state.userrole && this.state.status) {
-    //             const data = {
-    //                 name: this.state.userrole,
-    //                 status: this.state.status
-    //             }
-    //             this.props.addUserRole(data);
-    //             EventEmitter.dispatch('role_added', 1);
-    //             this.setState({
-    //                 userrole: this.state.userrole = '',
-    //                 status: this.state.status = ''
-    //             })
-    //         } else {
-    //             Swal.fire("PLease Enter Field First!", "", "warning");
-    //         }
-    //     };
-    // }
-
-    // handleChangeStatus(event) {
-    //     this.setState({
-    //         statuscheck1: this.state.statuscheck1 = event.target.checked,
-    //         status: this.state.status = event.target.defaultValue
-    //     })
-    // }
-
-    // UpdateUserRoleData() {
-    //     const isValid = this.validate();
-    //     if (isValid) {
-    //         this.setState({
-    //             userrole: '',
-    //             userroleerror: '',
-    //             status: '',
-    //             statuserror: ''
-    //         })
-    //         if (this.state.userrole && this.state.status) {
-    //             this.setState({
-    //                 checked: false
-    //             })
-    //             const obj = {
-    //                 name: this.state.userrole,
-    //                 status: this.state.status = this.state.status,
-    //                 id: this.state.roleId
-    //             }
-    //             this.props.updateRole(obj);
-    //             EventEmitter.dispatch('role_updated', 1);
-    //             this.setState({
-    //                 userrole: this.state.userrole = '',
-    //                 status: this.state.status = '',
-    //                 updateRoleBtn: this.state.updateRoleBtn = false
-    //             })
-    //         } else {
-    //             Swal.fire("Please enter filed first!", "", "warning");
-    //         }
-    //     };
-    // };
-
-    // handleChangeEvent(e) {
-    //     EventEmitter.dispatch('per_page_changed', e.target.value);
-    // }
+    UsersPageData() {
+        const obj = {
+            page_no: "1",
+            items_per_page: this.state.items_per_page
+        }
+        let _this = this;
+        this.props.usersPGData(obj).then(function (res) {
+            console.log("res", res);
+            var data = [];
+            for (var i = 0; i < res.response.data.length; i++) {
+                if (res.response.data[i].user_type == 1) {
+                    data.push(res.response.data[i])
+                }
+            }
+            _this.setState({
+                paginationdata: data,
+                isFetch: true
+            })
+        })
+    }
 
 
-    // searchUserRoleDataKeyUp(e) {
-    //     const obj = {
-    //         search_string: e.target.value
-    //     }
-    //     this.props.searchRole(obj);
-    //     EventEmitter.dispatch('searchData', this.state.searchData);
-    // }
+    handleClick(event) {
+        if (this.props.auth.auth_data.user_group == "publisher") {
+            if (this.state.currentPage <= '' + event.target.id) {
+                this.setState({
+                    currentPage: this.state.currentPage + 1,
+                    onClickPage: +this.state.onClickPage + +this.state.items_per_page
+                    // render_per_page:
+                })
+            } else {
+                this.setState({
+                    currentPage: this.state.currentPage - 1
+                })
+            }
+            const obj = {
+                page_no: '' + event.target.id,
+                items_per_page: this.state.items_per_page,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.ownership
+            }
+            let _this = this;
+            this.props.applicationPGData(obj).then(function (res) {
+                var data = [];
+                for (var i = 0; i < res.response.data.length; i++) {
+                    if (res.response.data[i].user_type == 1) {
+                        data.push(res.response.data[i])
+                    }
+                }
+                _this.setState({
+                    paginationdata: data,
+                    isFetch: true
+                })
+            })
+
+        } else {
+            if (this.state.currentPage <= '' + event.target.id) {
+                this.setState({
+                    currentPage: this.state.currentPage + 1
+                })
+            } else {
+                this.setState({
+                    currentPage: this.state.currentPage - 1
+                })
+            }
+            const obj = {
+                page_no: '' + event.target.id,
+                items_per_page: this.state.items_per_page,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.ownership = ""
+            }
+            let _this = this;
+            this.props.applicationPGData(obj).then(function (res) {
+                _this.setState({
+                    paginationdata: res.response.data,
+                    isFetch: true
+                })
+            })
+        }
+    }
+
+    appData(data) {
+        // const id = data.id;
+        // this.props.history.push("/viewapp/" + id)
+    }
+
+
+    btnIncrementClick() {
+        this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
+        this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
+        let listid = this.state.upperPageBound + 1;
+        this.setState({ currentPage: listid });
+    }
+
+    btnDecrementClick() {
+        this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
+        this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
+        let listid = this.state.upperPageBound - this.state.pageBound;
+        this.setState({ currentPage: listid });
+    }
+
+    handleChangegetAds(data, index) {
+        if (data.ad_status == 1) {
+            if (data.ad_id != null) {
+                const obj = {
+                    id: data.ad_id
+                }
+                this.props.activeAppAds(obj).then((res) => {
+                    this.getApplicationPageData();
+                })
+            }
+        } else {
+            if (data.ad_id != null) {
+                const obj = {
+                    id: data.ad_id
+                }
+                this.props.InactiveAppAds(obj).then((res) => {
+                    this.getApplicationPageData();
+                })
+            }
+        }
+    }
+
+    searchUserDataKeyUp(e) {
+        const obj = {
+            search_string: e.target.value
+        }
+        this.props.searchUsersData(obj).then((res) => {
+            this.setState({
+                searchData: this.state.searchData = res.response.data
+            })
+        });
+    }
 
     render() {
-        const { auth } = this.props;
+        let auth = this.props.auth.auth_data;
+        var pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {
+            pageNumbers.push(i);
+        }
+        var renderPageNumbers = pageNumbers.map(number => {
+            if (number === 1 && this.state.currentPage === 1) {
+                return (
+                    <li
+                        key={number}
+                        id={number}
+                        className={this.state.currentPage === number ? 'active' : 'page-item'}
+                    >
+                        <a className="page-link" onClick={this.handleClick}>{number}</a>
+                    </li>
+                );
+            }
+            else if ((number < this.state.upperPageBound + 1) && number > this.state.lowerPageBound) {
+                return (
+                    <li
+                        key={number}
+                        id={number}
+                        className={this.state.currentPage === number ? 'active' : 'page-item'}
+                    >
+                        <a className="page-link" id={number} onClick={this.handleClick}>{number}</a>
+                    </li>
+                )
+            }
+        });
+
+        let pageIncrementBtn = null;
+        if (pageNumbers.length > this.state.upperPageBound) {
+            pageIncrementBtn =
+                <li
+                    className='page-item'
+                >
+                    <a
+                        className='page-link'
+                        onClick={this.btnIncrementClick}
+                    >
+                        &hellip;
+          </a>
+                </li>
+        }
+
+        let pageDecrementBtn = null;
+        if (this.state.lowerPageBound >= 1) {
+            pageDecrementBtn =
+                <li
+                    className='page-item'
+                >
+                    <a
+                        className='page-link'
+                        onClick={this.btnDecrementClick}
+                    >
+                        &hellip;
+          </a>
+                </li>
+        }
 
         return (
-            <div className="animated fadeIn">
-               <h1>Advertiser</h1>
-            </div>
+            <Row>
+                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                    <Card className="main-card mb-3">
+                        <CardHeader>
+                            <CardTitle
+                                className="font"
+                            >
+                                Advertisers
+                                        </CardTitle>
+                        </CardHeader>
+                        <CardBody>
+                            <div>
+                                <Row>
+                                    <Col md="6">
+                                        <input
+                                            className="form-control search"
+                                            type="text"
+                                            placeholder="Search"
+                                            aria-label="Search"
+                                            onKeyUp={this.searchUserDataKeyUp}
+                                        />
+                                    </Col>
+                                    <Col md="6">
+
+                                        <div className="pull-right">
+                                            <Row>
+                                                <span style={{ marginTop: '8px' }}>Records per page</span>
+                                                <Col md="2">
+                                                    <Input
+                                                        type="select"
+                                                        id="rightid"
+                                                        name="customSelect"
+                                                        onChange={this.handleChangeEvent}
+                                                    >
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                    </Input>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                            <br />
+                            <div>
+                                {
+                                    this.state.searchData.length > 0 ? (
+                                        <div>
+                                            <Table hover className="mb-0 table_responsive" bordered>
+                                                <thead>
+                                                    <tr>
+                                                        <th>FirstName</th>
+                                                        <th>LastName</th>
+                                                        <th>EmailId</th>
+                                                        <th>MobileNo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.searchData.map((data, index) =>
+                                                            <tr key={index}>
+                                                                <td onClick={() => this.appData(data)}>{data.first_name}</td>
+                                                                <td onClick={() => this.appData(data)}>{data.last_name}</td>
+                                                                <td onClick={() => this.appData(data)}>{data.email_id}</td>
+                                                                <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
+
+                                                            </tr>
+                                                        )
+                                                    }
+                                                </tbody>
+                                            </Table>
+                                        </div>
+                                    ) : (
+                                            <div>
+                                                {
+                                                    this.state.paginationdata ? (
+                                                        <div>
+                                                            <Table hover className="mb-0 table_responsive" bordered>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>FirstName</th>
+                                                                        <th>LastName</th>
+                                                                        <th>EmailId</th>
+                                                                        <th>MobileNo</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {
+                                                                        this.state.paginationdata.map((data, index) =>
+                                                                            <tr key={index}>
+                                                                                <td onClick={() => this.appData(data)}>{data.first_name}</td>
+                                                                                <td onClick={() => this.appData(data)}>{data.last_name}</td>
+                                                                                <td onClick={() => this.appData(data)}>{data.email_id}</td>
+                                                                                <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
+                                                                            </tr>
+                                                                        )
+                                                                    }
+                                                                </tbody>
+                                                            </Table>
+                                                            {
+                                                                this.state.paginationdata ? (
+                                                                    <div>
+                                                                        <ul className="pagination" id="page-numbers">
+                                                                            {pageDecrementBtn}
+                                                                            {renderPageNumbers}
+                                                                            {pageIncrementBtn}
+                                                                        </ul>
+                                                                    </div>
+                                                                ) : (
+                                                                        <Table hover className="mb-0" bordered>
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th className="action">Action</th>
+                                                                                    <th>Manage Ads</th>
+                                                                                    <th>App Icon</th>
+                                                                                    <th>Name</th>
+                                                                                    <th>Package</th>
+                                                                                    <th>Discription</th>
+                                                                                    <th>status</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                            </tbody>
+                                                                        </Table>
+                                                                    )
+                                                            }
+                                                            {/* <div>
+                                            showing {this.state.onClickPage} to {this.state.render_per_page} of {this.state.count} entries
+                                        </div> */}
+                                                        </div>
+                                                    ) : (
+                                                            null
+                                                        )
+                                                }
+                                            </div>
+                                        )
+                                }
+                            </div>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
         );
     }
 }

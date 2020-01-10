@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import { createApp,getAppDataById,editApp} from '../actions/createapp';
+import {countuser,usersPGData,searchUsersData} from '../actions/auth';
 import Advertiser from '../../views/Advertiser/advertiser';
 
 class AdvertiserContainer extends Component {
@@ -24,10 +24,10 @@ class AdvertiserContainer extends Component {
     }
 
     render() {
-      const {auth} = this.props;
+      const {auth,countuser,usersPGData,searchUsersData} = this.props;
     //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <Advertiser auth={auth}/>
+        <Advertiser auth={auth} countuser={countuser} usersPGData={usersPGData} searchUsersData={searchUsersData}/>
       );
     }
 }
@@ -37,7 +37,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    // createApp:(data) => dispatch(createApp(data))
+    countuser:() => dispatch(countuser()),
+    usersPGData:(data) => dispatch(usersPGData(data)),
+    searchUsersData:(data) => dispatch(searchUsersData(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdvertiserContainer));

@@ -124,3 +124,11 @@ th.center {
 .img-nt{
   width: 50px;
 }
+
+@media screen and (max-width: 1200px) {
+  .table_responsive {
+    display: block;
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+}

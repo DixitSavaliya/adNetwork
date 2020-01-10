@@ -345,15 +345,15 @@ export default class TableApp extends React.Component {
                             {
                                 this.state.paginationdata ? (
                                     <div>
-                                        <Table hover className="mb-0" bordered>
+                                        <Table hover className="mb-0 table_responsive" bordered>
                                             <thead>
                                                 <tr>
                                                     <th className="action">Action</th>
-                                                    <th>Manage Ads</th>
+                                                    {this.props.auth.auth_data.user_group == 'publisher' ? (<th>Manage Ads</th>):(null)}
                                                     <th>App Icon</th>
                                                     <th>Name</th>
                                                     <th>Package</th>
-                                                    <th>Discription</th>
+                                                    {/* <th>Discription</th> */}
                                                     <th>status</th>
                                                 </tr>
                                             </thead>
@@ -385,18 +385,22 @@ export default class TableApp extends React.Component {
                                                                         </td>
                                                                     )
                                                             }
-                                                            <td>
-                                                                <Switch
-                                                                    checked={data.ad_status == 1 ? true : false}
-                                                                    onChange={() => this.handleChangegetAds(data, index)}
-                                                                />
-                                                            </td>
+                                                            {
+                                                                this.props.auth.auth_data.user_group == 'publisher'?(
+                                                                    <td>
+                                                                        <Switch
+                                                                            checked={data.ad_status == 1 ? true : false}
+                                                                            onChange={() => this.handleChangegetAds(data, index)}
+                                                                        />
+                                                                    </td>
+                                                                ) : (null)
+                                                            }
                                                             <td onClick={() => this.appData(data)}>
                                                                 <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
                                                             </td>
                                                             <td onClick={() => this.appData(data)}>{data.name}</td>
                                                             <td onClick={() => this.appData(data)}>{data.package}</td>
-                                                            <td onClick={() => this.appData(data)}>{data.description}</td>
+                                                            {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
                                                             <td onClick={() => this.appData(data)}>
                                                                 <div className="btn_size">
                                                                     {

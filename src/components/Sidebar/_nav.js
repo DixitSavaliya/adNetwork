@@ -40,15 +40,10 @@ export default {
       icon: 'fa fa-share-alt',
       children: [
         {
-          name: 'Create-Advertiser',
+          name: 'Advertiser',
           url: '/advertiser',
-          icon: 'fa fa-plus-square',
-        },
-        {
-          name: 'List-App',
-          url: '/ListApp',
           icon: 'fa fa-reorder',
-        },
+        }
       ]
     },
 
@@ -57,15 +52,10 @@ export default {
       icon: 'fa fa-bullhorn',
       children: [
         {
-          name: 'Create-Publisher',
+          name: 'Publisher',
           url: '/publisher',
-          icon: 'fa fa-plus-square',
-        },
-        {
-          name: 'List-App',
-          url: '/ListApp',
           icon: 'fa fa-reorder',
-        },
+        }
       ]
     },
    

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import {searchApplicationData} from '../actions/createapp';
 import {getPublisherApplication,AddAppMonetization,getAPPMonetization,updateAppMonetization,RemoveAppMonetization} from '../actions/monetization';
 import MonetizationNetwork from '../../views/monetizationnetwork/monetizationnetwork';
 
@@ -24,10 +25,10 @@ class MonetizationNetworkContainer extends Component {
     }
 
     render() {
-      const {auth,getPublisherApplication,AddAppMonetization,getAPPMonetization,updateAppMonetization,RemoveAppMonetization} = this.props;
+      const {auth,searchApplicationData,getPublisherApplication,AddAppMonetization,getAPPMonetization,updateAppMonetization,RemoveAppMonetization} = this.props;
     //   this.id = this.props.location.pathname.split('/')[2];
       return (
-        <MonetizationNetwork auth={auth} getPublisherApplication={getPublisherApplication} AddAppMonetization={AddAppMonetization} getAPPMonetization={getAPPMonetization} updateAppMonetization={updateAppMonetization} RemoveAppMonetization={RemoveAppMonetization}/>
+        <MonetizationNetwork auth={auth} searchApplicationData={searchApplicationData} getPublisherApplication={getPublisherApplication} AddAppMonetization={AddAppMonetization} getAPPMonetization={getAPPMonetization} updateAppMonetization={updateAppMonetization} RemoveAppMonetization={RemoveAppMonetization}/>
       );
     }
 }
@@ -41,7 +42,8 @@ const mapDispatchToProps = (dispatch) => ({
     AddAppMonetization:(data) => dispatch(AddAppMonetization(data)),
     getAPPMonetization:(data) => dispatch(getAPPMonetization(data)),
     updateAppMonetization:(data) => dispatch(updateAppMonetization(data)),
-    RemoveAppMonetization:(data) =>dispatch(RemoveAppMonetization(data))
+    RemoveAppMonetization:(data) =>dispatch(RemoveAppMonetization(data)),
+    searchApplicationData:(data) => dispatch(searchApplicationData(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MonetizationNetworkContainer));

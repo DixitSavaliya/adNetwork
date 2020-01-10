@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import Switch from "react-switch";
 import { EventEmitter } from '../../event';
 import { Link } from 'react-router-dom';
+import { REMOTE_URL } from '../../redux/constants/index';
 import {
     Badge,
     Button,
@@ -61,16 +62,18 @@ class MonetizationNetwork extends React.Component {
             fb_ads: true,
             updateMonetization: false,
             mainAds: false,
-            showsection: false
+            showsection: false,
+            items:[]
         }
         this.handleChangeFBAds = this.handleChangeFBAds.bind(this);
         this.handleChangeAdMobAds = this.handleChangeAdMobAds.bind(this);
         this.handleChangeMopubAds = this.handleChangeMopubAds.bind(this);
-        this.onItemSelect = this.onItemSelect.bind(this);
         this.addAppMonetization = this.addAppMonetization.bind(this);
         this.UpdateAppMonetization = this.UpdateAppMonetization.bind(this);
         this.handleChangeMainAds = this.handleChangeMainAds.bind(this);
         this.removeAppMonetization = this.removeAppMonetization.bind(this);
+        this.filterList = this.filterList.bind(this);
+        this.handleAppClick = this.handleAppClick.bind(this);
     }
 
     componentDidMount() {
@@ -86,8 +89,8 @@ class MonetizationNetwork extends React.Component {
         })
     }
 
-    onItemSelect(event) {
-        let _id = event.target.options[event.target.selectedIndex].value;
+    handleAppClick(event) {
+        let _id = event;
         this.setState({
             app_id: this.state.app_id = _id,
             showsection: this.state.showsection = true
@@ -406,16 +409,53 @@ class MonetizationNetwork extends React.Component {
         }
     }
 
+    filterList(event) {
+        //response of api call
+        const obj = {
+            search_string: event.target.value,
+            user_id: this.props.auth.auth_data.id,
+            user_group: this.props.auth.auth_data.user_group,
+            ownership: this.state.ownership = 1
+        }
+        this.props.searchApplicationData(obj).then((res) => {
+            this.setState({
+                items: this.state.searchData = res.response.data
+            })
+        });
+    }
+
     render() {
         const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
         return (
             <div>
                 <Row>
-                    <Col md="3">
+                    <Col md="4">
                         <Form>
                             <FormGroup>
                                 {/* <Label for="exampleCustomSelect"><b>Select Application</b></Label> */}
-                                <Input
+                                <div className="filter-list">
+                                    <fieldset className="form-group">
+                                        <input
+                                            type="text"
+                                            className="form-control form-control-lg"
+                                            placeholder="Search Application.."
+                                            onChange={this.filterList}
+                                        />
+                                    </fieldset>
+
+                                    <ul className="list-group">{
+                                        this.state.items.map((item, index) =>
+                                            <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.id)}>
+                                                <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block',marginTop:'3px' }} src={REMOTE_URL + item.icon} />
+                                                <p  style={{ padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                    {item.name}<br />
+                                                    <small style={{ paddingTop: '0px', display: 'inline-block' }}>{item.package}</small>
+                                                </p>
+                                            </li>
+                                        )
+                                    }</ul>
+                                </div>
+                                {/* <Input
                                     type="select"
                                     id="exampleCustomSelect"
                                     name="customSelect"
@@ -424,10 +464,10 @@ class MonetizationNetwork extends React.Component {
                                     <option value="">Select MyApp:</option>
                                     {
                                         this.state.publisherapp.length > 0 ? this.state.publisherapp.map((data, index) =>
-                                    <option key={data.id} value={data.id}>{data.name} - ({data.package})</option>
+                                            <option key={data.id} value={data.id}>{data.name} - ({data.package})</option>
                                         ) : ''
                                     }
-                                </Input>
+                                </Input> */}
                             </FormGroup>
                         </Form>
                     </Col>

@@ -1039,6 +1039,63 @@ const auth = (state = initialState, action) => {
             };
 
 
+                        //GETUSERSCOUNTS                       
+        case ACTION.GETUSERSCOUNTS_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.GETUSERSCOUNTS_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.GETUSERSCOUNTS_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+             //GETUSERSPG                       
+        case ACTION.GETUSERSPG_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.GETUSERSPG_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.GETUSERSPG_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+
+             //SEARCHUSERS                       
+        case ACTION.SEARCHUSERS_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.SEARCHUSERS_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.SEARCHUSERS_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
 
 
 

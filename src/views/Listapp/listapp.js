@@ -105,7 +105,7 @@ class ListApp extends React.Component {
                 {
                     this.props.auth.auth_data.user_group == "publisher" ? (
                         <Row>
-                            <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                            <Col className="cols" xs="12" sm="12" md="12" lg="12" xl="12">
                                 <Card className="main-card mb-3">
                                     <CardHeader>
                                         <CardTitle
@@ -119,7 +119,7 @@ class ListApp extends React.Component {
                                             {
                                                 this.state.isDisplay == true ? (
                                                     <Row>
-                                                        <Col md="1">
+                                                        <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                                             <div className="rightapp">
                                                                 <Link to="/createapp">
                                                                     <Button
@@ -131,11 +131,14 @@ class ListApp extends React.Component {
                                                                 </Link>
                                                             </div>
                                                         </Col>
-                                                        {
-                                                            this.props.auth.auth_data.user_group == "publisher" ? (
-                                                                <Col md="3">
-                                                                    <Input
+                                                        <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                                            {
+                                                                this.props.auth.auth_data.user_group == "publisher" ? (
+                                                                    <div className="searchA">
+                                                                        <Input
                                                                         type="select"
+                                                      
+                                                                        className="form-control"
                                                                         id="exampleCustomSelect"
                                                                         name="customSelect"
                                                                         onChange={this.handleChangeAppEvent}
@@ -144,38 +147,68 @@ class ListApp extends React.Component {
                                                                         <option value="1">My Only</option>
                                                                         <option value="2">Advertisers</option>
                                                                     </Input>
-                                                                </Col>
-                                                            ) : (
-                                                                    null
-                                                                )
-                                                        }
-                                                        <Col md="8">
-                                                            <div>
-                                                                <Row>
-                                                                    <Col md="8">
-                                                                        <input
-                                                                            className="form-control"
-                                                                            type="text"
-                                                                            placeholder="Search"
-                                                                            aria-label="Search"
-                                                                            onKeyUp={this.searchApplicationDataKeyUp}
-                                                                        />
-                                                                    </Col>
-                                                                    <span style={{ marginTop: '8px' }}>Records per page</span>
-                                                                    <Col md="2">
-                                                                        <Input
-                                                                            type="select"
-                                                                            id="exampleCustomSelect"
-                                                                            name="customSelect"
-                                                                            onChange={this.handleChangeEvent}
-                                                                        >
-                                                                            <option value="5">5</option>
-                                                                            <option value="10">10</option>
-                                                                        </Input>
-                                                                    </Col>
-                                                                </Row>
-
-                                                            </div>
+                                                                    <input
+                                                                        className="form-control search"
+                                                                        type="text"
+                                                                        placeholder="Search"
+                                                                        aria-label="Search"
+                                                                        onKeyUp={this.searchApplicationDataKeyUp}
+                                                                    />
+                                                                    <span style={{marginRight: '5px'}}>Records per page</span>
+                                                                    <Input
+                                                                        type="select"
+                                                                        className="form-control drop"
+                                                                        id="exampleCustomSelect"
+                                                                        name="customSelect"
+                                                                        onChange={this.handleChangeEvent}
+                                                                    >
+                                                                        <option value="5">5</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="25">25</option>
+                                                                        <option value="50">50</option>
+                                                                        <option value="100">100</option>
+                                                                    </Input>
+                                                                </div>
+                                                                //     <div className="searchP">
+                                                                //     <Input
+                                                                //         type="select"
+                                                                //         style={{width:'150px'}}
+                                                                //         className="form-control"
+                                                                //         id="exampleCustomSelect"
+                                                                //         name="customSelect"
+                                                                //         onChange={this.handleChangeAppEvent}
+                                                                //     >
+                                                                //         <option value="">All</option>
+                                                                //         <option value="1">My Only</option>
+                                                                //         <option value="2">Advertisers</option>
+                                                                //     </Input>
+                                                                //      <input
+                                                                //          className="form-control searchP"
+                                                                //          type="text"
+                                                                //          placeholder="Search"
+                                                                //          aria-label="Search"
+                                                                //          onKeyUp={this.searchApplicationDataKeyUp}
+                                                                //      />
+                                                                //      <span>Records per page</span>
+                                                                //      <Input
+                                                                //          type="select"
+                                                                //          className="form-control drop"
+                                                                //          id="exampleCustomSelect"
+                                                                //          name="customSelect"
+                                                                //          onChange={this.handleChangeEvent}
+                                                                //      >
+                                                                //          <option value="5">5</option>
+                                                                //          <option value="10">10</option>
+                                                                //          <option value="25">25</option>
+                                                                //          <option value="50">50</option>
+                                                                //          <option value="100">100</option>
+                                                                //      </Input>
+                                                                //  </div>
+                                                                ) : (
+                                                                        null
+                                                                    )
+                                                            }
+                                                           
                                                         </Col>
                                                     </Row>
                                                 ) : (
@@ -192,7 +225,7 @@ class ListApp extends React.Component {
                         </Row>
                     ) : (
                             <Row>
-                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                <Col className="cols" xs="12" sm="12" md="12" lg="12" xl="12">
                                     <Card className="main-card mb-3">
                                         <CardHeader>
                                             <CardTitle
@@ -206,7 +239,7 @@ class ListApp extends React.Component {
                                                 {
                                                     this.state.isDisplay == true ? (
                                                         <Row>
-                                                            <Col md="1">
+                                                            <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                                                 <div className="rightapp">
                                                                     <Link to="/createapp">
                                                                         <Button
@@ -219,32 +252,29 @@ class ListApp extends React.Component {
                                                                 </div>
                                                             </Col>
 
-                                                            <Col md="11">
-                                                                <div>
-                                                                    <Row>
-                                                                        <Col md="8">
-                                                                            <input
-                                                                                className="form-control"
-                                                                                type="text"
-                                                                                placeholder="Search"
-                                                                                aria-label="Search"
-                                                                                onKeyUp={this.searchApplicationDataKeyUp}
-                                                                            />
-                                                                        </Col>
-                                                                        <span style={{ marginTop: '8px' }}>Records per page</span>
-                                                                        <Col md="2">
-                                                                            <Input
-                                                                                type="select"
-                                                                                id="exampleCustomSelect"
-                                                                                name="customSelect"
-                                                                                onChange={this.handleChangeEvent}
-                                                                            >
-                                                                                <option value="5">5</option>
-                                                                                <option value="10">10</option>
-                                                                            </Input>
-                                                                        </Col>
-                                                                    </Row>
-
+                                                            <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                                                <div className="searchP">
+                                                                    <input
+                                                                        className="form-control search"
+                                                                        type="text"
+                                                                        placeholder="Search"
+                                                                        aria-label="Search"
+                                                                        onKeyUp={this.searchApplicationDataKeyUp}
+                                                                    />
+                                                                    <span>Records per page</span>
+                                                                    <Input
+                                                                        type="select"
+                                                                        className="form-control drop"
+                                                                        id="exampleCustomSelect"
+                                                                        name="customSelect"
+                                                                        onChange={this.handleChangeEvent}
+                                                                    >
+                                                                        <option value="5">5</option>
+                                                                        <option value="10">10</option>
+                                                                        <option value="25">25</option>
+                                                                        <option value="50">50</option>
+                                                                        <option value="100">100</option>
+                                                                    </Input>
                                                                 </div>
                                                             </Col>
                                                         </Row>

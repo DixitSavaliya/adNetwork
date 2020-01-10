@@ -138,6 +138,44 @@ export const updateProfileData = () => {
   };
 };
 
+export const countuser = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'AP/countUsers',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["GETUSERSCOUNTS_REQUEST", "GETUSERSCOUNTS_SUCCESS", "GETUSERSCOUNTS_FAILURE"],
+    }
+  };
+};
+
+export const usersPGData = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'AP/usersByPg',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["GETUSERSPG_REQUEST", "GETUSERSPG_SUCCESS", "GETUSERSPG_FAILURE"],
+    }
+  };
+};
+
+export const searchUsersData = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'AP/usersBySearch',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["SEARCHUSERS_REQUEST", "SEARCHUSERS_SUCCESS", "SEARCHUSERS_FAILURE"],
+    }
+  };
+};
 
 
 

@@ -183,16 +183,34 @@ class ViewNotifications extends React.Component {
                                                                 <Col md="4" key={index}>
                                                                     <Form>
                                                                         <Card className="shadow_card">
-
                                                                             <CardBody className="padding">
                                                                                 <Row>
-                                                                                    <Col md="2">
+                                                                                    <Col md="3">
                                                                                         <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
                                                                                     </Col>
-                                                                                    <Col md="10" className="content">
+                                                                                    <Col md="9" className="content">
                                                                                         <div className="app_detail">
-                                                                                            <h6>Name: <p>{data.name}</p></h6>
-                                                                                            <h6>Package: <p>{data.package}</p></h6>
+                                                                                            {/* <Input
+                                                                                            type="checkbox"
+                                                                                            id="no"
+                                                                                            onChange={() => this.handleChange(data)}
+                                                                                            checked={this.state.advertiserapp[index]['_rowChecked'] == true}
+                                                                                        /> */}
+                                                                                            <h5>{data.name}</h5>
+                                                                                            <h6>{data.package}</h6>
+                                                                                            {/* {
+                                                                                            this.state.publisherapp[index]['_rowChecked'] == true ? (
+                                                                                                <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                                    SELECTED
+                                                                                            </Button>
+                    
+                                                                                            ) : (
+                                                                                                    <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                                        SELECT
+                                                                                            </Button>
+                                                                                                )
+                    
+                                                                                        } */}
                                                                                         </div>
                                                                                     </Col>
                                                                                 </Row>
@@ -202,7 +220,34 @@ class ViewNotifications extends React.Component {
                                                                 </Col>
                                                             )
                                                         }
+
                                                     </Row>
+                                                    // <Row>
+                                                    //     {
+                                                    //         this.state.appviewArray.map((data, index) =>
+                                                    //             <Col md="4" key={index}>
+                                                    //                 <Form>
+                                                    //                     <Card className="shadow_card">
+
+                                                    //                         <CardBody className="padding">
+                                                    //                             <Row>
+                                                    //                                 <Col md="2">
+                                                    //                                     <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                    //                                 </Col>
+                                                    //                                 <Col md="10" className="content">
+                                                    //                                     <div className="app_detail">
+                                                    //                                         <h6>Name: <p>{data.name}</p></h6>
+                                                    //                                         <h6>Package: <p>{data.package}</p></h6>
+                                                    //                                     </div>
+                                                    //                                 </Col>
+                                                    //                             </Row>
+                                                    //                         </CardBody>
+                                                    //                     </Card>
+                                                    //                 </Form>
+                                                    //             </Col>
+                                                    //         )
+                                                    //     }
+                                                    // </Row>
                                                 ) : (
                                                         null
                                                     )
@@ -255,9 +300,9 @@ class ViewNotifications extends React.Component {
 
                                                                 <div>
                                                                     <h5 >URL:</h5>
-                                                                    
-                                                                        <p className="blue">{this.state.App[0].data.notification.url}</p>
-                                                                 
+
+                                                                    <p className="blue">{this.state.App[0].data.notification.url}</p>
+
                                                                 </div>
 
                                                             </Col>
@@ -292,9 +337,9 @@ class ViewNotifications extends React.Component {
 
                                                                 <div>
                                                                     <h5>Click_Action:</h5>
-                                                                  
-                                                                        <p className="blue">{this.state.App[0].data.notification.click_action}</p>
-                                                                  
+
+                                                                    <p className="blue">{this.state.App[0].data.notification.click_action}</p>
+
                                                                 </div>
 
                                                             </Col>
