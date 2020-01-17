@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import './dashboard.css';
 import {
   Badge,
   Row,
@@ -12,6 +13,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Form,
   CardFooter,
   CardTitle,
   Button,
@@ -22,6 +24,9 @@ import {
   Input,
   Table
 } from 'reactstrap';
+
+import axios from 'axios';
+import { REMOTE_URL } from '../../redux/constants/index';
 
 const brandPrimary = '#20a8d8';
 const brandSuccess = '#4dbd74';
@@ -416,8 +421,45 @@ class Dashboard extends Component {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false
+      dropdownOpen: false,
+      publisher: [],
+      advertiser: []
     };
+  }
+
+  componentDidMount() {
+    if (this.props.auth.auth_data.user_group == "publisher") {
+      let auth = this.props.auth.auth_data;
+      axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
+      axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
+      let data = {
+        publisher_id: this.props.auth.auth_data.id
+      }
+      axios.post(REMOTE_URL + "Application/getPublisherAppHitCount", data)
+        .then(response => {
+          this.setState({
+            publisher: this.state.publisher = response.data.data
+          })
+        }).catch(error => {
+          console.log("error", error);
+        });
+
+    } else {
+      let auth = this.props.auth.auth_data;
+      axios.defaults.headers.post['Authorization'] = 'Barier ' + (auth ? auth.access_token : '');
+      axios.defaults.headers.post['content-md5'] = auth ? auth.secret_key : '';
+      let data = {
+        advertiser_id: this.props.auth.auth_data.id
+      }
+      axios.post(REMOTE_URL + "Application/getAdvertiserAppHitCount", data)
+        .then(response => {
+          this.setState({
+            advertiser: this.state.advertiser = response.data.data
+          })
+        }).catch(error => {
+          console.log("error", error);
+        });
+    }
   }
 
   toggle() {
@@ -425,7 +467,6 @@ class Dashboard extends Component {
       dropdownOpen: !this.state.dropdownOpen
     });
   }
-
 
   render() {
     const { auth, login, getUser } = this.props;
@@ -441,6 +482,140 @@ class Dashboard extends Component {
               ""
             )
         }
+        {
+          this.props.auth.auth_data.user_group == "publisher" ? (
+            <Card>
+              <CardHeader>
+                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App Hit Count</strong>
+              </CardHeader>
+              <CardBody className="app_list" style={{height:'305px'}}>
+                {
+                  this.state.publisher.length > 0 ? (
+                    <Row>
+                      {
+                        this.state.publisher.map((data, index) =>
+                          <Col sm="12" key={index}>
+                            <Form>
+                              <Card className="shadow_card">
+                                <CardBody className="padding">
+                                  <Row>
+                                    <Col sm="1">
+                                      <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                    </Col>
+                                    <Col sm="3" className="content text-left">
+                                      <div className="app_detail">
+                                        <h5>{data.name}</h5>
+                                        <h6>{data.package}</h6>
+                                      </div>
+                                    </Col>
+                                    <Col sm="4">
+                                      <div className="text-center">
+                                          <label><strong>Hit Count</strong></label>
+                                          <div className="inline_content">
+                                            <h5>Today 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_hit_count}</p>
+                                            </h5>
+                                            <h5>Total 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_hit_count}</p>
+                                            </h5>
+                                          </div>
+                                      </div>
+                                    </Col>
+                                    <Col sm="4">
+                                      {/* <h5>Today Count:</h5>
+                                      <p className="blue">{data.today_impression_count}</p>
+                                      <h5>Total Count:</h5>
+                                      <p className="blue">{data.total_impression_count}</p> */}
+                                      <div className="text-center">
+                                          <label><strong>Impression Count</strong></label>
+                                          <div className="inline_content">
+                                            <h5>Today 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_impression_count}</p>
+                                            </h5>
+                                            <h5>Total 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_impression_count}</p>
+                                            </h5>
+                                          </div>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </CardBody>
+                              </Card>
+                            </Form>
+                          </Col>
+                        )
+                      }
+
+                    </Row>
+                  ) : (
+                      null
+                    )
+                }
+              </CardBody>
+            </Card>
+          ) : (
+              <Card>
+                <CardHeader>
+                  <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App Impression Count</strong>
+                </CardHeader>
+                <CardBody className="app_list" style={{height:'305px'}}>
+                  {
+                    this.state.advertiser.length > 0 ? (
+                      <Row>
+                        {
+                          this.state.advertiser.map((data, index) =>
+                            <Col sm="12" key={index}>
+                              <Form>
+                                <Card className="shadow_card">
+                                  <CardBody className="padding">
+                                    <Row>
+                                      <Col sm="1">
+                                        <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                      </Col>
+                                      <Col sm="6" className="content text-left">
+                                        <div className="app_detail">
+                                          <h5>{data.name}</h5>
+                                          <h6>{data.package}</h6>
+                                        </div>
+                                      </Col>
+                                      <Col sm="5">
+                                      <div className="text-center">
+                                          <label><strong>Impression Count</strong></label>
+                                          <div className="inline_content">
+                                            <h5>Today 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_count}</p>
+                                            </h5>
+                                            <h5>Total 
+                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_count}</p>
+                                            </h5>
+                                          </div>
+                                      </div>
+                                    </Col>
+                                      {/* <Col sm="3">
+                                      <h5>Today_Impression_Count:</h5>
+                                      <p className="blue">{data.today_impression_count}</p>
+                                      <h5>Total_Impression_Count:</h5>
+                                      <p className="blue">{data.total_impression_count}</p>
+                                    </Col> */}
+                                    </Row>
+                                  </CardBody>
+                                </Card>
+                              </Form>
+                            </Col>
+                          )
+                        }
+
+                      </Row>
+                    ) : (
+                        null
+                      )
+                  }
+                </CardBody>
+              </Card>
+            )
+        }
+
+
         {/* <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-primary">

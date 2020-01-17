@@ -137,7 +137,7 @@ class ListApp extends React.Component {
                                                                     <div className="searchA">
                                                                         <Input
                                                                         type="select"
-                                                      
+                                                                        style={{width: '170px'}}
                                                                         className="form-control"
                                                                         id="exampleCustomSelect"
                                                                         name="customSelect"

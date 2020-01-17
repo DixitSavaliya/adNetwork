@@ -38,14 +38,17 @@ class CustomAds extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            publisherapp: '',
-            advertiserapp: '',
+            publisherapp: [],
+            advertiserapp: [],
             _maincheck: false,
             app_id: '',
             app_package: '',
             isDelete: false,
             items: [],
-            ownership: ''
+            ownership: '',
+            selectApp: null,
+            isShow: false,
+            listHasApp: false,
         }
         this.checkMainHandler = this.checkMainHandler.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -53,6 +56,8 @@ class CustomAds extends React.Component {
         this.removeCustomAds = this.removeCustomAds.bind(this);
         this.filterList = this.filterList.bind(this);
         this.handleAppClick = this.handleAppClick.bind(this);
+        this.select = this.select.bind(this);
+        this.unselect = this.unselect.bind(this);
 
     }
 
@@ -98,30 +103,6 @@ class CustomAds extends React.Component {
         })
     }
 
-    checkMaster(data) {
-        let count = 0;
-        data.forEach(element => {
-            if (element._rowChecked == true) {
-                element._rowChecked = true;
-                count++;
-            } else {
-                element._rowChecked = false;
-            }
-        });
-        if (count == data.length) {
-            this.setState({
-                _maincheck: true
-            })
-        } else {
-            this.setState({
-                _maincheck: false
-            })
-        }
-        this.setState({
-            advertiserapp: data
-        });
-    }
-
     handleChange(item, e) {
         let _id = item.id;
         let ind = this.state.advertiserapp.findIndex((x) => x.id == _id);
@@ -138,11 +119,14 @@ class CustomAds extends React.Component {
             this.setState({
                 advertiserapp: data
             });
+            this.verifySettings(ind, newState);
         }
-
     }
 
-    handleAppClick(data, event) {
+    handleAppClick(data, event, item) {
+        this.setState({
+            selectApp: this.state.selectApp = item
+        })
         let _id = event;
         let _package = data;
         this.setState({
@@ -153,43 +137,104 @@ class CustomAds extends React.Component {
             app_id: this.state.app_id
         }
         this.props.getCustomAds(obj).then((res) => {
+            if (res.response.status == 1) {
+                let app_list = res.response.data.app_list;
+                if (res.response.data.app_list.length > 0) {
+                    this.setState({
+                        isDelete: this.state.isDelete = true,
+                        listHasApp: this.state.listHasApp = true
+                    })
+                }
 
-            if (res.response.data.app_list.length > 0) {
-                this.setState({
-                    isDelete: this.state.isDelete = true
-                })
-            }
-            let obj = res.response.data.app_list;
-            for (var i = 0; i < this.state.advertiserapp.length; i++) {
-                for (var j = 0; j < obj.length; j++) {
-                    if (this.state.advertiserapp[i].id == obj[j].app_id) {
-                        if (this.state.advertiserapp[i]._rowChecked == true && (obj[j].row_checked == 1) ? true : false) {
-                            this.setState({
-                                _maincheck: this.state._maincheck = true
-                            })
+                let obj = res.response.data.app_list;
+                for (var i = 0; i < this.state.advertiserapp.length; i++) {
+                    for (var j = 0; j < obj.length; j++) {
+                        if (this.state.advertiserapp[i].id == obj[j].app_id) {
+                            if (this.state.advertiserapp[i]._rowChecked == true && (obj[j].row_checked == 1) ? true : false) {
+                                this.setState({
+                                    _maincheck: this.state._maincheck = true
+                                })
+                            }
+                        }
+                        if (this.state.advertiserapp[i].id == obj[j].app_id) {
+                            this.state.advertiserapp[i]._rowChecked = (obj[j].row_checked == 1) ? true : false
                         }
                     }
-                    if (this.state.advertiserapp[i].id == obj[j].app_id) {
-
-                        this.state.advertiserapp[i]._rowChecked = (obj[j].row_checked == 1) ? true : false
-                    }
                 }
+                this.setState({
+                    advertiserapp: this.state.advertiserapp = this.state.advertiserapp,
+                    items: this.state.items = [],
+                })
+                this.state.items = [];
+                document.getElementById('searchInput').value = '';
+                if (res.response.data.app_list.length == this.state.advertiserapp.length) {
+                    this.setState({
+                        isShow: this.state.isShow = true,
+                    })
+                } else {
+                    this.setState({
+                        isShow: this.state.isShow = false,
+                    })
+                }
+            } else {
+                this.setState({
+                    isDelete: this.state.isDelete = false,
+                    isShow: this.state.isShow = false,
+                    listHasApp: this.state.listHasApp = false,
+                })
             }
-            this.setState({
-                advertiserapp: this.state.advertiserapp = this.state.advertiserapp
-            })
-
         })
+    }
+
+    select() {
+        for (var i = 0; i < this.state.advertiserapp.length; i++) {
+            this.state.advertiserapp[i]._rowChecked = true
+        }
+        this.setState({
+            advertiserapp: this.state.advertiserapp = this.state.advertiserapp,
+            isShow: this.state.isShow = true
+        })
+        this.verifySettings('', '', true);
+    }
+
+    unselect() {
+        for (var i = 0; i < this.state.advertiserapp.length; i++) {
+            this.state.advertiserapp[i]._rowChecked = false
+        }
+        this.setState({
+            advertiserapp: this.state.advertiserapp = this.state.advertiserapp,
+            isShow: this.state.isShow = false
+        })
+        this.verifySettings('', '', false);
+    }
+
+    verifySettings(index, state, allState) {
+        if (index && state && allState == undefined) {
+            this.state.advertiserapp[index]._rowChecked = state;
+        } else {
+            if (allState != undefined) {
+                this.state.advertiserapp.map(function (x) {
+                    x._rowChecked = allState
+                });
+            }
+        }
+        if (this.state.advertiserapp.filter(function (e) { return e._rowChecked == true; }).length > 0) {
+            this.setState({
+                listHasApp: this.state.listHasApp = true
+            })
+        } else {
+            this.setState({
+                listHasApp: this.state.listHasApp = false
+            })
+        }
     }
 
     addCustomAds() {
         var selectedAppArray = [];
-        for (var i = 0; i < this.state.advertiserapp.length; i++) {
-            if (this.state.advertiserapp[i]._rowChecked == true) {
-                selectedAppArray.push(this.state.advertiserapp[i]);
-            } else if (this.state.advertiserapp[i]._rowChecked == false) {
-                this.state.advertiserapp[i]._rowChecked = false
-                selectedAppArray.push(this.state.advertiserapp[i]);
+        let data = this.state.advertiserapp;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i]._rowChecked == true) {
+                selectedAppArray.push(data[i]);
             }
         }
 
@@ -200,6 +245,9 @@ class CustomAds extends React.Component {
         }
         this.props.insertCustomAds(appList).then((res) => {
             if (res.response.status == 1) {
+                this.setState({
+                    isDelete: this.state.isDelete = true
+                })
                 Swal.fire({
                     text: res.response.message,
                     icon: 'success'
@@ -225,7 +273,8 @@ class CustomAds extends React.Component {
                 });
                 this.getAdvertiserApplication();
                 this.setState({
-                    isDelete: this.state.isDelete = false
+                    isDelete: this.state.isDelete = false,
+                    isShow: this.state.isShow = false
                 })
             } else {
                 Swal.fire({
@@ -234,6 +283,7 @@ class CustomAds extends React.Component {
                 });
             }
         })
+        this.verifySettings('', '', false);
     }
 
     filterList(event) {
@@ -264,6 +314,7 @@ class CustomAds extends React.Component {
                                     <fieldset className="form-group">
                                         <input
                                             type="text"
+                                            id="searchInput"
                                             className="form-control form-control-lg"
                                             placeholder="Search Application.."
                                             onChange={this.filterList}
@@ -271,7 +322,7 @@ class CustomAds extends React.Component {
                                     </fieldset>
                                     <ul className="list-group">{
                                         this.state.items.map((item, index) =>
-                                            <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.package, item.id)}>
+                                            <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.package, item.id, item)}>
                                                 <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
                                                 <p style={{ padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
                                                     {item.name}<br />
@@ -285,81 +336,147 @@ class CustomAds extends React.Component {
                         </Form>
                     </Col>
                     {
-                        this.state.isDelete == true ? (
-                            <Col md="2">
-                                <Button className="mb-2 mr-2" color="danger" onClick={this.removeCustomAds}>
-                                    Remove Ads
-                            </Button>
+                        this.state.selectApp != null ? (
+                            <Col md="4">
+                                <Card>
+                                    <CardHeader>
+                                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Selected Application</strong>
+                                    </CardHeader>
+                                    <CardBody>
+                                        <Row>
+                                            <Col md="3">
+                                                <img src={REMOTE_URL + this.state.selectApp.icon} style={{ height: '50px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                            </Col>
+                                            <Col md="9" className="content">
+                                                <div className="app_detail">
+
+                                                    <h5>{this.state.selectApp.name}</h5>
+                                                    <h6>{this.state.selectApp.package}</h6>
+                                                    {/* {
+                                                    this.state.advertiserapp[index]['_rowChecked'] == true ? (
+                                                        <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
+                                                            SELECTED
+                                                                            </Button>
+
+                                                    ) : (
+                                                            <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                SELECT
+                                                                            </Button>
+                                                        )
+
+                                                } */}
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </CardBody>
+                                </Card>
                             </Col>
                         ) : (
                                 null
                             )
                     }
-                    <Col md="3">
-                        <Button className="mb-2 mr-2" color="primary" onClick={this.addCustomAds}>
-                            Save Settings
-                        </Button>
+                    <Col md="4">
+                        <div className="btn-group">
+                            {
+                                this.state.selectApp != null ? (
+                                    <div>
+                                        {
+                                            this.state.isShow == false ? (
+                                                <Button className="" color="primary" onClick={this.select}>SelectAll</Button>
+                                            ) : (
+                                                    <Button className="" color="primary" onClick={this.unselect}>UnSelectAll</Button>
+                                                )
+                                        }
+                                    </div>
+                                ) : (
+                                        null
+                                    )
+
+                            }
+                            {
+                                this.state.isDelete == true ? (
+                                    <Button className="" color="danger" onClick={this.removeCustomAds}>Remove Ads</Button>
+
+                                ) : (
+                                        null
+                                    )
+                            }
+                            {
+                                this.state.listHasApp == true ? (
+                                    <Button className="" color="success" onClick={this.addCustomAds}>Save Settings</Button>
+                                ) : (
+                                        null
+                                    )
+                            }
+
+                        </div>
                     </Col>
                 </Row>
-                <Card>
-                    <CardHeader>
-                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
-                    </CardHeader>
-                    <CardBody className="app_list">
-                        {
-                            this.state.advertiserapp.length > 0 ? (
+                {
+                    this.state.selectApp != null ? (
+                        <Card>
+                            <CardHeader>
+                                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
+                            </CardHeader>
+                            <CardBody className="app_list">
+                                {
+                                    this.state.advertiserapp.length > 0 ? (
 
-                                <Row>
-                                    {
-                                        this.state.advertiserapp.map((data, index) =>
-                                            <Col md="4" key={index}>
-                                                <Form>
-                                                    <Card className="shadow_card">
-                                                        <CardBody className="padding">
-                                                            <Row>
-                                                                <Col md="3">
-                                                                    <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                </Col>
-                                                                <Col md="9" className="content">
-                                                                    <div className="app_detail">
-                                                                        {/* <Input
+                                        <Row>
+                                            {
+                                                this.state.advertiserapp.map((data, index) =>
+                                                    <Col md="4" key={index}>
+                                                        <Form>
+                                                            <Card className="shadow_card">
+                                                                <CardBody className="padding">
+                                                                    <Row>
+                                                                        <Col md="3">
+                                                                            <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                                        </Col>
+                                                                        <Col md="9" className="content">
+                                                                            <div className="app_detail">
+                                                                                {/* <Input
                                                                             type="checkbox"
                                                                             id="no"
                                                                             onChange={() => this.handleChange(data)}
                                                                             checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                         /> */}
-                                                                        <h5>{data.name}</h5>
-                                                                        <h6>{data.package}</h6>
-                                                                        {
-                                                                            this.state.advertiserapp[index]['_rowChecked'] == true ? (
-                                                                                <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
-                                                                                    SELECTED
+                                                                                <h5>{data.name}</h5>
+                                                                                <h6>{data.package}</h6>
+                                                                                {
+                                                                                    this.state.advertiserapp[index]['_rowChecked'] == true ? (
+                                                                                        <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                            SELECTED
                                                                             </Button>
 
-                                                                            ) : (
-                                                                                    <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
-                                                                                        SELECT
+                                                                                    ) : (
+                                                                                            <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                                SELECT
                                                                             </Button>
-                                                                                )
+                                                                                        )
 
-                                                                        }
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                        </CardBody>
-                                                    </Card>
-                                                </Form>
-                                            </Col>
+                                                                                }
+                                                                            </div>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Form>
+                                                    </Col>
+                                                )
+                                            }
+
+                                        </Row>
+                                    ) : (
+                                            null
                                         )
-                                    }
-
-                                </Row>
-                            ) : (
-                                    null
-                                )
-                        }
-                    </CardBody>
-                </Card>
+                                }
+                            </CardBody>
+                        </Card>
+                    ) : (
+                            null
+                        )
+                }
             </div>
         );
     }

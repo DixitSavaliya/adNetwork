@@ -76,7 +76,7 @@ class ViewApp extends React.Component {
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
                 if (res.response.message == "No Monetisations Found For This Application!") {
-                  
+
                 } else {
                     this.setState({
                         fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
@@ -125,134 +125,469 @@ class ViewApp extends React.Component {
     }
 
     render() {
+
         return (
             <div>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Link to="/listapp">
-                            <Button className="mb-2 mr-2" color="primary">
-                                Go back
-                                </Button>
-                        </Link>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Card className="main-card mb-3">
-                            <CardHeader>
-                                <CardTitle
-                                    className="font"
-                                >
-                                    App Detail
-                                            </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                <Row>
-                                    <Col md="6">
-                                        {
-                                            this.state.App.map((data, index) =>
-                                                <div key={index}>
-                                                    <h5>Name:</h5>
-                                                    <p className="blue">{data.name}</p>
-                                                </div>
-                                            )
-                                        }
-                                    </Col>
-                                    <Col md="6">
-                                        {
-                                            this.state.App.map((data, index) =>
-                                                <div key={index}>
-                                                    <h5>Package:</h5>
-                                                    <p className="blue">{data.package}</p>
-                                                </div>
-                                            )
-                                        }
-                                    </Col>
-                                    <br />
-                                    <Col md="6">
-                                        {
-                                            this.state.App.map((data, index) =>
-                                                <div key={index}>
-                                                    <h5>Icon:</h5>
-                                                    <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
-                                                </div>
-                                            )
-                                        }
-                                    </Col>
-                                    <Col md="6">
-                                        {
-                                            this.state.App.map((data, index) =>
-                                                <div key={index}>
-                                                    <h5>Status:</h5>
-                                                    <div className="btn_size">
-                                                        {
-                                                            data.status == 1 ? (
-                                                                <span className="badge badge-success">{data.status == 1 ? 'Active' : ''}</span>
-                                                            ) : (
-                                                                    <span className="badge badge-danger">{data.status == 0 ? 'InActive' : ''}</span>
-                                                                )
-                                                        }
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                    </Col>
-                                    <br />
-                                    <Col md="12" className="data">
-                                        {
-                                            this.state.App.map((data, index) =>
-                                                <div key={index}>
-                                                    <h5>Discription:</h5>
-                                                    <p className="blue">{data.description}</p>
-                                                </div>
-                                            )
-                                        }
-                                    </Col>
+                {
+                    this.state.App.length > 0 ? (
+                        <div>
+                            {
+                                this.state.App[0].owner == "publisher" ? (
+                                    <div>
+                                        <Row>
+                                            <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                <Link to="/listapp">
+                                                    <Button className="mb-2 mr-2" color="primary">
+                                                        Go back
+                                    </Button>
+                                                </Link>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                <Card className="main-card mb-3">
+                                                    <CardHeader>
+                                                        <CardTitle
+                                                            className="font"
+                                                        >
+                                                            App Detail
+                                                </CardTitle>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        <Row>
+                                                            <Col md="6">
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Name:</h5>
+                                                                            <p className="blue">{data.name}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6">
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Package:</h5>
+                                                                            <p className="blue">{data.package}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <br />
+                                                            <Col md="6">
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Icon:</h5>
+                                                                            <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6">
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Banner:</h5>
+                                                                            <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
 
-                                </Row>
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Link:</h5>
+                                                                            <p className="blue">{data.link}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Data:</h5>
+                                                                            <p className="blue">{data.data}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <br />
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Status:</h5>
+                                                                            <div className="btn_size">
+                                                                                {
+                                                                                    data.status == 1 ? (
+                                                                                        <span className="badge badge-success">{data.status == 1 ? 'Active' : ''}</span>
+                                                                                    ) : (
+                                                                                            <span className="badge badge-danger">{data.status == 0 ? 'InActive' : ''}</span>
+                                                                                        )
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Privacy Policy:</h5>
+                                                                            <p className="blue">{data.privacy}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <br />
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>WebView:</h5>
+                                                                            <div className="btn_size">
+                                                                                {
+                                                                                    data.web_view == 1 ? (
+                                                                                        <span className="badge badge-success">{data.web_view == 1 ? 'true' : ''}</span>
+                                                                                    ) : (
+                                                                                            <span className="badge badge-danger">{data.web_view == 0 ? 'false' : ''}</span>
+                                                                                        )
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>ExitStatus:</h5>
+                                                                            <div className="btn_size">
+                                                                                {
+                                                                                    data.exit_status == 1 ? (
+                                                                                        <span className="badge badge-success">{data.exit_status == 1 ? 'true' : ''}</span>
+                                                                                    ) : (
+                                                                                            <span className="badge badge-danger">{data.exit_status == 0 ? 'false' : ''}</span>
+                                                                                        )
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <br />
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>More Apps:</h5>
+                                                                            <p className="blue">{data.more_apps}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Version Code</h5>
+                                                                            <p className="blue">{data.version_code}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                          <br />
+                                                          <Col md="12" style={{ marginTop: '15px' }}>
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Server Key</h5>
+                                                                            <p className="blue">{data.serverKey}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+                                                            <br/>
 
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-                        <Card className="main-card mb-3">
-                            <CardHeader>
-                                <CardTitle
-                                    className="font"
-                                >
-                                    Monetisation Ads
-                                            </CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                <Row>
-                                    <Col md="4">
-                                        <Label>
-                                            Facebook Ads:
-                                        </Label>
-                                        <br />
-                                        <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
-                                    </Col>
-                                    <Col md="4">
-                                        <Label>
-                                            AdMob Ads:
-                                        </Label>
-                                        <br />
-                                        <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
-                                    </Col>
-                                    <Col md="4">
-                                        <Label>
-                                            Mopub Ads:
-                                        </Label>
-                                        <br />
-                                        <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
-                                    </Col>
-                                </Row>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+                                                            <Col md="12" className="data">
+                                                                {
+                                                                    this.state.App.map((data, index) =>
+                                                                        <div key={index}>
+                                                                            <h5>Discription:</h5>
+                                                                            <p className="blue">{data.description}</p>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </Col>
+
+                                                        </Row>
+                                                    </CardBody>
+                                                </Card>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                <Card className="main-card mb-3">
+                                                    <CardHeader>
+                                                        <CardTitle
+                                                            className="font"
+                                                        >
+                                                            Monetisation Ads
+                                                </CardTitle>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        <Row>
+                                                            <Col md="4">
+                                                                <Label>
+                                                                    Facebook Ads:
+                                            </Label>
+                                                                <br />
+                                                                <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
+                                                            </Col>
+                                                            <Col md="4">
+                                                                <Label>
+                                                                    AdMob Ads:
+                                            </Label>
+                                                                <br />
+                                                                <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
+                                                            </Col>
+                                                            <Col md="4">
+                                                                <Label>
+                                                                    Mopub Ads:
+                                            </Label>
+                                                                <br />
+                                                                <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
+                                                            </Col>
+                                                        </Row>
+                                                    </CardBody>
+                                                </Card>
+                                            </Col>
+                                        </Row>
+                                    </div>
+
+                                ) : (
+                                        <div>
+                                            <Row>
+                                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                    <Link to="/listapp">
+                                                        <Button className="mb-2 mr-2" color="primary">
+                                                            Go back
+                                        </Button>
+                                                    </Link>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                    <Card className="main-card mb-3">
+                                                        <CardHeader>
+                                                            <CardTitle
+                                                                className="font"
+                                                            >
+                                                                App Detail
+                                                    </CardTitle>
+                                                        </CardHeader>
+                                                        <CardBody>
+                                                            <Row>
+                                                                <Col md="6">
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Name:</h5>
+                                                                                <p className="blue">{data.name}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <Col md="6">
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Package:</h5>
+                                                                                <p className="blue">{data.package}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <br />
+                                                                <Col md="6">
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Icon:</h5>
+                                                                                <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <Col md="6">
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Banner:</h5>
+                                                                                <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Link:</h5>
+                                                                                <p className="blue">{data.link}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Data:</h5>
+                                                                                <p className="blue">{data.data}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <br />
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Status:</h5>
+                                                                                <div className="btn_size">
+                                                                                    {
+                                                                                        data.status == 1 ? (
+                                                                                            <span className="badge badge-success">{data.status == 1 ? 'Active' : ''}</span>
+                                                                                        ) : (
+                                                                                                <span className="badge badge-danger">{data.status == 0 ? 'InActive' : ''}</span>
+                                                                                            )
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Privacy Policy:</h5>
+                                                                                <p className="blue">{data.privacy}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <br />
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>WebView:</h5>
+                                                                                <div className="btn_size">
+                                                                                    {
+                                                                                        data.web_view == 1 ? (
+                                                                                            <span className="badge badge-success">{data.web_view == 1 ? 'true' : ''}</span>
+                                                                                        ) : (
+                                                                                                <span className="badge badge-danger">{data.web_view == 0 ? 'false' : ''}</span>
+                                                                                            )
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <Col md="6" style={{ marginTop: '15px' }}>
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>IsFeatures:</h5>
+                                                                                <div className="btn_size">
+                                                                                    {
+                                                                                        data.is_features == 1 ? (
+                                                                                            <span className="badge badge-success">{data.is_features == 1 ? 'true' : ''}</span>
+                                                                                        ) : (
+                                                                                                <span className="badge badge-danger">{data.is_features == 0 ? 'false' : ''}</span>
+                                                                                            )
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+                                                                <br />
+
+                                                                <Col md="12" className="data">
+                                                                    {
+                                                                        this.state.App.map((data, index) =>
+                                                                            <div key={index}>
+                                                                                <h5>Discription:</h5>
+                                                                                <p className="blue">{data.description}</p>
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </Col>
+
+                                                            </Row>
+                                                        </CardBody>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
+                                                    <Card className="main-card mb-3">
+                                                        <CardHeader>
+                                                            <CardTitle
+                                                                className="font"
+                                                            >
+                                                                Monetisation Ads
+                                                    </CardTitle>
+                                                        </CardHeader>
+                                                        <CardBody>
+                                                            <Row>
+                                                                <Col md="4">
+                                                                    <Label>
+                                                                        Facebook Ads:
+                                                </Label>
+                                                                    <br />
+                                                                    <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
+                                                                </Col>
+                                                                <Col md="4">
+                                                                    <Label>
+                                                                        AdMob Ads:
+                                                </Label>
+                                                                    <br />
+                                                                    <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
+                                                                </Col>
+                                                                <Col md="4">
+                                                                    <Label>
+                                                                        Mopub Ads:
+                                                </Label>
+                                                                    <br />
+                                                                    <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
+                                                                </Col>
+                                                            </Row>
+                                                        </CardBody>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                    ) : (
+                            null
+                        )
+                }
             </div>
         );
     }
