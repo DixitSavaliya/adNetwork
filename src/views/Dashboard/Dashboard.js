@@ -473,147 +473,161 @@ class Dashboard extends Component {
 
     return (
       <div className="animated fadeIn">
-        <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
-        <h5>Welcome To Dashboard</h5>
-        {
-          this.props.auth.auth_data.user_group == "publisher" ? (
-            <p>Your Publisher ID is: {this.props.auth.auth_data.id}</p>
-          ) : (
-              ""
-            )
-        }
-        {
-          this.props.auth.auth_data.user_group == "publisher" ? (
-            <Card>
-              <CardHeader>
-                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App Hit Count</strong>
-              </CardHeader>
-              <CardBody className="app_list" style={{height:'305px'}}>
+        <div>
+          {
+            this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "advertiser" ? (
+              <div>
+                <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
+                <h5>Welcome To Dashboard</h5>
                 {
-                  this.state.publisher.length > 0 ? (
-                    <Row>
-                      {
-                        this.state.publisher.map((data, index) =>
-                          <Col sm="12" key={index}>
-                            <Form>
-                              <Card className="shadow_card">
-                                <CardBody className="padding">
-                                  <Row>
-                                    <Col sm="1">
-                                      <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
-                                    </Col>
-                                    <Col sm="3" className="content text-left">
-                                      <div className="app_detail">
-                                        <h5>{data.name}</h5>
-                                        <h6>{data.package}</h6>
-                                      </div>
-                                    </Col>
-                                    <Col sm="4">
-                                      <div className="text-center">
-                                          <label><strong>Hit Count</strong></label>
-                                          <div className="inline_content">
-                                            <h5>Today 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_hit_count}</p>
-                                            </h5>
-                                            <h5>Total 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_hit_count}</p>
-                                            </h5>
-                                          </div>
-                                      </div>
-                                    </Col>
-                                    <Col sm="4">
-                                      {/* <h5>Today Count:</h5>
+                  this.props.auth.auth_data.user_group == "publisher" ? (
+                    <p>Your Publisher ID is: {this.props.auth.auth_data.id}</p>
+                  ) : (
+                      ""
+                    )
+                }
+                {
+                  this.props.auth.auth_data.user_group == "publisher" ? (
+                    <Card>
+                      <CardHeader>
+                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App Hit Count</strong>
+                      </CardHeader>
+                      <CardBody className="app_list" style={{ height: '305px' }}>
+                        {
+                          this.state.publisher.length > 0 ? (
+                            <Row>
+                              {
+                                this.state.publisher.map((data, index) =>
+                                  <Col sm="12" key={index}>
+                                    <Form>
+                                      <Card className="shadow_card">
+                                        <CardBody className="padding">
+                                          <Row>
+                                            <Col sm="1">
+                                              <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                            </Col>
+                                            <Col sm="3" className="content text-left">
+                                              <div className="app_detail">
+                                                <h5>{data.name}</h5>
+                                                <h6>{data.package}</h6>
+                                              </div>
+                                            </Col>
+                                            <Col sm="4">
+                                              <div className="text-center">
+                                                <label><strong>Hit Count</strong></label>
+                                                <div className="inline_content">
+                                                  <h5>Today
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.today_hit_count}</p>
+                                                  </h5>
+                                                  <h5>Total
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.total_hit_count}</p>
+                                                  </h5>
+                                                </div>
+                                              </div>
+                                            </Col>
+                                            <Col sm="4">
+                                              {/* <h5>Today Count:</h5>
                                       <p className="blue">{data.today_impression_count}</p>
                                       <h5>Total Count:</h5>
                                       <p className="blue">{data.total_impression_count}</p> */}
-                                      <div className="text-center">
-                                          <label><strong>Impression Count</strong></label>
-                                          <div className="inline_content">
-                                            <h5>Today 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_impression_count}</p>
-                                            </h5>
-                                            <h5>Total 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_impression_count}</p>
-                                            </h5>
-                                          </div>
-                                      </div>
-                                    </Col>
-                                  </Row>
-                                </CardBody>
-                              </Card>
-                            </Form>
-                          </Col>
-                        )
-                      }
+                                              <div className="text-center">
+                                                <label><strong>Impression Count</strong></label>
+                                                <div className="inline_content">
+                                                  <h5>Today
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.today_impression_count}</p>
+                                                  </h5>
+                                                  <h5>Total
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.total_impression_count}</p>
+                                                  </h5>
+                                                </div>
+                                              </div>
+                                            </Col>
+                                          </Row>
+                                        </CardBody>
+                                      </Card>
+                                    </Form>
+                                  </Col>
+                                )
+                              }
 
-                    </Row>
+                            </Row>
+                          ) : (
+                              null
+                            )
+                        }
+                      </CardBody>
+                    </Card>
                   ) : (
-                      null
-                    )
-                }
-              </CardBody>
-            </Card>
-          ) : (
-              <Card>
-                <CardHeader>
-                  <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App Impression Count</strong>
-                </CardHeader>
-                <CardBody className="app_list" style={{height:'305px'}}>
-                  {
-                    this.state.advertiser.length > 0 ? (
-                      <Row>
-                        {
-                          this.state.advertiser.map((data, index) =>
-                            <Col sm="12" key={index}>
-                              <Form>
-                                <Card className="shadow_card">
-                                  <CardBody className="padding">
-                                    <Row>
-                                      <Col sm="1">
-                                        <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
-                                      </Col>
-                                      <Col sm="6" className="content text-left">
-                                        <div className="app_detail">
-                                          <h5>{data.name}</h5>
-                                          <h6>{data.package}</h6>
-                                        </div>
-                                      </Col>
-                                      <Col sm="5">
-                                      <div className="text-center">
-                                          <label><strong>Impression Count</strong></label>
-                                          <div className="inline_content">
-                                            <h5>Today 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.today_count}</p>
-                                            </h5>
-                                            <h5>Total 
-                                              <p style={{marginBottom:'0px'}} className="blue">{data.total_count}</p>
-                                            </h5>
-                                          </div>
-                                      </div>
-                                    </Col>
-                                      {/* <Col sm="3">
+                      <Card>
+                        <CardHeader>
+                          <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App Impression Count</strong>
+                        </CardHeader>
+                        <CardBody className="app_list" style={{ height: '305px' }}>
+                          {
+                            this.state.advertiser.length > 0 ? (
+                              <Row>
+                                {
+                                  this.state.advertiser.map((data, index) =>
+                                    <Col sm="12" key={index}>
+                                      <Form>
+                                        <Card className="shadow_card">
+                                          <CardBody className="padding">
+                                            <Row>
+                                              <Col sm="1">
+                                                <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                              </Col>
+                                              <Col sm="6" className="content text-left">
+                                                <div className="app_detail">
+                                                  <h5>{data.name}</h5>
+                                                  <h6>{data.package}</h6>
+                                                </div>
+                                              </Col>
+                                              <Col sm="5">
+                                                <div className="text-center">
+                                                  <label><strong>Impression Count</strong></label>
+                                                  <div className="inline_content">
+                                                    <h5>Today
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.today_count}</p>
+                                                    </h5>
+                                                    <h5>Total
+                                              <p style={{ marginBottom: '0px' }} className="blue">{data.total_count}</p>
+                                                    </h5>
+                                                  </div>
+                                                </div>
+                                              </Col>
+                                              {/* <Col sm="3">
                                       <h5>Today_Impression_Count:</h5>
                                       <p className="blue">{data.today_impression_count}</p>
                                       <h5>Total_Impression_Count:</h5>
                                       <p className="blue">{data.total_impression_count}</p>
                                     </Col> */}
-                                    </Row>
-                                  </CardBody>
-                                </Card>
-                              </Form>
-                            </Col>
-                          )
-                        }
+                                            </Row>
+                                          </CardBody>
+                                        </Card>
+                                      </Form>
+                                    </Col>
+                                  )
+                                }
 
-                      </Row>
-                    ) : (
-                        null
-                      )
-                  }
-                </CardBody>
-              </Card>
-            )
-        }
+                              </Row>
+                            ) : (
+                                null
+                              )
+                          }
+                        </CardBody>
+                      </Card>
+                    )
+                }
+              </div>
+            ) : (
+                <div>
+                  <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
+                  <h5>Welcome To Dashboard</h5>
+                </div>
+              )
+          }
+        </div>
+
 
 
         {/* <Row>

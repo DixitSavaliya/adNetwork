@@ -1,135 +1,169 @@
-import React from 'react';
-import { Table, Input, Button } from 'reactstrap';
-import './table.css';
-// import API from '../../service';
+import React, { Component } from 'react';
+// import './userrole.css';
+import TableRight from '../Tables/tableright';
 import Swal from 'sweetalert2';
 import { EventEmitter } from '../../event';
-import { HashRouter, Link, Route } from "react-router-dom";
+import {
+    Row,
+    Col,
+    Button,
+    ButtonDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBody,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupButton,
 
-export default class TableRight extends React.Component {
+} from 'reactstrap';
+
+class UserRight extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
-            check: false,
-            isData: false,
+            userright: '',
+            userrighterror: '',
+            displayname: '',
+            displaynameerror: '',
+            group_name: '',
+            group_nameerror: '',
+            group_display_name: '',
+            group_display_nameerrror: '',
+            updateRightBtn: false,
+            rightId: '',
             searchData: '',
-            count: '',
-            currentPage: "1",
-            items_per_page: "5",
-            perpage: "1",
-            paginationdata: '',
-            isFetch: false,
-            data: '',
-            allRecords: '',
-            upperPageBound: "3",
-            lowerPageBound: "0",
-            pageBound: "3",
-            isPrevBtnActive: 'disabled',
-            isNextBtnActive: '',
-            onClickPage: "1",
-            _maincheck: false
+            delete: false,
+            deletedata: '',
+            isDisplay: false
         }
-
-        this.checkAllHandler = this.checkAllHandler.bind(this);
-        this.deleteUserRightData = this.deleteUserRightData.bind(this);
-        this.editUserRightData = this.editUserRightData.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.btnDecrementClick = this.btnDecrementClick.bind(this);
-        this.btnIncrementClick = this.btnIncrementClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-
+        this.userRightData = this.userRightData.bind(this);
+        this.UpdateUserRightData = this.UpdateUserRightData.bind(this);
+        this.handleChangeStatus = this.handleChangeStatus.bind(this);
+        this.searchUserRightDataKeyUp = this.searchUserRightDataKeyUp.bind(this);
+        this.handleChangeEvent = this.handleChangeEvent.bind(this);
+        this.deleteAllUserRightData = this.deleteAllUserRightData.bind(this);
     }
 
     componentDidMount() {
-        EventEmitter.subscribe('searchRightData', (data) => {
-            
+        EventEmitter.subscribe('rightIsDisplay', (value) => {
+            this.setState({ isDisplay: this.state.isDisplay = true });
+        });
+
+
+        EventEmitter.subscribe('deletepageRightdata', (data) => {
             this.setState({
-                searchData: data,
-                isData: true
+                deletedata: this.state.deletedata = data,
+                delete: this.state.delete = true
             })
-            
         });
 
-
-        EventEmitter.subscribe('per_page_changed', (value) => {
-         
-            this.setState({ items_per_page: value });
-            this.getRightCountData();
-            setTimeout(() => {
-                this.getRightPageData();
-            }, 120)
+        EventEmitter.subscribe('editRightData', (data) => {
+            this.setState({
+                updateRightBtn: this.state.updateRightBtn = true,
+                rightId: this.state.rightId = data.id,
+                userright: this.state.userright = data.name,
+                displayname: this.state.displayname = data.display_name,
+                group_name: this.state.group_name = data.group_name,
+                group_display_name: this.state.group_display_name = data.group_display_name
+            })
         });
-
-        EventEmitter.subscribe('right_added', (data) => {
-            this.getRightCountData();
-            setTimeout(() => {
-                this.getRightPageData();
-            }, 120)
-        });
-
-        EventEmitter.subscribe('right_updated', (data) => {
-            this.getRightCountData();
-            setTimeout(() => {
-                this.getRightPageData();
-            }, 120)
-        });
-
-        this.getRightCountData();
-        setTimeout(() => {
-            this.getRightPageData();
-        }, 120)
-    }
-
-    getRightCountData() {
-        this.props.rightCountData();
     }
 
 
-    getRightPageData() {
-        const obj = {
-            page_no: this.state.perpage,
-            items_per_page: this.state.items_per_page
+    validate() {
+        let userrighterror = "";
+        let displaynameerror = "";
+        let group_display_nameerrror = "";
+        let group_nameerror = "";
+
+        if (!this.state.userright) {
+            userrighterror = "please enter userright name";
+        } else if (!this.state.userright.toLowerCase()) {
+            userrighterror = "please enter userright name in lowercase"
         }
-        this.props.RightPGData(obj).then((res) => {
-            this.setState({
-                paginationdata: this.state.paginationdata = res.response.data
-            })
-            EventEmitter.dispatch('rightIsDisplay', 1);
-        });
 
-    }
-
-    checkAllHandler(event) {
-        if (event.target.checked == true) {
-            this.setState({
-                _maincheck: this.state._maincheck = true,
-                check: this.state.check = true,
-                paginationdata: this.state.paginationdata = this.state.paginationdata.map(el => ({ ...el, _rowChecked: true }))
-            })
-            this.checkMaster(this.state.paginationdata);
-        } else {
-            this.setState({
-                _maincheck: this.state._maincheck = false,
-                check: this.state.check = false,
-                paginationdata: this.state.paginationdata = this.state.paginationdata.map(el => ({ ...el, _rowChecked: false }))
-            })
-            this.checkMaster(this.state.paginationdata);
+        if (!this.state.displayname) {
+            displaynameerror = "please enter displayname";
         }
-    }
 
-    editUserRightData(data) {
-        EventEmitter.dispatch('editRightData', data);
-    }
-
-    deleteUserRightData(data) {
-        const obj = {
-            userRightID: data.id
+        if (!this.state.group_display_name) {
+            group_display_nameerrror = "please enter group_display_name";
         }
-        var array = [];
-        array.push(obj);
-        const right = {
-            data: array
+
+        if (!this.state.group_name) {
+            group_nameerror = "please enter group_name";
+        }
+
+        if (userrighterror || displaynameerror || group_display_nameerrror || group_nameerror) {
+            this.setState({ userrighterror, displaynameerror, group_display_nameerrror, group_nameerror });
+            return false;
+        }
+        return true;
+    };
+
+
+    userRightData() {
+        const isValid = this.validate();
+        if (isValid) {
+            this.setState({
+
+                userrighterror: this.state.userrighterror = '',
+
+                displaynameerror: this.state.displaynameerror = '',
+
+                group_nameerror: this.state.group_nameerror = '',
+
+                group_display_nameerrror: this.state.group_display_nameerrror = ''
+            })
+
+            if (this.state.userright && this.state.displayname && this.state.group_name && this.state.group_display_name) {
+                const data = {
+                    name: this.state.userright.toLowerCase(),
+                    display_name: this.state.displayname,
+                    group_name: this.state.group_name,
+                    group_display_name: this.state.group_display_name
+                }
+                this.props.addUserRight(data).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('right_added', 1);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+
+                });
+            } else {
+                Swal.fire("Please enter filed first!", "", "warning");
+            }
+        };
+    }
+
+    handleChangeStatus(event) {
+        this.setState({
+            statuscheck1: this.state.statuscheck1 = event.target.checked,
+            status: this.state.status = event.target.defaultValue
+        })
+    }
+
+    deleteAllUserRightData() {
+        const role = {
+            data: this.state.deletedata
         }
         Swal.fire({
             title: 'Are you sure?',
@@ -140,309 +174,277 @@ export default class TableRight extends React.Component {
             cancelButtonText: 'No, keep it'
         }).then((result) => {
             if (result.value) {
-                this.props.deleteRightData(right);
-                setTimeout(() => {
-                    this.getRightPageData();
-                }, 1200)
+                this.props.deleteRightData(role).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        setTimeout(() => {
+                            this.userRightData();
+                        }, 1200)
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                })
             }
         })
     }
 
-    handleClick(event) {
+    UpdateUserRightData() {
+        const isValid = this.validate();
+        if (isValid) {
+            this.setState({
 
-        // this.setState({
-        //     perpage: +this.state.perpage + +this.state.items_per_page,
-        //     items_per_page: +this.state.items_per_page + +this.state.items_per_page
-        // })
-        if (this.state.currentPage <= '' + event.target.id) {
-            this.setState({
-                currentPage: this.state.currentPage + 1
+                userrighterror: this.state.userrighterror = '',
+
+                displaynameerror: this.state.displaynameerror = '',
+
+                group_nameerror: this.state.group_nameerror = '',
+
+                group_display_nameerrror: this.state.group_display_nameerrror = ''
             })
-        } else {
-            this.setState({
-                currentPage: this.state.currentPage - 1
-            })
-        }
+            if (this.state.userright && this.state.displayname && this.state.group_name && this.state.group_display_name) {
+                const obj = {
+                    name: this.state.userright,
+                    display_name: this.state.displayname,
+                    group_name: this.state.group_name,
+                    group_display_name: this.state.group_display_name,
+                    id: this.state.rightId
+                }
+                this.props.updateRight(obj).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        EventEmitter.dispatch('right_updated', 1);
+                        this.setState({
+                            updateRightBtn: this.state.updateRightBtn = false,
+                        })
+
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+
+                });
+            } else {
+                Swal.fire("Please enter filed first!", "", "warning");
+            }
+        };
+    };
+
+    handleChangeEvent(e) {
+        EventEmitter.dispatch('per_page_changed', e.target.value);
+    }
+
+
+    searchUserRightDataKeyUp(e) {
         const obj = {
-            page_no: '' + event.target.id,
-            items_per_page: this.state.items_per_page
+            search_string: e.target.value
         }
-        this.props.RightPGData(obj).then((res) => {
-            this.setState({
-                paginationdata: this.state.paginationdata = res.response.data
-            })
-            EventEmitter.dispatch('rightIsDisplay', 1);
-        });
-
-    }
-
-    checkMaster(data) {
-        let count = 0;
-        data.forEach(element => {
-            if (element._rowChecked == true) {
-              
-                element._rowChecked = true;
-                count++;
-            } else {
-               
-                element._rowChecked = false;
-            }
-        });
-        if (count == data.length) {
-            this.setState({
-                _maincheck: true
-            })
-        } else {
-            this.setState({
-                _maincheck: false
-            })
-        }
-        this.setState({
-            paginationdata: data
-        });
-        var array = [];
-        for (var i = 0; i < this.state.paginationdata.length; i++) {
-            if (this.state.paginationdata[i]._rowChecked == true) {
-                array.push({ userRightID: this.state.paginationdata[i].id });
-            }
-        }
-        EventEmitter.dispatch('deletepageRightdata', array);
-    }
-
-    handleChange(item, e) {
-        let _id = item.id;
-        let ind = this.state.paginationdata.findIndex((x) => x.id == _id);
-        let data = this.state.paginationdata;
-        if (ind > -1) {
-            let newState = !item._rowChecked;
-            data[ind]._rowChecked = newState;
-            if (!newState) {
-                data[ind]._rowChecked = false;
-
-            } else {
-                data[ind]._rowChecked = true;
-            }
-
-            this.setState({
-                paginationdata: data
-            });
-        }
-        this.checkMaster(data);
-    }
-
-    btnIncrementClick() {
-        this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
-        this.setState({ lowerPageBound: this.state.lowerPageBound + this.state.pageBound });
-        let listid = this.state.upperPageBound + 1;
-        this.setState({ currentPage: listid });
-    }
-
-    btnDecrementClick() {
-        this.setState({ upperPageBound: this.state.upperPageBound - this.state.pageBound });
-        this.setState({ lowerPageBound: this.state.lowerPageBound - this.state.pageBound });
-        let listid = this.state.upperPageBound - this.state.pageBound;
-        this.setState({ currentPage: listid });
+        this.props.searchRight(obj);
+        EventEmitter.dispatch('searchRightData', this.state.searchData);
     }
 
     render() {
-        const { auth, roleCountData, countData } = this.props;
-        this.state.count = this.props.auth.count;
-        // const { fetching, error } = auth;
-
-
-        var pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {
-            pageNumbers.push(i);
-        }
-        var renderPageNumbers = pageNumbers.map(number => {
-            if (number === 1 && this.state.currentPage === 1) {
-                return (
-                    <li
-                        key={number}
-                        id={number}
-                        className={this.state.currentPage === number ? 'active' : 'page-item'}
-                    >
-                        <a className="page-link" onClick={this.handleClick}>{number}</a>
-                    </li>
-                );
-            }
-            else if ((number < this.state.upperPageBound + 1) && number > this.state.lowerPageBound) {
-                return (
-                    <li
-                        key={number}
-                        id={number}
-                        className={this.state.currentPage === number ? 'active' : 'page-item'}
-                    >
-                        <a className="page-link" id={number} onClick={this.handleClick}>{number}</a>
-                    </li>
-                )
-            }
-        });
-
-        let pageIncrementBtn = null;
-        if (pageNumbers.length > this.state.upperPageBound) {
-            pageIncrementBtn =
-                <li
-                    className='page-item'
-                >
-                    <a
-                        className='page-link'
-                        onClick={this.btnIncrementClick}
-                    >
-                        &hellip;
-          </a>
-                </li>
-        }
-
-        let pageDecrementBtn = null;
-        if (this.state.lowerPageBound >= 1) {
-            pageDecrementBtn =
-                <li
-                    className='page-item'
-                >
-                    <a
-                        className='page-link'
-                        onClick={this.btnDecrementClick}
-                    >
-                        &hellip;
-          </a>
-                </li>
-        }
+        const { auth, rightCountData, RightPGData, deleteRightData } = this.props;
+        this.state.searchData = this.props.auth.searchdata;
+        const { fetching, error } = auth;
 
         return (
-            <div>
-                {
-                    this.state.isData == false ? (
-                        <div>
-                            {
-                                this.state.paginationdata.length ? (
-                                    <div>
-                                        <Table hover className="mb-0" bordered>
-                                            <thead>
-                                                <tr>
-                                                    <th className="center">
-                                                        <Input
-                                                            type="checkbox"
-                                                            id="exampleCustomCheckbox"
-                                                            onChange={this.checkAllHandler}
-                                                            checked={this.state._maincheck}
-                                                        />
-                                                    </th>
-                                                    <th className="action">Action</th>
-                                                    <th>Name</th>
-                                                    <th>DisplayName</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    this.state.paginationdata.map((data, index) =>
-                                                        <tr key={index}>
-                                                            <td scope="row" className="center">
-                                                                <span className="margin-t">
-                                                                    <Input
-                                                                        type="checkbox"
-                                                                        id={index}
-                                                                        checked={data._rowChecked == true ? true : false}
-                                                                        onChange={(e) => this.handleChange(data, e)}
-                                                                    />
-                                                                </span>
-                                                            </td>
-                                                            <td className="action">
-                                                                <span>
-                                                                    <i className="fa fa-pencil-square fa-lg" onClick={() => this.editUserRightData(data)}></i>
-                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRightData(data)}></i>
-                                                                </span>
-                                                            </td>
-                                                            <td>{data.name}</td>
-                                                            <td>{data.display_name}</td>
-
-                                                        </tr>
-                                                    )
+            <div className="animated fadeIn">
+                <Row>
+                    <Col xs="12" sm="12" md="12" lg="4" xl="4">
+                        <Card>
+                            <CardHeader>
+                                <strong>UserRight</strong>
+                            </CardHeader>
+                            <CardBody>
+                                <Row>
+                                    <Col xs="12">
+                                        <FormGroup>
+                                            <Label htmlFor="userright">Right_Name:</Label>
+                                            <Input
+                                                type="text"
+                                                id="userright"
+                                                name="userright"
+                                                className="form-control"
+                                                defaultValue={this.state.userright}
+                                                onChange={(e) =>
+                                                    this.state.userright = e.target.value
                                                 }
-                                            </tbody>
-                                        </Table>
-                                        {
-                                            this.state.paginationdata ? (
-                                                <div>
-                                                    <ul className="pagination" id="page-numbers">
-                                                        {pageDecrementBtn}
-                                                        {renderPageNumbers}
-                                                        {pageIncrementBtn}
-                                                    </ul>
-                                                </div>
-                                            ) : (
-                                                    null
-                                                )
-                                        }
+                                                placeholder="Enter your Right Name"
+                                                required
+                                            />
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.userrighterror}
+                                            </div>
 
-                                    </div>
-                                ) : (
-                                        null
-                                    )
-                            }
-                        </div>
-                    ) : (
-                            <div>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="12">
+                                        <FormGroup>
+                                            <Label htmlFor="displayname">Display_Name:</Label>
+                                            <Input
+                                                type="text"
+                                                id="displayname"
+                                                name="displayname"
+                                                className="form-control"
+                                                defaultValue={this.state.displayname}
+                                                onChange={(e) =>
+                                                    this.state.displayname = e.target.value
+                                                }
+                                                placeholder="Enter your Display Name"
+                                                required
+                                            />
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.displaynameerror}
+                                            </div>
+
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="12">
+                                        <FormGroup>
+                                            <Label htmlFor="group_name">Group_Name:</Label>
+                                            <Input
+                                                type="text"
+                                                id="group_name"
+                                                name="group_name"
+                                                className="form-control"
+                                                defaultValue={this.state.group_name}
+                                                onChange={(e) =>
+                                                    this.state.group_name = e.target.value
+                                                }
+                                                placeholder="Enter your Group Name"
+                                                required
+                                            />
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.group_nameerror}
+                                            </div>
+
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xs="12">
+                                        <FormGroup>
+                                            <Label htmlFor="group_display_name">Group_Display_Name:</Label>
+                                            <Input
+                                                type="text"
+                                                id="group_display_name"
+                                                name="group_display_name"
+                                                className="form-control"
+                                                defaultValue={this.state.group_display_name}
+                                                onChange={(e) =>
+                                                    this.state.group_display_name = e.target.value
+                                                }
+                                                placeholder="Enter your Group Display Name"
+                                                required
+                                            />
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.group_display_nameerrror}
+                                            </div>
+
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                {error ?
+                                    (<Alert color="danger">
+                                        {error}
+                                    </Alert>) : (<div />)
+                                }
                                 {
-                                    this.state.searchData.length ? (
-                                        <div>
-                                            <Table hover className="mb-0" bordered>
-                                                <thead>
-                                                    <tr>
-                                                        <th className="center">
-                                                            <Input
-                                                                type="checkbox"
-                                                                id="exampleCustomCheckbox"
-                                                                onChange={this.checkAllHandler}
-                                                                checked={this.state._maincheck}
-                                                            />
-                                                        </th>
-                                                        <th className="action">Action</th>
-                                                        <th>Name</th>
-                                                        <th>DisplayName</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        this.state.searchData.map((data, index) =>
-                                                            <tr key={index}>
-                                                                <th scope="row" className="center">
-                                                                    <span className="margin-t">
-                                                                        <Input
-                                                                            type="checkbox"
-                                                                            id={index}
-                                                                            checked={data._rowChecked == true ? true : false}
-                                                                            onChange={(e) => this.handleChange(data, e)}
-                                                                        />
-                                                                    </span>
-                                                                </th>
-                                                                <td className="action">
-                                                                    <span className="space">
-                                                                        <i className="fa fa-pencil-square fa-lg" onClick={() => this.editUserRightData(data)}></i>
-                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRightData(data)}></i>
-                                                                    </span>
-                                                                </td>
-                                                                <td>{data.name}</td>
-                                                                <td>{data.display_name}</td>
-
-                                                            </tr>
-                                                        )
-                                                    }
-                                                </tbody>
-                                            </Table>
-
-                                        </div>
-
+                                    this.state.updateRightBtn == false ? (
+                                        <Button type="button" size="sm" color="primary" onClick={this.userRightData} disabled={fetching} style={{ marginTop: '15px' }}>Save</Button>
                                     ) : (
-                                            null
+                                            <Button type="button" size="sm" color="primary" onClick={this.UpdateUserRightData} disabled={fetching} style={{ marginTop: '15px' }}>Update</Button>
                                         )
                                 }
-                            </div>
-                        )
-                }
+                            </CardBody>
+                        </Card>
+                    </Col>
+                    <Col xs="12" sm="12" md="12" lg="8" xl="8">
+                        <Card>
+                            <CardHeader>
+                                <strong>UserRight</strong>
+                            </CardHeader>
+                            <CardBody>
+                                <div>
+                                    {
+                                        this.state.isDisplay == true ? (
+                                            <Row>
+                                                <Col xs="2">
+                                                    <div>
+                                                        <Button
+                                                            type="button"
+                                                            size="md"
+                                                            color="danger"
+                                                            onClick={this.deleteAllUserRightData}
+                                                            disabled={!this.state.delete}
+                                                        >
+                                                            Delete
+                                                 </Button>
+                                                    </div>
+                                                </Col>
+                                                <Col xs="7">
+                                                    <div className="search">
+                                                        <input
+                                                            className="form-control"
+                                                            type="text"
+                                                            placeholder="Search"
+                                                            aria-label="Search"
+                                                            onKeyUp={this.searchUserRightDataKeyUp}
+                                                        />
+                                                    </div>
+                                                </Col>
+                                                <Col xs="3">
+
+                                                    <Row>
+                                                        <Col xs="4">
+                                                            {/* <span className="size">page</span> */}
+                                                        </Col>
+                                                        <Col xs="8">
+                                                            <Input
+                                                                type="select"
+                                                                id="exampleCustomSelect"
+                                                                name="customSelect"
+                                                                onChange={this.handleChangeEvent}
+                                                            >
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                            </Input>
+                                                        </Col>
+                                                    </Row>
+
+                                                </Col>
+                                            </Row>
+                                        ) : (
+                                                null
+                                            )
+                                    }
+
+                                </div>
+                                <br />
+                                <TableRight auth={auth} rightCountData={rightCountData} RightPGData={RightPGData} deleteRightData={deleteRightData} />
+                            </CardBody>
+                        </Card>
+                    </Col>
+
+                </Row>
             </div>
         );
     }
 }
+
+export default UserRight;

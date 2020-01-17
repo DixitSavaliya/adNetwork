@@ -60,6 +60,7 @@ class Advertiser extends Component {
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
         this.handleChangegetAds = this.handleChangegetAds.bind(this);
         this.searchUserDataKeyUp = this.searchUserDataKeyUp.bind(this);
+        this.handleChangeEvent = this.handleChangeEvent.bind(this);
     }
 
     componentDidMount() {
@@ -118,7 +119,8 @@ class Advertiser extends Component {
                 ownership: this.state.ownership
             }
             let _this = this;
-            this.props.applicationPGData(obj).then(function (res) {
+         
+            this.props.usersPGData(obj).then(function (res) {
                 var data = [];
                 for (var i = 0; i < res.response.data.length; i++) {
                     if (res.response.data[i].user_type == 1) {
@@ -130,7 +132,6 @@ class Advertiser extends Component {
                     isFetch: true
                 })
             })
-
         } else {
             if (this.state.currentPage <= '' + event.target.id) {
                 this.setState({
@@ -149,13 +150,23 @@ class Advertiser extends Component {
                 ownership: this.state.ownership = ""
             }
             let _this = this;
-            this.props.applicationPGData(obj).then(function (res) {
+            this.props.usersPGData(obj).then(function (res) {
+                var data = [];
+                for (var i = 0; i < res.response.data.length; i++) {
+                    if (res.response.data[i].user_type == 1) {
+                        data.push(res.response.data[i])
+                    }
+                }
                 _this.setState({
-                    paginationdata: res.response.data,
+                    paginationdata: data,
                     isFetch: true
                 })
             })
         }
+    }
+
+    handleChangeEvent(event) {
+        this.setState({ items_per_page: this.state.items_per_page = event.target.value });
     }
 
     appData(data) {

@@ -8,7 +8,7 @@ import { HashRouter, Link, Route } from "react-router-dom";
 
 export default class TableRole extends React.Component {
     constructor(props) {
-        console.log("props", props);
+
         super(props);
         this.state = {
             auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
@@ -54,7 +54,7 @@ export default class TableRole extends React.Component {
 
         EventEmitter.subscribe('per_page_changed', (value) => {
            
-            this.setState({ items_per_page: value });
+            this.setState({ items_per_page:this.state.items_per_page =  value });
             this.getRoleCountData();
             setTimeout(() => {
                 this.getRolePageData();
