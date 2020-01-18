@@ -22,11 +22,11 @@ export default {
       name: 'Application',
       icon: 'fa fa-android',
       children: [
-        {
-          name: 'Create-App',
-          url: '/CreateApp',
-          icon: 'fa fa-plus-square',
-        },
+        // {
+        //   name: 'Create-App',
+        //   url: '/CreateApp',
+        //   icon: 'fa fa-plus-square',
+        // },
         {
           name: 'List-App',
           url: '/ListApp',

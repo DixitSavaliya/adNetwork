@@ -61,6 +61,7 @@ class Publisher extends Component {
         this.handleChangegetAds = this.handleChangegetAds.bind(this);
         this.searchUserDataKeyUp = this.searchUserDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
+        this.deleteUserData = this.deleteUserData.bind(this);
     }
 
     componentDidMount() {
@@ -122,7 +123,7 @@ class Publisher extends Component {
                 user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership
             }
-        
+
             let _this = this;
             this.props.usersPGData(obj).then(function (res) {
                 var data = [];
@@ -172,6 +173,10 @@ class Publisher extends Component {
     appData(data) {
         // const id = data.id;
         // this.props.history.push("/viewapp/" + id)
+    }
+
+    deleteUserData(id) {
+        console.log("id",id);
     }
 
 
@@ -335,20 +340,39 @@ class Publisher extends Component {
                                             <Table hover className="mb-0 table_responsive" bordered>
                                                 <thead>
                                                     <tr>
+                                                        <th>Action</th>
                                                         <th>FirstName</th>
                                                         <th>LastName</th>
                                                         <th>EmailId</th>
                                                         <th>MobileNo</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {
                                                         this.state.searchData.map((data, index) =>
                                                             <tr key={index}>
+                                                                <td className="action">
+                                                                    <span className="padding">
+                                                                        {/* <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i> */}
+                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data.id)}></i>
+                                                                    </span>
+                                                                </td>
                                                                 <td onClick={() => this.appData(data)}>{data.first_name}</td>
                                                                 <td onClick={() => this.appData(data)}>{data.last_name}</td>
                                                                 <td onClick={() => this.appData(data)}>{data.email_id}</td>
                                                                 <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
+                                                                <td onClick={() => this.appData(data)}>
+                                                                    <div className="btn_size">
+                                                                        {
+                                                                            data.status == 1 ? (
+                                                                                <span className="badge badge-success">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                            ) : (
+                                                                                    <span className="badge badge-danger">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                )
+                                                                        }
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     }
@@ -363,21 +387,39 @@ class Publisher extends Component {
                                                             <Table hover className="mb-0 table_responsive" bordered>
                                                                 <thead>
                                                                     <tr>
+                                                                        <th>Action</th>
                                                                         <th>FirstName</th>
                                                                         <th>LastName</th>
                                                                         <th>EmailId</th>
                                                                         <th>MobileNo</th>
+                                                                        <th>Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     {
                                                                         this.state.paginationdata.map((data, index) =>
                                                                             <tr key={index}>
+                                                                                <td className="action">
+                                                                                    <span className="padding">
+                                                                                        {/* <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i> */}
+                                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data.id)}></i>
+                                                                                    </span>
+                                                                                </td>
                                                                                 <td onClick={() => this.appData(data)}>{data.first_name}</td>
                                                                                 <td onClick={() => this.appData(data)}>{data.last_name}</td>
                                                                                 <td onClick={() => this.appData(data)}>{data.email_id}</td>
                                                                                 <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
-
+                                                                                <td onClick={() => this.appData(data)}>
+                                                                                    <div className="btn_size">
+                                                                                        {
+                                                                                            data.status == 1 ? (
+                                                                                                <span className="badge badge-success">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                            ) : (
+                                                                                                    <span className="badge badge-danger">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                                )
+                                                                                        }
+                                                                                    </div>
+                                                                                </td>
                                                                             </tr>
                                                                         )
                                                                     }

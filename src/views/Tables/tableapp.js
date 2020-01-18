@@ -21,7 +21,7 @@ export default class TableApp extends React.Component {
             count: '',
             currentPage: "1",
             items_per_page: "5",
-            render_per_page:"5",
+            render_per_page: "5",
             perpage: '',
             paginationdata: '',
             isFetch: false,
@@ -69,18 +69,25 @@ export default class TableApp extends React.Component {
     }
 
     getApplicationCount() {
-        if (this.props.auth.auth_data.user_group == "publisher") {
+        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
             const obj = {
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
                 ownership: this.state.ownership
             }
             let _this = this;
             this.props.applicationCount(obj).then((res) => {
-                _this.setState({
-                    count: _this.state.count = res.response.data
-                })
-                _this.getApplicationPageData();
+                if (res.response.status == 1) {
+                    _this.setState({
+                        count: _this.state.count = res.response.data
+                    })
+                    _this.getApplicationPageData();
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             })
         } else {
             const obj = {
@@ -90,30 +97,45 @@ export default class TableApp extends React.Component {
             }
             let _this = this;
             this.props.applicationCount(obj).then(function (res) {
-                _this.setState({
-                    count: _this.state.count = res.response.data
-                })
-                _this.getApplicationPageData();
+                if (res.response.status == 1) {
+                    _this.setState({
+                        count: _this.state.count = res.response.data
+                    })
+                    _this.getApplicationPageData();
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             })
         }
     }
 
     getApplicationPageData() {
-        if (this.props.auth.auth_data.user_group == "publisher") {
+        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
             const obj = {
                 page_no: "1",
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
                 ownership: this.state.ownership
             }
             let _this = this;
             this.props.applicationPGData(obj).then(function (res) {
-                _this.setState({
-                    paginationdata: res.response.data,
-                    isFetch: true
-                })
-                EventEmitter.dispatch('isDisplay',1);
+                if (res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                    EventEmitter.dispatch('isDisplay', 1);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
             })
         } else {
             const obj = {
@@ -125,11 +147,18 @@ export default class TableApp extends React.Component {
             }
             let _this = this;
             this.props.applicationPGData(obj).then(function (res) {
-                _this.setState({
-                    paginationdata: res.response.data,
-                    isFetch: true
-                })
-                EventEmitter.dispatch('isDisplay',1);
+                if (res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                    EventEmitter.dispatch('isDisplay', 1);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             })
         }
     }
@@ -146,7 +175,7 @@ export default class TableApp extends React.Component {
         array.push(obj);
         const data1 = {
             data: array,
-            user_id:this.props.auth.auth_data.id
+            user_id: this.props.auth.auth_data.id
         }
         Swal.fire({
             title: 'Are you sure?',
@@ -159,27 +188,27 @@ export default class TableApp extends React.Component {
             if (result.value) {
                 this.props.deleteApp(data1).then((res) => {
                     if (res.response.status == 1) {
-                    Swal.fire({
-                        text: res.response.message,
-                        icon: 'success'
-                    });
-                    setTimeout(() => {
-                        this.getApplicationPageData();
-                    }, 1200)
-                } else {
-                    Swal.fire({
-                        text: res.response.message,
-                        icon: 'warning'
-                    });
-                }
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        setTimeout(() => {
+                            this.getApplicationPageData();
+                        }, 1200)
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 });
-              
+
             }
         })
     }
 
     handleClick(event) {
-        if (this.props.auth.auth_data.user_group == "publisher") {
+        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
             if (this.state.currentPage <= '' + event.target.id) {
                 this.setState({
                     currentPage: this.state.currentPage + 1,
@@ -195,15 +224,22 @@ export default class TableApp extends React.Component {
                 page_no: '' + event.target.id,
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
                 ownership: this.state.ownership
             }
             let _this = this;
             this.props.applicationPGData(obj).then(function (res) {
-                _this.setState({
-                    paginationdata: res.response.data,
-                    isFetch: true
-                })
+                if (res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             })
 
         } else {
@@ -225,10 +261,18 @@ export default class TableApp extends React.Component {
             }
             let _this = this;
             this.props.applicationPGData(obj).then(function (res) {
-                _this.setState({
-                    paginationdata: res.response.data,
-                    isFetch: true
-                })
+                if (res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
             })
         }
     }
@@ -260,7 +304,15 @@ export default class TableApp extends React.Component {
                     id: data.ad_id
                 }
                 this.props.activeAppAds(obj).then((res) => {
-                    this.getApplicationPageData();
+                    if (res.response.status == 1) {
+                        this.getApplicationPageData();
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+
                 })
             }
         } else {
@@ -269,13 +321,21 @@ export default class TableApp extends React.Component {
                     id: data.ad_id
                 }
                 this.props.InactiveAppAds(obj).then((res) => {
-                    this.getApplicationPageData();
+                    if (res.response.status == 1) {
+                        this.getApplicationPageData();
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 })
             }
         }
     }
 
     render() {
+
         let auth = this.props.auth.auth_data;
         var pageNumbers = [];
         for (let i = 1; i <= Math.ceil(this.state.count / this.state.items_per_page); i++) {
@@ -348,8 +408,8 @@ export default class TableApp extends React.Component {
                                         <Table hover className="mb-0 table_responsive" bordered>
                                             <thead>
                                                 <tr>
-                                                    <th className="action">Action</th>
-                                                    {this.props.auth.auth_data.user_group == 'publisher' ? (<th>Manage Ads</th>):(null)}
+                                                    {this.props.auth.auth_data.user_group == 'publisher' || this.props.auth.auth_data.user_group == 'advertiser' ? (<th className="action">Action</th>) : (null)}
+                                                    {this.props.auth.auth_data.user_group == 'publisher' ? (<th>Manage Ads</th>) : (null)}
                                                     <th>App Icon</th>
                                                     <th>Name</th>
                                                     <th>Package</th>
@@ -376,17 +436,25 @@ export default class TableApp extends React.Component {
                                                                             )}
                                                                     </td>
                                                                 ) : (
-                                                                        <td className="action">
-                                                                            <span className="padding">
-                                                                                <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
-                                                                            </span>
 
-                                                                        </td>
+                                                                        null
+
                                                                     )
                                                             }
                                                             {
-                                                                this.props.auth.auth_data.user_group == 'publisher'?(
+                                                                auth.user_group == "advertiser" ? (
+                                                                    <td className="action">
+                                                                        <span className="padding">
+                                                                            <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
+                                                                            <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                        </span>
+                                                                    </td>
+                                                                ) : (
+                                                                        null
+                                                                    )
+                                                            }
+                                                            {
+                                                                this.props.auth.auth_data.user_group == 'publisher' ? (
                                                                     <td>
                                                                         <Switch
                                                                             checked={data.ad_status == 1 ? true : false}
@@ -483,19 +551,26 @@ export default class TableApp extends React.Component {
                                                                     </span>
                                                                 ) : (
                                                                         <span className="padding">
-
                                                                             No Access
                                                                         </span>
                                                                     )}
                                                             </td>
                                                         ) : (
-                                                                <td className="action">
-                                                                    <span className="padding">
-                                                                        <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
-                                                                    </span>
 
-                                                                </td>
+                                                                null
+
+                                                            )
+                                                    }
+                                                    {
+                                                        auth.user_group == "advertiser" ? (
+                                                            <td className="action">
+                                                                <span className="padding">
+                                                                    <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
+                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                </span>
+                                                            </td>
+                                                        ) : (
+                                                                null
                                                             )
                                                     }
                                                     <td>

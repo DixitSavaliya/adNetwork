@@ -14,7 +14,7 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rightdata:''
+      rightdata: ''
     }
   }
 
@@ -30,18 +30,19 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
-    if(this.props.auth.auth_data) {
+    let auth = JSON.parse(window.sessionStorage.getItem('ad_network_user'));
+    if (auth) {
       const obj = {
-        userRole: this.props.auth.auth_data.id
-    }
-  
-    let _this = this;
-    this.props.userroletoright(obj).then(function (res) {
+        userRole: auth.user_role_id
+      }
+
+      let _this = this;
+      this.props.userroletoright(obj).then(function (res) {
         let data = res.response.data;
         _this.setState({
-          rightdata:_this.state.rightdata = data
+          rightdata: _this.state.rightdata = data
         })
-    })
+      })
     }
   }
 
@@ -53,11 +54,39 @@ class Sidebar extends Component {
 
   render() {
     if (this.props.auth.auth_data.user_group == "admin") {
+      if (this.state.rightdata) {
+        var items = [{
+          name: '',
+          url: '',
+          icon: ''
+        }];
+
+        for (var i = 0; i < this.state.rightdata.length; i++) {
+          for (var z = 0; z < items.length; z++) {
+            items[z].name = this.state.rightdata[i].display_name,
+              items[z].url = '/' + this.state.rightdata[i].name
+          }
+        }
+        // for(var j=0;j<nav.items.length;j++) {
+        //   if(this.state.rightdata[i].display_name == nav.items[j].name) {
+        //     console.log('ismatch');
+        //     console.log('nav.items[j].name',nav.items[j].name);
+        //     nav.items[j].name = this.state.rightdata[i].display_name;
+        //     console.log('nav.items[j].name',nav.items[j].name);
+        //     for(var z=0;z<items.length;z++){
+
+        //       items[z].name = nav.items[j].name;
+        //     }
+        //   }
+        // }
+
+        console.log('items', items);
+      }
       this.props.sidebar.nav = nav.items;
     } else if (this.props.auth.auth_data.user_group == "advertiser") {
       this.props.sidebar.nav = navRight.items;
     } else if (this.props.auth.auth_data.user_group == "publisher") {
-    
+
       this.props.sidebar.nav = navRightPublisher.items;
     }
 

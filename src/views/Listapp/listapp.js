@@ -68,18 +68,26 @@ class ListApp extends React.Component {
     }
 
     searchApplicationDataKeyUp(e) {
-        if (this.props.auth.auth_data.user_group == "publisher") {
+        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
             const obj = {
                 search_string: e.target.value,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
                 ownership: this.state.ownership
             }
             this.props.searchApplicationData(obj).then((res) => {
-                this.setState({
-                    searchData: this.state.searchData = res.response.data
-                })
-                EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res.response.status == 1) {
+                    this.setState({
+                        searchData: this.state.searchData = res.response.data
+                    })
+                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
             });
         } else {
             const obj = {
@@ -89,10 +97,18 @@ class ListApp extends React.Component {
                 ownership: this.state.ownership = ""
             }
             this.props.searchApplicationData(obj).then((res) => {
-                this.setState({
-                    searchData: this.state.searchData = res.response.data
-                })
-                EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res.response.status == 1) {
+                    this.setState({
+                        searchData: this.state.searchData = res.response.data
+                    })
+                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
             });
         }
     }
@@ -121,13 +137,14 @@ class ListApp extends React.Component {
                                                     <Row>
                                                         <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                                             <div className="rightapp">
+
                                                                 <Link to="/createapp">
                                                                     <Button
                                                                         className="mb-2 mr-2"
                                                                         color="primary"
                                                                     >
                                                                         Add
-                                                                    </Button>
+                                                                        </Button>
                                                                 </Link>
                                                             </div>
                                                         </Col>
@@ -136,79 +153,79 @@ class ListApp extends React.Component {
                                                                 this.props.auth.auth_data.user_group == "publisher" ? (
                                                                     <div className="searchA">
                                                                         <Input
-                                                                        type="select"
-                                                                        style={{width: '170px'}}
-                                                                        className="form-control"
-                                                                        id="exampleCustomSelect"
-                                                                        name="customSelect"
-                                                                        onChange={this.handleChangeAppEvent}
-                                                                    >
-                                                                        <option value="">All</option>
-                                                                        <option value="1">My Only</option>
-                                                                        <option value="2">Advertisers</option>
-                                                                    </Input>
-                                                                    <input
-                                                                        className="form-control search"
-                                                                        type="text"
-                                                                        placeholder="Search"
-                                                                        aria-label="Search"
-                                                                        onKeyUp={this.searchApplicationDataKeyUp}
-                                                                    />
-                                                                    <span style={{marginRight: '5px'}}>Records per page</span>
-                                                                    <Input
-                                                                        type="select"
-                                                                        className="form-control drop"
-                                                                        id="exampleCustomSelect"
-                                                                        name="customSelect"
-                                                                        onChange={this.handleChangeEvent}
-                                                                    >
-                                                                        <option value="5">5</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="25">25</option>
-                                                                        <option value="50">50</option>
-                                                                        <option value="100">100</option>
-                                                                    </Input>
-                                                                </div>
-                                                                //     <div className="searchP">
-                                                                //     <Input
-                                                                //         type="select"
-                                                                //         style={{width:'150px'}}
-                                                                //         className="form-control"
-                                                                //         id="exampleCustomSelect"
-                                                                //         name="customSelect"
-                                                                //         onChange={this.handleChangeAppEvent}
-                                                                //     >
-                                                                //         <option value="">All</option>
-                                                                //         <option value="1">My Only</option>
-                                                                //         <option value="2">Advertisers</option>
-                                                                //     </Input>
-                                                                //      <input
-                                                                //          className="form-control searchP"
-                                                                //          type="text"
-                                                                //          placeholder="Search"
-                                                                //          aria-label="Search"
-                                                                //          onKeyUp={this.searchApplicationDataKeyUp}
-                                                                //      />
-                                                                //      <span>Records per page</span>
-                                                                //      <Input
-                                                                //          type="select"
-                                                                //          className="form-control drop"
-                                                                //          id="exampleCustomSelect"
-                                                                //          name="customSelect"
-                                                                //          onChange={this.handleChangeEvent}
-                                                                //      >
-                                                                //          <option value="5">5</option>
-                                                                //          <option value="10">10</option>
-                                                                //          <option value="25">25</option>
-                                                                //          <option value="50">50</option>
-                                                                //          <option value="100">100</option>
-                                                                //      </Input>
-                                                                //  </div>
+                                                                            type="select"
+                                                                            style={{ width: '170px' }}
+                                                                            className="form-control"
+                                                                            id="exampleCustomSelect"
+                                                                            name="customSelect"
+                                                                            onChange={this.handleChangeAppEvent}
+                                                                        >
+                                                                            <option value="">All</option>
+                                                                            <option value="1">My Only</option>
+                                                                            <option value="2">Advertisers</option>
+                                                                        </Input>
+                                                                        <input
+                                                                            className="form-control search"
+                                                                            type="text"
+                                                                            placeholder="Search"
+                                                                            aria-label="Search"
+                                                                            onKeyUp={this.searchApplicationDataKeyUp}
+                                                                        />
+                                                                        <span style={{ marginRight: '5px' }}>Records per page</span>
+                                                                        <Input
+                                                                            type="select"
+                                                                            className="form-control drop"
+                                                                            id="exampleCustomSelect"
+                                                                            name="customSelect"
+                                                                            onChange={this.handleChangeEvent}
+                                                                        >
+                                                                            <option value="5">5</option>
+                                                                            <option value="10">10</option>
+                                                                            <option value="25">25</option>
+                                                                            <option value="50">50</option>
+                                                                            <option value="100">100</option>
+                                                                        </Input>
+                                                                    </div>
+                                                                    //     <div className="searchP">
+                                                                    //     <Input
+                                                                    //         type="select"
+                                                                    //         style={{width:'150px'}}
+                                                                    //         className="form-control"
+                                                                    //         id="exampleCustomSelect"
+                                                                    //         name="customSelect"
+                                                                    //         onChange={this.handleChangeAppEvent}
+                                                                    //     >
+                                                                    //         <option value="">All</option>
+                                                                    //         <option value="1">My Only</option>
+                                                                    //         <option value="2">Advertisers</option>
+                                                                    //     </Input>
+                                                                    //      <input
+                                                                    //          className="form-control searchP"
+                                                                    //          type="text"
+                                                                    //          placeholder="Search"
+                                                                    //          aria-label="Search"
+                                                                    //          onKeyUp={this.searchApplicationDataKeyUp}
+                                                                    //      />
+                                                                    //      <span>Records per page</span>
+                                                                    //      <Input
+                                                                    //          type="select"
+                                                                    //          className="form-control drop"
+                                                                    //          id="exampleCustomSelect"
+                                                                    //          name="customSelect"
+                                                                    //          onChange={this.handleChangeEvent}
+                                                                    //      >
+                                                                    //          <option value="5">5</option>
+                                                                    //          <option value="10">10</option>
+                                                                    //          <option value="25">25</option>
+                                                                    //          <option value="50">50</option>
+                                                                    //          <option value="100">100</option>
+                                                                    //      </Input>
+                                                                    //  </div>
                                                                 ) : (
                                                                         null
                                                                     )
                                                             }
-                                                           
+
                                                         </Col>
                                                     </Row>
                                                 ) : (
@@ -241,16 +258,22 @@ class ListApp extends React.Component {
                                                         <Row>
                                                             <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                                                 <div className="rightapp">
-                                                                    <Link to="/createapp">
-                                                                        <Button
-                                                                            className="mb-2 mr-2"
-                                                                            color="primary"
-                                                                        >
-                                                                            Add
-                                                                    </Button>
-                                                                    </Link>
+                                                                    {
+                                                                        this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "advertiser" ? (
+                                                                            <Link to="/createapp">
+                                                                                <Button
+                                                                                    className="mb-2 mr-2"
+                                                                                    color="primary"
+                                                                                >
+                                                                                    Add
+                                                                        </Button>
+                                                                            </Link>
+                                                                        ) : (null)
+                                                                    }
+
                                                                 </div>
                                                             </Col>
+
 
                                                             <Col className="cols" sm="12" md="9" lg="9" xl="9">
                                                                 <div className="searchP">

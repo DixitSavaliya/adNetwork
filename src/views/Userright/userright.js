@@ -264,7 +264,7 @@ class UserRight extends Component {
                     <Col xs="12" sm="12" md="12" lg="4" xl="4">
                         <Card>
                             <CardHeader>
-                                <strong>UserRole</strong>
+                                <strong>UserRight</strong>
                             </CardHeader>
                             <CardBody>
                                 <Row>
