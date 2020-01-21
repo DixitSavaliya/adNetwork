@@ -68,6 +68,14 @@ export default class TableNotifications extends React.Component {
             this.getNotificationsCount();
         });
 
+        EventEmitter.subscribe('send_notification', (value) => {
+            this.getNotificationsCount();
+            setTimeout(() => {
+                this.getNotificationPageData();
+            }, 120)
+        });
+
+
         this.getNotificationsCount();
     }
 
@@ -140,7 +148,6 @@ export default class TableNotifications extends React.Component {
                     }
                 });
             }
-          
         })
     }
 

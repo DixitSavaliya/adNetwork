@@ -34,7 +34,8 @@ export default class TableApp extends React.Component {
             isNextBtnActive: '',
             onClickPage: "1",
             ownership: 1,
-            ads: false
+            ads: false,
+            switch: false
         }
 
         // this.checkAllHandler = this.checkAllHandler.bind(this);
@@ -44,6 +45,7 @@ export default class TableApp extends React.Component {
         this.btnDecrementClick = this.btnDecrementClick.bind(this);
         this.btnIncrementClick = this.btnIncrementClick.bind(this);
         this.handleChangegetAds = this.handleChangegetAds.bind(this);
+        this.handleLog = this.handleLog.bind(this);
 
         EventEmitter.subscribe('searchDataApp', (data) => {
             this.setState({
@@ -60,7 +62,9 @@ export default class TableApp extends React.Component {
         });
 
         EventEmitter.subscribe('select_app', (value) => {
-            this.setState({ ownership: this.state.ownership = value });
+            this.setState({
+                ownership: this.state.ownership = value
+            });
             this.getApplicationCount();
         });
 
@@ -282,6 +286,10 @@ export default class TableApp extends React.Component {
         this.props.history.push("/viewapp/" + id)
     }
 
+    handleLog() {
+
+    }
+
 
     btnIncrementClick() {
         this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
@@ -297,9 +305,9 @@ export default class TableApp extends React.Component {
         this.setState({ currentPage: listid });
     }
 
-      addAppMonetization(app_id,status) {
+    addAppMonetization(app_id, status) {
         if (app_id) {
-           
+
             var obj = {
                 id: "",
                 app_id: app_id,
@@ -353,7 +361,7 @@ export default class TableApp extends React.Component {
     }
 
     handleChangegetAds(data, index) {
-        if(data.ad_id != null) {
+        if (data.ad_id != null) {
             if (data.ad_status == 1) {
                 if (data.ad_id != null) {
                     const obj = {
@@ -368,7 +376,7 @@ export default class TableApp extends React.Component {
                                 icon: 'warning'
                             });
                         }
-    
+
                     })
                 }
             } else {
@@ -389,9 +397,9 @@ export default class TableApp extends React.Component {
                 }
             }
         } else {
-            this.addAppMonetization(data.id,data.ad_status);
+            this.addAppMonetization(data.id, data.ad_status);
         }
-       
+
     }
 
     render() {
@@ -516,10 +524,19 @@ export default class TableApp extends React.Component {
                                                             {
                                                                 this.props.auth.auth_data.user_group == 'publisher' ? (
                                                                     <td>
-                                                                        <Switch
-                                                                            checked={data.ad_status == 1 ? true : false}
-                                                                            onChange={() => this.handleChangegetAds(data, index)}
-                                                                        />
+                                                                        {
+                                                                            data.owner !== 'advertiser' ? (
+                                                                                <Switch
+                                                                                    checked={data.ad_status == 1 ? true : false}
+                                                                                    onChange={() => this.handleChangegetAds(data, index)}
+                                                                                />
+                                                                            ) : (
+                                                                                    <Switch
+                                                                                        checked={data.ad_status == 1 ? true : false}
+                                                                                        onChange={() => this.handleLog()}
+                                                                                    />
+                                                                                )
+                                                                        }
                                                                     </td>
                                                                 ) : (null)
                                                             }
@@ -634,10 +651,19 @@ export default class TableApp extends React.Component {
                                                             )
                                                     }
                                                     <td>
-                                                        <Switch
-                                                            checked={data.ad_status == 1 ? true : false}
-                                                            onChange={() => this.handleChangegetAds(data, index)}
-                                                        />
+                                                        {
+                                                            data.owner !== 'advertiser' ? (
+                                                                <Switch
+                                                                    checked={data.ad_status == 1 ? true : false}
+                                                                    onChange={() => this.handleChangegetAds(data, index)}
+                                                                />
+                                                            ) : (
+                                                                    <Switch
+                                                                        checked={data.ad_status == 1 ? true : false}
+                                                                        onChange={() => this.handleLog()}
+                                                                    />
+                                                                )
+                                                        }
                                                     </td>
                                                     <td onClick={() => this.appData(data)}>
                                                         <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />

@@ -43,7 +43,29 @@ class ListNotifications extends React.Component {
             ownership: '',
             isDisplay: false,
             deletedata: '',
-            delete: false
+            delete: false,
+            auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),
+            check: false,
+            isData: false,
+            searchData: '',
+            count: '',
+            currentPage: "1",
+            items_per_page: "5",
+            render_per_page: "5",
+            perpage: '',
+            paginationdata: '',
+            isFetch: false,
+            data: '',
+            allRecords: '',
+            upperPageBound: "3",
+            lowerPageBound: "0",
+            pageBound: "3",
+            isPrevBtnActive: 'disabled',
+            isNextBtnActive: '',
+            onClickPage: "1",
+            ownership: '',
+            ads: false,
+            _maincheck: false
         }
 
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
@@ -58,7 +80,39 @@ class ListNotifications extends React.Component {
                 delete: this.state.delete = true
             })
         });
+        this.getNotificationsCount();
     }
+
+    getNotificationsCount() {
+        const obj = {
+            user_id: this.props.auth.auth_data.id
+        }
+        let _this = this;
+        this.props.notificationCount(obj).then((res) => {
+
+            _this.setState({
+                count: _this.state.count = res.response.data
+            })
+            _this.getNotificationPageData();
+        })
+
+    }
+
+    getNotificationPageData() {
+        const obj = {
+            page_no: "1",
+            items_per_page: this.state.items_per_page,
+            user_id: this.props.auth.auth_data.id
+        }
+        let _this = this;
+        this.props.notificationPGData(obj).then(function (res) {
+            _this.setState({
+                paginationdata: res.response.data,
+                isFetch: true
+            })
+        })
+    }
+
 
     handleChangeEvent(e) {
         EventEmitter.dispatch('per_page_notification_value', e.target.value);
@@ -84,6 +138,10 @@ class ListNotifications extends React.Component {
                             text: res.response.message,
                             icon: 'success'
                         });
+                        EventEmitter.dispatch('send_notification', 1);
+                        this.setState({
+                            delete:this.state.delete = false
+                        })
                     } else {
                         Swal.fire({
                             text: res.response.message,

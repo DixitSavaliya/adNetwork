@@ -53,7 +53,8 @@ class Publisher extends Component {
             isNextBtnActive: '',
             onClickPage: "1",
             ownership: '',
-            ads: false
+            ads: false,
+     
         }
         this.handleClick = this.handleClick.bind(this);
         this.btnDecrementClick = this.btnDecrementClick.bind(this);

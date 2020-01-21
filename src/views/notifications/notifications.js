@@ -44,6 +44,7 @@ class Notifications extends Component {
             title: '',
             titleerror: '',
             message: '',
+            messageerror:'',
             time: '',
             status: 0,
             statuserror: '',
@@ -293,23 +294,18 @@ class Notifications extends Component {
 
     validate() {
         let titleerror = "";
-        let urlerror = "";
-        let selectedFileerror = "";
+        let messageerror = "";
 
         if (!this.state.title) {
             titleerror = "please enter title";
         }
 
-        if (!this.state.url) {
-            urlerror = "please enter url";
+        if (!this.state.message) {
+            messageerror = "please enter message";
         }
 
-        if (!this.state.selectedFile) {
-            selectedFileerror = "please select file";
-        }
-
-        if (titleerror || urlerror || selectedFileerror) {
-            this.setState({ titleerror, urlerror, selectedFileerror });
+        if (titleerror || messageerror) {
+            this.setState({ titleerror, messageerror});
             return false;
         }
         return true;
@@ -532,6 +528,9 @@ class Notifications extends Component {
                                                         placeholder="Content..."
                                                         required
                                                     />
+                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                        {this.state.messageerror}
+                                                    </div>
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -580,9 +579,9 @@ class Notifications extends Component {
                                                                 </div>
                                                             )
                                                     }
-                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
                                                         {this.state.selectedFileerror}
-                                                    </div>
+                                                    </div> */}
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -602,9 +601,9 @@ class Notifications extends Component {
                                                         placeholder="Enter URL"
                                                         required
                                                     />
-                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
                                                         {this.state.urlerror}
-                                                    </div>
+                                                    </div> */}
                                                 </FormGroup>
                                             </Col>
                                         </Row>
