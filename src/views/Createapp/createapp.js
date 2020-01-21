@@ -200,7 +200,7 @@ class CreateApp extends React.Component {
 
 
         if (nameerror || descriptionerror || packageerrror || selectedFileerror || customSelecterror) {
-            this.setState({ nameerror,descriptionerror, packageerrror, selectedFileerror, customSelecterror });
+            this.setState({ nameerror, descriptionerror, packageerrror, selectedFileerror, customSelecterror });
             return false;
         }
         return true;
@@ -271,7 +271,7 @@ class CreateApp extends React.Component {
 
 
         if (nameerror || descriptionerror || packageerrror || selectedFileerror || customSelecterror) {
-            this.setState({ nameerror,descriptionerror, packageerrror, selectedFileerror, customSelecterror });
+            this.setState({ nameerror, descriptionerror, packageerrror, selectedFileerror, customSelecterror });
             return false;
         }
         return true;
@@ -901,23 +901,25 @@ class CreateApp extends React.Component {
                                             <Row>
                                                 <Col xs="6">
                                                     <FormGroup>
-                                                        <Label htmlFor="description"><b>Description:</b></Label>
+                                                        <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
                                                         <Input
-                                                            type="textarea"
-                                                            id="description"
-                                                            name="description"
+                                                            type="text"
+                                                            id="privacy"
+                                                            name="privacy"
                                                             className="form-control"
-                                                            defaultValue={this.state.description}
+                                                            defaultValue={this.state.privacy}
                                                             onChange={this.handleChangeEvent}
                                                             rows="4"
-                                                            placeholder="Content..."
+                                                            placeholder="Enter privacy policy content..."
                                                             required
                                                         />
-                                                        <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.descriptionerror}
-                                                        </div>
+                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.privacyerror}
+                                                        </div> */}
                                                     </FormGroup>
                                                 </Col>
+
+
                                                 <Col xs="6">
                                                     {
                                                         this.props.id ? (
@@ -968,6 +970,24 @@ class CreateApp extends React.Component {
                                             <Row>
                                                 <Col xs="6">
                                                     <FormGroup>
+                                                        <Label htmlFor="Versioncode"><b>Versioncode:</b></Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="Versioncode"
+                                                            name="version_code"
+                                                            className="form-control"
+                                                            defaultValue={this.state.version_code}
+                                                            onChange={this.handleChangeEvent}
+                                                            placeholder="Enter Version Code"
+                                                            required
+                                                        />
+                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.version_codeerror}
+                                                        </div> */}
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col xs="6">
+                                                    <FormGroup>
                                                         <Label htmlFor="Link"><b>Link:</b></Label>
                                                         <Input
                                                             type="text"
@@ -981,6 +1001,26 @@ class CreateApp extends React.Component {
                                                         />
                                                         {/* <div style={{ fontSize: 12, color: "red" }}>
                                                             {this.state.linkerror}
+                                                        </div> */}
+                                                    </FormGroup>
+                                                </Col>
+                                                </Row>
+                                                <Row>
+                                                <Col xs="6">
+                                                    <FormGroup>
+                                                        <Label htmlFor="more_apps"><b>More apps:</b></Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="more_apps"
+                                                            name="more_apps"
+                                                            className="form-control"
+                                                            defaultValue={this.state.more_apps}
+                                                            onChange={this.handleChangeEvent}
+                                                            placeholder="Enter More Apps"
+                                                            required
+                                                        />
+                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.more_appserror}
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
@@ -1003,25 +1043,186 @@ class CreateApp extends React.Component {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
+
                                             <Row>
                                                 <Col xs="12">
                                                     <FormGroup>
-                                                        <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
+                                                        <Label htmlFor="ServerKey"><b>ServerKey:</b></Label>
                                                         <Input
-                                                            type="textarea"
-                                                            id="privacy"
-                                                            name="privacy"
+                                                            type="text"
+                                                            id="ServerKey"
+                                                            name="serverKey"
                                                             className="form-control"
-                                                            defaultValue={this.state.privacy}
+                                                            defaultValue={this.state.serverKey}
                                                             onChange={this.handleChangeEvent}
                                                             rows="4"
-                                                            placeholder="Enter privacy policy content..."
+                                                            placeholder="Enter ServerKey"
                                                             required
                                                         />
                                                         {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.privacyerror}
-                                                        </div> */}
+                                                                {this.state.serverKeyerror}
+                                                            </div> */}
                                                     </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs="12">
+                                                    <FormGroup>
+                                                        <Label htmlFor="description"><b>Description:</b></Label>
+                                                        <Input
+                                                            type="textarea"
+                                                            id="description"
+                                                            name="description"
+                                                            className="form-control"
+                                                            defaultValue={this.state.description}
+                                                            onChange={this.handleChangeEvent}
+                                                            rows="4"
+                                                            placeholder="Content..."
+                                                            required
+                                                        />
+                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.descriptionerror}
+                                                        </div>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+
+                                            <Row>
+                                                <Col xs="3">
+                                                    <Label htmlFor="userrole"><b>Status:</b></Label>
+                                                    <br />
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            id="inline-radio36"
+                                                            defaultValue="1"
+                                                            checked={this.state.status == 1 ? this.state.statuscheck1 : !this.state.statuscheck1}
+                                                            name="status"
+                                                            onChange={this.handleChangeStatus}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio36"
+                                                        >
+                                                            Active
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            id="inline-radio65"
+                                                            defaultValue="0"
+                                                            checked={this.state.status == 0 ? this.state.statuscheck1 : !this.state.statuscheck1}
+                                                            name="status"
+                                                            onChange={this.handleChangeStatus}
+                                                        />
+
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio65"
+                                                        >
+                                                            InActive
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                        {this.state.statuserror}
+                                                    </div>
+                                                </Col>
+
+                                                <Col xs="3">
+                                                    <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
+                                                    <br />
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            id="inline-radio789"
+                                                            defaultValue="1"
+                                                            checked={this.state.webviewstatus == 1 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
+                                                            name="WebView"
+                                                            onChange={this.handleChangeWebViewStatus}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio789"
+                                                        >
+                                                            Yes
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            id="inline-radio498"
+                                                            defaultValue="0"
+                                                            checked={this.state.webviewstatus == 0 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
+                                                            name="WebView"
+                                                            onChange={this.handleChangeWebViewStatus}
+                                                        />
+
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio498"
+                                                        >
+                                                            No
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {this.state.webviewstatuserror}
+                                                    </div> */}
+                                                </Col>
+
+                                                <Col xs="3">
+                                                    <Label htmlFor="userrole"><b>ExitStatus:</b></Label>
+                                                    <br />
+                                                    <FormGroup check inline>
+                                                        <Input
+                                                            type="radio"
+                                                            id="inline-radio188"
+                                                            defaultValue="1"
+                                                            checked={this.state.exitstatus == 1 ? this.state.exitstatuscheck1 : !this.state.exitstatuscheck1}
+                                                            name="ExitStatus"
+                                                            onChange={this.handleChangeExitStatus}
+                                                        />
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio188"
+                                                        >
+                                                            Yes
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    <FormGroup check inline>
+                                                        <Input
+
+                                                            type="radio"
+                                                            id="inline-radio288"
+                                                            defaultValue="0"
+                                                            checked={this.state.exitstatus == 0 ? this.state.exitstatuscheck1 : !this.state.exitstatuscheck1}
+                                                            name="ExitStatus"
+                                                            onChange={this.handleChangeExitStatus}
+                                                        />
+
+                                                        <Label
+                                                            className="form-check-label"
+                                                            check htmlFor="inline-radio288"
+                                                        >
+                                                            No
+                                                 </Label>
+
+                                                    </FormGroup>
+                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {this.state.exitstatuserror}
+                                                    </div> */}
+                                                </Col>
+                                                <Col xs="3">
+                                                    <Label>
+                                                        <b>IsLive:</b>
+                                                    </Label>
+                                                    <br />
+                                                    <Switch onChange={this.handleChange} checked={this.state.checked} />
                                                 </Col>
                                             </Row>
                                             <Row>
@@ -1042,7 +1243,7 @@ class CreateApp extends React.Component {
                                                             ) : (
                                                                     <div>
                                                                         <p><b>Icon Image:</b></p>
-                                                                        <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                                                        <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
                                                                         <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
                                                                         <Input
                                                                             type="url"
@@ -1091,7 +1292,7 @@ class CreateApp extends React.Component {
                                                             ) : (
                                                                     <div>
                                                                         <p><b>Banner Image:</b></p>
-                                                                        <Label className="imag" for="file-input1"><i className="fa fa-upload fa-lg"></i></Label>
+                                                                        <Label className="imag" for="file-input1"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
                                                                         <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
                                                                         <Input
                                                                             type="url"
@@ -1125,205 +1326,8 @@ class CreateApp extends React.Component {
                                                 </Col>
 
                                             </Row>
-                                            <Row>
-                                                <Col xs="6">
-                                                    <Label htmlFor="userrole"><b>Status:</b></Label>
-                                                    <br />
-                                                    <FormGroup check inline>
-                                                        <Input
-                                                            type="radio"
-                                                            id="inline-radio36"
-                                                            defaultValue="1"
-                                                            checked={this.state.status == 1 ? this.state.statuscheck1 : !this.state.statuscheck1}
-                                                            name="status"
-                                                            onChange={this.handleChangeStatus}
-                                                        />
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio36"
-                                                        >
-                                                            Active
-                                                 </Label>
 
-                                                    </FormGroup>
-                                                    <FormGroup check inline>
-                                                        <Input
-                                                            type="radio"
-                                                            id="inline-radio65"
-                                                            defaultValue="0"
-                                                            checked={this.state.status == 0 ? this.state.statuscheck1 : !this.state.statuscheck1}
-                                                            name="status"
-                                                            onChange={this.handleChangeStatus}
-                                                        />
 
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio65"
-                                                        >
-                                                            InActive
-                                                 </Label>
-
-                                                    </FormGroup>
-                                                    <div style={{ fontSize: 12, color: "red" }}>
-                                                        {this.state.statuserror}
-                                                    </div>
-                                                </Col>
-
-                                                <Col xs="6">
-                                                    <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
-                                                    <br />
-                                                    <FormGroup check inline>
-                                                        <Input
-                                                            type="radio"
-                                                            id="inline-radio789"
-                                                            defaultValue="1"
-                                                            checked={this.state.webviewstatus == 1 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
-                                                            name="WebView"
-                                                            onChange={this.handleChangeWebViewStatus}
-                                                        />
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio789"
-                                                        >
-                                                            Yes
-                                                 </Label>
-
-                                                    </FormGroup>
-                                                    <FormGroup check inline>
-                                                        <Input
-                                                            type="radio"
-                                                            id="inline-radio498"
-                                                            defaultValue="0"
-                                                            checked={this.state.webviewstatus == 0 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
-                                                            name="WebView"
-                                                            onChange={this.handleChangeWebViewStatus}
-                                                        />
-
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio498"
-                                                        >
-                                                            No
-                                                 </Label>
-
-                                                    </FormGroup>
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                        {this.state.webviewstatuserror}
-                                                    </div> */}
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col xs="6">
-                                                    <Label>
-                                                        <b>IsLive:</b>
-                                                    </Label>
-                                                    <br />
-                                                    <Switch onChange={this.handleChange} checked={this.state.checked} />
-                                                </Col>
-                                                <Col xs="6">
-                                                    <Label htmlFor="userrole"><b>ExitStatus:</b></Label>
-                                                    <br />
-                                                    <FormGroup check inline>
-                                                        <Input
-                                                            type="radio"
-                                                            id="inline-radio188"
-                                                            defaultValue="1"
-                                                            checked={this.state.exitstatus == 1 ? this.state.exitstatuscheck1 : !this.state.exitstatuscheck1}
-                                                            name="ExitStatus"
-                                                            onChange={this.handleChangeExitStatus}
-                                                        />
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio188"
-                                                        >
-                                                            Yes
-                                                 </Label>
-
-                                                    </FormGroup>
-                                                    <FormGroup check inline>
-                                                        <Input
-
-                                                            type="radio"
-                                                            id="inline-radio288"
-                                                            defaultValue="0"
-                                                            checked={this.state.exitstatus == 0 ? this.state.exitstatuscheck1 : !this.state.exitstatuscheck1}
-                                                            name="ExitStatus"
-                                                            onChange={this.handleChangeExitStatus}
-                                                        />
-
-                                                        <Label
-                                                            className="form-check-label"
-                                                            check htmlFor="inline-radio288"
-                                                        >
-                                                            No
-                                                 </Label>
-
-                                                    </FormGroup>
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                        {this.state.exitstatuserror}
-                                                    </div> */}
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col xs="6">
-                                                    <FormGroup>
-                                                        <Label htmlFor="more_apps"><b>More apps:</b></Label>
-                                                        <Input
-                                                            type="text"
-                                                            id="more_apps"
-                                                            name="more_apps"
-                                                            className="form-control"
-                                                            defaultValue={this.state.more_apps}
-                                                            onChange={this.handleChangeEvent}
-                                                            placeholder="Enter More Apps"
-                                                            required
-                                                        />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.more_appserror}
-                                                        </div> */}
-                                                    </FormGroup>
-                                                </Col>
-                                                <Col xs="6">
-                                                    <FormGroup>
-                                                        <Label htmlFor="Versioncode"><b>Versioncode:</b></Label>
-                                                        <Input
-                                                            type="text"
-                                                            id="Versioncode"
-                                                            name="version_code"
-                                                            className="form-control"
-                                                            defaultValue={this.state.version_code}
-                                                            onChange={this.handleChangeEvent}
-                                                            placeholder="Enter Version Code"
-                                                            required
-                                                        />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.version_codeerror}
-                                                        </div> */}
-                                                    </FormGroup>
-                                                </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col xs="12">
-                                                        <FormGroup>
-                                                            <Label htmlFor="ServerKey"><b>ServerKey:</b></Label>
-                                                            <Input
-                                                                type="textarea"
-                                                                id="ServerKey"
-                                                                name="serverKey"
-                                                                className="form-control"
-                                                                defaultValue={this.state.serverKey}
-                                                                onChange={this.handleChangeEvent}
-                                                                rows="4"
-                                                                placeholder="Enter ServerKey"
-                                                                required
-                                                            />
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                                {this.state.serverKeyerror}
-                                                            </div> */}
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                     
                                         </div>
                                     ) : (
                                             //Advertiser App
@@ -1367,25 +1371,26 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="6">
+                                                <Col xs="6">
                                                         <FormGroup>
-                                                            <Label htmlFor="description"><b>Description:</b></Label>
+                                                            <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
                                                             <Input
-                                                                type="textarea"
-                                                                id="description"
-                                                                name="description"
+                                                                type="text"
+                                                                id="privacy"
+                                                                name="privacy"
                                                                 className="form-control"
-                                                                defaultValue={this.state.description}
+                                                                defaultValue={this.state.privacy}
                                                                 onChange={this.handleChangeEvent}
                                                                 rows="4"
-                                                                placeholder="Content..."
+                                                                placeholder="Enter privacy policy content..."
                                                                 required
                                                             />
-                                                            <div style={{ fontSize: 12, color: "red" }}>
-                                                                {this.state.descriptionerror}
-                                                            </div>
+                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                                {this.state.privacyerror}
+                                                            </div> */}
                                                         </FormGroup>
                                                     </Col>
+                                                   
                                                     <Col xs="6">
                                                         {
                                                             this.props.id ? (
@@ -1472,24 +1477,163 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="12">
+                                                <Col xs="12">
                                                         <FormGroup>
-                                                            <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
+                                                            <Label htmlFor="description"><b>Description:</b></Label>
                                                             <Input
                                                                 type="textarea"
-                                                                id="privacy"
-                                                                name="privacy"
+                                                                id="description"
+                                                                name="description"
                                                                 className="form-control"
-                                                                defaultValue={this.state.privacy}
+                                                                defaultValue={this.state.description}
                                                                 onChange={this.handleChangeEvent}
                                                                 rows="4"
-                                                                placeholder="Enter privacy policy content..."
+                                                                placeholder="Content..."
                                                                 required
                                                             />
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                                {this.state.privacyerror}
-                                                            </div> */}
+                                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                                {this.state.descriptionerror}
+                                                            </div>
                                                         </FormGroup>
+                                                    </Col>
+                                                </Row>
+
+                                                <Row>
+                                                    <Col xs="3">
+                                                        <Label htmlFor="userrole"><b>Status:</b></Label>
+                                                        <br />
+                                                        <FormGroup check inline>
+                                                            <Input
+                                                                type="radio"
+                                                                id="inline-radio36"
+                                                                defaultValue="1"
+                                                                checked={this.state.status == 1 ? this.state.statuscheck1 : !this.state.statuscheck1}
+                                                                name="status"
+                                                                onChange={this.handleChangeStatus}
+                                                            />
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio36"
+                                                            >
+                                                                Active
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        <FormGroup check inline>
+                                                            <Input
+                                                                type="radio"
+                                                                id="inline-radio65"
+                                                                defaultValue="0"
+                                                                checked={this.state.status == 0 ? this.state.statuscheck1 : !this.state.statuscheck1}
+                                                                name="status"
+                                                                onChange={this.handleChangeStatus}
+                                                            />
+
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio65"
+                                                            >
+                                                                InActive
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.statuserror}
+                                                        </div>
+                                                    </Col>
+
+                                                    <Col xs="3">
+                                                        <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
+                                                        <br />
+                                                        <FormGroup check inline>
+                                                            <Input
+                                                                type="radio"
+                                                                id="inline-radio789"
+                                                                defaultValue="1"
+                                                                checked={this.state.webviewstatus == 1 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
+                                                                name="WebView"
+                                                                onChange={this.handleChangeWebViewStatus}
+                                                            />
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio789"
+                                                            >
+                                                                Yes
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        <FormGroup check inline>
+                                                            <Input
+                                                                type="radio"
+                                                                id="inline-radio498"
+                                                                defaultValue="0"
+                                                                checked={this.state.webviewstatus == 0 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
+                                                                name="WebView"
+                                                                onChange={this.handleChangeWebViewStatus}
+                                                            />
+
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio498"
+                                                            >
+                                                                No
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.webviewstatuserror}
+                                                        </div> */}
+                                                    </Col>
+
+                                                    <Col xs="3">
+                                                        <Label htmlFor="userrole"><b>IsFeatures:</b></Label>
+                                                        <br />
+                                                        <FormGroup check inline>
+                                                            <Input
+                                                                type="radio"
+                                                                id="inline-radio02"
+                                                                defaultValue="1"
+                                                                checked={this.state.is_features == 1 ? this.state.is_featuresstatuscheck1 : !this.state.is_featuresstatuscheck1}
+                                                                name="IsFeatures"
+                                                                onChange={this.handleChangeIsFeaturesStatus}
+                                                            />
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio02"
+                                                            >
+                                                                Yes
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        <FormGroup check inline>
+                                                            <Input
+
+                                                                type="radio"
+                                                                id="inline-radio30"
+                                                                defaultValue="0"
+                                                                checked={this.state.is_features == 0 ? this.state.is_featuresstatuscheck1 : !this.state.is_featuresstatuscheck1}
+                                                                name="IsFeatures"
+                                                                onChange={this.handleChangeIsFeaturesStatus}
+                                                            />
+
+                                                            <Label
+                                                                className="form-check-label"
+                                                                check htmlFor="inline-radio30"
+                                                            >
+                                                                No
+                                                 </Label>
+
+                                                        </FormGroup>
+                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {this.state.statuserror}
+                                                        </div> */}
+                                                    </Col>
+                                                    <Col xs="3">
+                                                        <Label>
+                                                            <b>IsLive:</b>
+                                                        </Label>
+                                                        <br />
+                                                        <Switch onChange={this.handleChange} checked={this.state.checked} />
                                                     </Col>
                                                 </Row>
                                                 <Row>
@@ -1510,7 +1654,7 @@ class CreateApp extends React.Component {
                                                                 ) : (
                                                                         <div>
                                                                             <p><b>Icon Image:</b></p>
-                                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
                                                                             <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
                                                                             <Input
                                                                                 type="url"
@@ -1559,7 +1703,7 @@ class CreateApp extends React.Component {
                                                                 ) : (
                                                                         <div>
                                                                             <p><b>Banner Image:</b></p>
-                                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
+                                                                            <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
                                                                             <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
                                                                             <Input
                                                                                 type="url"
@@ -1590,145 +1734,6 @@ class CreateApp extends React.Component {
                                                                 {this.state.bannerselectedFileerror}
                                                             </div> */}
                                                         </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col xs="6">
-                                                        <Label htmlFor="userrole"><b>Status:</b></Label>
-                                                        <br />
-                                                        <FormGroup check inline>
-                                                            <Input
-                                                                type="radio"
-                                                                id="inline-radio36"
-                                                                defaultValue="1"
-                                                                checked={this.state.status == 1 ? this.state.statuscheck1 : !this.state.statuscheck1}
-                                                                name="status"
-                                                                onChange={this.handleChangeStatus}
-                                                            />
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio36"
-                                                            >
-                                                                Active
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        <FormGroup check inline>
-                                                            <Input
-                                                                type="radio"
-                                                                id="inline-radio65"
-                                                                defaultValue="0"
-                                                                checked={this.state.status == 0 ? this.state.statuscheck1 : !this.state.statuscheck1}
-                                                                name="status"
-                                                                onChange={this.handleChangeStatus}
-                                                            />
-
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio65"
-                                                            >
-                                                                InActive
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.statuserror}
-                                                        </div>
-                                                    </Col>
-
-                                                    <Col xs="6">
-                                                        <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
-                                                        <br />
-                                                        <FormGroup check inline>
-                                                            <Input
-                                                                type="radio"
-                                                                id="inline-radio789"
-                                                                defaultValue="1"
-                                                                checked={this.state.webviewstatus == 1 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
-                                                                name="WebView"
-                                                                onChange={this.handleChangeWebViewStatus}
-                                                            />
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio789"
-                                                            >
-                                                                Yes
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        <FormGroup check inline>
-                                                            <Input
-                                                                type="radio"
-                                                                id="inline-radio498"
-                                                                defaultValue="0"
-                                                                checked={this.state.webviewstatus == 0 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
-                                                                name="WebView"
-                                                                onChange={this.handleChangeWebViewStatus}
-                                                            />
-
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio498"
-                                                            >
-                                                                No
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.webviewstatuserror}
-                                                        </div> */}
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col xs="6">
-                                                        <Label>
-                                                            <b>IsLive:</b>
-                                                        </Label>
-                                                        <br />
-                                                        <Switch onChange={this.handleChange} checked={this.state.checked} />
-                                                    </Col>
-                                                    <Col xs="6">
-                                                        <Label htmlFor="userrole"><b>IsFeatures:</b></Label>
-                                                        <br />
-                                                        <FormGroup check inline>
-                                                            <Input
-                                                                type="radio"
-                                                                id="inline-radio02"
-                                                                defaultValue="1"
-                                                                checked={this.state.is_features == 1 ? this.state.is_featuresstatuscheck1 : !this.state.is_featuresstatuscheck1}
-                                                                name="IsFeatures"
-                                                                onChange={this.handleChangeIsFeaturesStatus}
-                                                            />
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio02"
-                                                            >
-                                                                Yes
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        <FormGroup check inline>
-                                                            <Input
-
-                                                                type="radio"
-                                                                id="inline-radio30"
-                                                                defaultValue="0"
-                                                                checked={this.state.is_features == 0 ? this.state.is_featuresstatuscheck1 : !this.state.is_featuresstatuscheck1}
-                                                                name="IsFeatures"
-                                                                onChange={this.handleChangeIsFeaturesStatus}
-                                                            />
-
-                                                            <Label
-                                                                className="form-check-label"
-                                                                check htmlFor="inline-radio30"
-                                                            >
-                                                                No
-                                                 </Label>
-
-                                                        </FormGroup>
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.statuserror}
-                                                        </div> */}
                                                     </Col>
                                                 </Row>
                                             </div>

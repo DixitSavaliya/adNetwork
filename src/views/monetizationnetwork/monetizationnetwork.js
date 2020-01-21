@@ -488,7 +488,7 @@ class MonetizationNetwork extends React.Component {
         const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
         return (
             <div>
-                <Row>
+                <Row style={{ height: '170px' }}>
                     <Col xl="3" lg="3" md="4">
                         <Form>
                             <FormGroup>
@@ -637,145 +637,143 @@ class MonetizationNetwork extends React.Component {
                 {/* Monetization setup */}
                 <Row>
                     <Col xs="12" sm="12">
-                        {
-                            this.state.selectApp != null ? (
-                                <Card>
-                                    <CardHeader>
-                                        <strong style={{ color: '#20a8d8', fontSize: '25px' }}>Monetization Setup</strong>
-                                    </CardHeader>
-                                    <CardBody>
-                                        {
-                                            this.state.showsection == true ? (
-                                                <div>
-                                                    {/* Facebook ads*/}
-                                                    < Row >
-                                                        <Col xs="12" sm="12">
-                                                            <Card>
-                                                                <CardHeader>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>FACEBOOK</strong>
-                                                                        </Col>
-                                                                        <Col xs="6" style={{ textAlign: 'right' }}>
-                                                                            <FormGroup>
-                                                                                {/* <Label>
+
+                        <Card>
+                            <CardHeader>
+                                <strong style={{ color: '#20a8d8', fontSize: '25px' }}>Monetization Setup</strong>
+                            </CardHeader>
+                            <CardBody>
+
+                                <div>
+                                    {/* Facebook ads*/}
+                                    < Row >
+                                        <Col xs="12" sm="12">
+                                            <Card>
+                                                <CardHeader>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>FACEBOOK</strong>
+                                                        </Col>
+                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                            <FormGroup>
+                                                                {/* <Label>
                                                                             <b>Facebook Ads</b>
                                                                         </Label> */}
-                                                                                <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardHeader>
-                                                                <CardBody>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="FB_id"><b>FB_id</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="FB_id"
-                                                                                    name="FB_id"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.FB_id}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.FB_id = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_id"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="FB_rewareded_ads"><b>FB_rewareded_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="FB_rewareded_ads"
-                                                                                    name="FB_rewareded_ads"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.FB_rewareded_ads}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.FB_rewareded_ads = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_rewareded_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="fb_interstitial"><b>FB_interstitial_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="fb_interstitial"
-                                                                                    name="fb_interstitial"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.fb_interstitial}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.fb_interstitial = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_interstitial_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="fb_banner"><b>FB_banner_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="fb_banner"
-                                                                                    name="fb_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.fb_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.fb_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_banner_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="fb_native_banner"><b>FB_native_banner</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="fb_native_banner"
-                                                                                    name="fb_native_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.fb_native_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.fb_native_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_native_banner"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="fb_native"><b>FB_native_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="fb_native"
-                                                                                    name="fb_native"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.fb_native}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.fb_native = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter FB_native_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    {/* <Row>
+                                                                <Switch onChange={this.handleChangeFBAds} checked={this.state.fb_ads} />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="FB_id"><b>FB_id</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="FB_id"
+                                                                    name="FB_id"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.FB_id}
+                                                                    onChange={(e) =>
+                                                                        this.state.FB_id = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_id"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="FB_rewareded_ads"><b>FB_rewareded_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="FB_rewareded_ads"
+                                                                    name="FB_rewareded_ads"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.FB_rewareded_ads}
+                                                                    onChange={(e) =>
+                                                                        this.state.FB_rewareded_ads = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_rewareded_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="fb_interstitial"><b>FB_interstitial_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="fb_interstitial"
+                                                                    name="fb_interstitial"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.fb_interstitial}
+                                                                    onChange={(e) =>
+                                                                        this.state.fb_interstitial = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_interstitial_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="fb_banner"><b>FB_banner_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="fb_banner"
+                                                                    name="fb_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.fb_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.fb_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_banner_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="fb_native_banner"><b>FB_native_banner</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="fb_native_banner"
+                                                                    name="fb_native_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.fb_native_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.fb_native_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_native_banner"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="fb_native"><b>FB_native_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="fb_native"
+                                                                    name="fb_native"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.fb_native}
+                                                                    onChange={(e) =>
+                                                                        this.state.fb_native = e.target.value
+                                                                    }
+                                                                    placeholder="Enter FB_native_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    {/* <Row>
                                                                     <Col xs="6">
                                                                         <FormGroup>
                                                                             <Label>
@@ -786,140 +784,140 @@ class MonetizationNetwork extends React.Component {
                                                                         </FormGroup>
                                                                     </Col>
                                                                 </Row> */}
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Col>
-                                                    </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
 
-                                                    {/* Admob ads*/}
+                                    {/* Admob ads*/}
+                                    <Row>
+                                        <Col xs="12" sm="12">
+                                            <Card>
+                                                <CardHeader>
                                                     <Row>
-                                                        <Col xs="12" sm="12">
-                                                            <Card>
-                                                                <CardHeader>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>GOOGLE</strong>
-                                                                        </Col>
-                                                                        <Col xs="6" style={{ textAlign: 'right' }}>
-                                                                            <FormGroup>
-                                                                                {/* <Label>
+                                                        <Col xs="6">
+                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>GOOGLE</strong>
+                                                        </Col>
+                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                            <FormGroup>
+                                                                {/* <Label>
                                                                             <b>Facebook Ads</b>
                                                                         </Label> */}
-                                                                                <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardHeader>
+                                                                <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                </CardHeader>
 
-                                                                <CardBody>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="admob_appid"><b>GAN_id</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="admob_appid"
-                                                                                    name="admob_appid"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.admob_appid}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.admob_appid = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_id"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="admob_interstitial"><b>GAN_interstitial_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="admob_interstitial"
-                                                                                    name="admob_interstitial"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.admob_interstitial}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.admob_interstitial = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_interstitial_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="admob_banner"><b>GAN_banner_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="admob_banner"
-                                                                                    name="admob_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.admob_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.admob_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_banner_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="admob_native_banner"><b>GAN_native_banner</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="admob_native_banner"
-                                                                                    name="admob_native_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.admob_native_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.admob_native_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_native_banner"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="GAN_native_ads"><b>GAN_native_ads </b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="GAN_native_ads"
-                                                                                    name="GAN_native_ads"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.GAN_native_ads}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.GAN_native_ads = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_native_ads "
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="admob_rewarded"><b>GAN_rewareded_ads </b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="admob_rewarded"
-                                                                                    name="admob_rewarded"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.admob_rewarded}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.admob_rewarded = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter GAN_rewareded_ads "
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        {/* <Col xs="6">
+                                                <CardBody>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="admob_appid"><b>GAN_id</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="admob_appid"
+                                                                    name="admob_appid"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.admob_appid}
+                                                                    onChange={(e) =>
+                                                                        this.state.admob_appid = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_id"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="admob_interstitial"><b>GAN_interstitial_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="admob_interstitial"
+                                                                    name="admob_interstitial"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.admob_interstitial}
+                                                                    onChange={(e) =>
+                                                                        this.state.admob_interstitial = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_interstitial_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="admob_banner"><b>GAN_banner_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="admob_banner"
+                                                                    name="admob_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.admob_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.admob_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_banner_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="admob_native_banner"><b>GAN_native_banner</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="admob_native_banner"
+                                                                    name="admob_native_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.admob_native_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.admob_native_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_native_banner"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="GAN_native_ads"><b>GAN_native_ads </b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="GAN_native_ads"
+                                                                    name="GAN_native_ads"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.GAN_native_ads}
+                                                                    onChange={(e) =>
+                                                                        this.state.GAN_native_ads = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_native_ads "
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="admob_rewarded"><b>GAN_rewareded_ads </b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="admob_rewarded"
+                                                                    name="admob_rewarded"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.admob_rewarded}
+                                                                    onChange={(e) =>
+                                                                        this.state.admob_rewarded = e.target.value
+                                                                    }
+                                                                    placeholder="Enter GAN_rewareded_ads "
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        {/* <Col xs="6">
                                                                         <FormGroup>
                                                                             <Label>
                                                                                 <b>AdMob Ads</b>
@@ -928,143 +926,143 @@ class MonetizationNetwork extends React.Component {
                                                                             <Switch onChange={this.handleChangeAdMobAds} checked={this.state.admob_ads} />
                                                                         </FormGroup>
                                                                     </Col> */}
-                                                                    </Row>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Col>
                                                     </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
 
-                                                    {/* Mopub ads*/}
+                                    {/* Mopub ads*/}
+                                    <Row>
+                                        <Col xs="12" sm="12">
+                                            <Card>
+                                                <CardHeader>
                                                     <Row>
-                                                        <Col xs="12" sm="12">
-                                                            <Card>
-                                                                <CardHeader>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>MOPUB</strong>
-                                                                        </Col>
-                                                                        <Col xs="6" style={{ textAlign: 'right' }}>
-                                                                            <FormGroup>
-                                                                                {/* <Label>
+                                                        <Col xs="6">
+                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>MOPUB</strong>
+                                                        </Col>
+                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                            <FormGroup>
+                                                                {/* <Label>
                                                                             <b>Facebook Ads</b>
                                                                         </Label> */}
-                                                                                <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardHeader>
+                                                                <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                </CardHeader>
 
-                                                                <CardBody>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="MO_id"><b>MO_id</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="MO_id"
-                                                                                    name="MO_id"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.MO_id}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.MO_id = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_id"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="mopub_interstitial"><b>MO_interstitial_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="mopub_interstitial"
-                                                                                    name="mopub_interstitial"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.mopub_interstitial}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.mopub_interstitial = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_interstitial_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
+                                                <CardBody>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="MO_id"><b>MO_id</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="MO_id"
+                                                                    name="MO_id"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.MO_id}
+                                                                    onChange={(e) =>
+                                                                        this.state.MO_id = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_id"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="mopub_interstitial"><b>MO_interstitial_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="mopub_interstitial"
+                                                                    name="mopub_interstitial"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.mopub_interstitial}
+                                                                    onChange={(e) =>
+                                                                        this.state.mopub_interstitial = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_interstitial_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
 
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="mopub_native_banner"><b>MO_native_banner</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="mopub_native_banner"
-                                                                                    name="mopub_native_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.mopub_native_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.mopub_native_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_native_banner"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="mopub_video"><b>MO_native_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="mopub_video"
-                                                                                    name="mopub_video"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.mopub_video}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.mopub_video = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_native_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="mopub_banner"><b>MO_banner_ads</b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="mopub_banner"
-                                                                                    name="mopub_banner"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.mopub_banner}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.mopub_banner = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_banner_ads"
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="mopub_native_banner"><b>MO_native_banner</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="mopub_native_banner"
+                                                                    name="mopub_native_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.mopub_native_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.mopub_native_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_native_banner"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="mopub_video"><b>MO_native_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="mopub_video"
+                                                                    name="mopub_video"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.mopub_video}
+                                                                    onChange={(e) =>
+                                                                        this.state.mopub_video = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_native_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="mopub_banner"><b>MO_banner_ads</b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="mopub_banner"
+                                                                    name="mopub_banner"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.mopub_banner}
+                                                                    onChange={(e) =>
+                                                                        this.state.mopub_banner = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_banner_ads"
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
 
-                                                                        <Col xs="6">
-                                                                            <FormGroup>
-                                                                                <Label htmlFor="mopub_reward_video"><b>MO_rewareded_ads </b></Label>
-                                                                                <Input
-                                                                                    type="text"
-                                                                                    id="mopub_reward_video"
-                                                                                    name="mopub_reward_video"
-                                                                                    className="form-control"
-                                                                                    defaultValue={this.state.mopub_reward_video}
-                                                                                    onChange={(e) =>
-                                                                                        this.state.mopub_reward_video = e.target.value
-                                                                                    }
-                                                                                    placeholder="Enter MO_rewareded_ads "
-                                                                                    required
-                                                                                />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        {/* <Col xs="6">
+                                                        <Col xs="6">
+                                                            <FormGroup>
+                                                                <Label htmlFor="mopub_reward_video"><b>MO_rewareded_ads </b></Label>
+                                                                <Input
+                                                                    type="text"
+                                                                    id="mopub_reward_video"
+                                                                    name="mopub_reward_video"
+                                                                    className="form-control"
+                                                                    defaultValue={this.state.mopub_reward_video}
+                                                                    onChange={(e) =>
+                                                                        this.state.mopub_reward_video = e.target.value
+                                                                    }
+                                                                    placeholder="Enter MO_rewareded_ads "
+                                                                    required
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        {/* <Col xs="6">
                                                                         <FormGroup>
                                                                             <Label>
                                                                                 <b>Mopub Ads</b>
@@ -1073,23 +1071,16 @@ class MonetizationNetwork extends React.Component {
                                                                             <Switch onChange={this.handleChangeMopubAds} checked={this.state.mopub_ads} />
                                                                         </FormGroup>
                                                                     </Col> */}
-                                                                    </Row>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Col>
                                                     </Row>
-                                                </div>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </div>
 
-                                            ) : (
-                                                    null
-                                                )
-                                        }
-                                    </CardBody>
-                                </Card>
-                            ) : (
-                                    null
-                                )
-                        }
+                            </CardBody>
+                        </Card>
+
 
                     </Col>
                 </Row>

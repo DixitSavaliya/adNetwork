@@ -478,7 +478,7 @@ class Dashboard extends Component {
             this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "advertiser" ? (
               <div>
                 <h2>Hello, {this.props.auth.user.first_name} {this.props.auth.user.last_name}</h2>
-                <h5>Welcome To Dashboard</h5>
+                {/* <h5>Welcome To Dashboard</h5> */}
                 {
                   this.props.auth.auth_data.user_group == "publisher" ? (
                     <p>Your Publisher ID is: {this.props.auth.auth_data.id}</p>
@@ -490,9 +490,9 @@ class Dashboard extends Component {
                   this.props.auth.auth_data.user_group == "publisher" ? (
                     <Card>
                       <CardHeader>
-                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App Hit Count</strong>
+                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App</strong>
                       </CardHeader>
-                      <CardBody className="app_list" style={{ height: '305px' }}>
+                      <CardBody>
                         {
                           this.state.publisher.length > 0 ? (
                             <Row>
@@ -560,9 +560,9 @@ class Dashboard extends Component {
                   ) : (
                       <Card>
                         <CardHeader>
-                          <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App Impression Count</strong>
+                          <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App</strong>
                         </CardHeader>
-                        <CardBody className="app_list" style={{ height: '305px' }}>
+                        <CardBody>
                           {
                             this.state.advertiser.length > 0 ? (
                               <Row>

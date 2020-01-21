@@ -1098,6 +1098,26 @@ const auth = (state = initialState, action) => {
             };
 
 
+             //INACTIVEUSER                       
+        case ACTION.INACTIVEUSER_REQUEST:
+            return {
+                ...state,
+                fetching: true,
+            };
+        case ACTION.INACTIVEUSER_SUCCESS:
+            return {
+                ...state,
+                fetching: false
+            };
+        case ACTION.INACTIVEUSER_FAILURE:
+            Swal.fire("Something went wrong!", "", "warning");
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            };
+
+
 
 
 

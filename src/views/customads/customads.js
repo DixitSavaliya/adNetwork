@@ -306,7 +306,7 @@ class CustomAds extends React.Component {
         const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
         return (
             <div>
-                <Row>
+                <Row style={{ height: '170px' }}>
                     <Col md="4">
                         <Form>
                             <FormGroup>
@@ -403,7 +403,7 @@ class CustomAds extends React.Component {
                             }
                             {
                                 this.state.listHasApp == true ? (
-                                    <Button className="" color="success" onClick={this.addCustomAds}>Save Settings</Button>
+                                    <Button style={{ marginLeft: '8px' }} className="" color="success" onClick={this.addCustomAds}>Save Settings</Button>
                                 ) : (
                                         null
                                     )
@@ -412,71 +412,67 @@ class CustomAds extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                {
-                    this.state.selectApp != null ? (
-                        <Card>
-                            <CardHeader>
-                                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
-                            </CardHeader>
-                            <CardBody className="app_list">
-                                {
-                                    this.state.advertiserapp.length > 0 ? (
 
-                                        <Row>
-                                            {
-                                                this.state.advertiserapp.map((data, index) =>
-                                                    <Col md="4" key={index}>
-                                                        <Form>
-                                                            <Card className="shadow_card">
-                                                                <CardBody className="padding">
-                                                                    <Row>
-                                                                        <Col md="3">
-                                                                            <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                        </Col>
-                                                                        <Col md="9" className="content">
-                                                                            <div className="app_detail">
-                                                                                {/* <Input
+                <Card>
+                    <CardHeader>
+                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
+                    </CardHeader>
+                    <CardBody className="app_list">
+                        {
+                            this.state.advertiserapp.length > 0 ? (
+
+                                <Row>
+                                    {
+                                        this.state.advertiserapp.map((data, index) =>
+                                            <Col md="4" key={index}>
+                                                <Form>
+                                                    <Card className="shadow_card">
+                                                        <CardBody className="padding">
+                                                            <Row>
+                                                                <Col md="3">
+                                                                    <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                                </Col>
+                                                                <Col md="9" className="content">
+                                                                    <div className="app_detail">
+                                                                        {/* <Input
                                                                             type="checkbox"
                                                                             id="no"
                                                                             onChange={() => this.handleChange(data)}
                                                                             checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                         /> */}
-                                                                                <h5>{data.name}</h5>
-                                                                                <h6>{data.package}</h6>
-                                                                                {
-                                                                                    this.state.advertiserapp[index]['_rowChecked'] == true ? (
-                                                                                        <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
-                                                                                            SELECTED
+                                                                        <h5>{data.name}</h5>
+                                                                        <h6>{data.package}</h6>
+                                                                        {
+                                                                            this.state.advertiserapp[index]['_rowChecked'] == true ? (
+                                                                                <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                    SELECTED
                                                                             </Button>
 
-                                                                                    ) : (
-                                                                                            <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
-                                                                                                SELECT
+                                                                            ) : (
+                                                                                    <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
+                                                                                        SELECT
                                                                             </Button>
-                                                                                        )
+                                                                                )
 
-                                                                                }
-                                                                            </div>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Form>
-                                                    </Col>
-                                                )
-                                            }
-
-                                        </Row>
-                                    ) : (
-                                            null
+                                                                        }
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+                                                        </CardBody>
+                                                    </Card>
+                                                </Form>
+                                            </Col>
                                         )
-                                }
-                            </CardBody>
-                        </Card>
-                    ) : (
-                            null
-                        )
-                }
+                                    }
+
+                                </Row>
+                            ) : (
+                                    null
+                                )
+                        }
+                    </CardBody>
+                </Card>
+
             </div>
         );
     }

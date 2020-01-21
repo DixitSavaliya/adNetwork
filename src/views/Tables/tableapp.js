@@ -33,7 +33,7 @@ export default class TableApp extends React.Component {
             isPrevBtnActive: 'disabled',
             isNextBtnActive: '',
             onClickPage: "1",
-            ownership: '',
+            ownership: 1,
             ads: false
         }
 
@@ -69,10 +69,10 @@ export default class TableApp extends React.Component {
     }
 
     getApplicationCount() {
-        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
+        if (this.props.auth.auth_data.user_group == "publisher") {
             const obj = {
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership
             }
             let _this = this;
@@ -92,7 +92,7 @@ export default class TableApp extends React.Component {
         } else {
             const obj = {
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
                 ownership: this.state.ownership = ""
             }
             let _this = this;
@@ -113,12 +113,12 @@ export default class TableApp extends React.Component {
     }
 
     getApplicationPageData() {
-        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
+        if (this.props.auth.auth_data.user_group == "publisher") {
             const obj = {
                 page_no: "1",
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership
             }
             let _this = this;
@@ -142,7 +142,7 @@ export default class TableApp extends React.Component {
                 page_no: "1",
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
                 ownership: this.state.ownership = ''
             }
             let _this = this;
@@ -208,7 +208,7 @@ export default class TableApp extends React.Component {
     }
 
     handleClick(event) {
-        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
+        if (this.props.auth.auth_data.user_group == "publisher") {
             if (this.state.currentPage <= '' + event.target.id) {
                 this.setState({
                     currentPage: this.state.currentPage + 1,
@@ -224,7 +224,7 @@ export default class TableApp extends React.Component {
                 page_no: '' + event.target.id,
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership
             }
             let _this = this;
@@ -256,7 +256,7 @@ export default class TableApp extends React.Component {
                 page_no: '' + event.target.id,
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group,
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
                 ownership: this.state.ownership = ""
             }
             let _this = this;
@@ -297,41 +297,101 @@ export default class TableApp extends React.Component {
         this.setState({ currentPage: listid });
     }
 
-    handleChangegetAds(data, index) {
-        if (data.ad_status == 1) {
-            if (data.ad_id != null) {
-                const obj = {
-                    id: data.ad_id
+      addAppMonetization(app_id,status) {
+        if (app_id) {
+           
+            var obj = {
+                id: "",
+                app_id: app_id,
+                status: "1",
+                data: {
+                    id: "",
+                    app_id: "",
+                    status: "1",
+                    FB_ADS: "",
+                    FB_id: "",
+                    FB_banner_ads: "",
+                    FB_native_ads: "",
+                    FB_interstitial_ads: "",
+                    FB_native_banner: "",
+                    FB_rewareded_ads: "",
+                    GAN_ADS: "",
+                    GAN_id: "",
+                    GAN_banner_ads: "",
+                    GAN_rewareded_ads: "",
+                    GAN_interstitial_ads: "",
+                    GAN_native_banner: "",
+                    GAN_native_ads: "",
+                    MO_id: "",
+                    MO_native_ads: "",
+                    MO_banner_ads: "",
+                    MO_interstitial_ads: "",
+                    MO_ADS: "",
+                    MO_rewareded_ads: "",
+                    MO_native_banner: "",
                 }
-                this.props.activeAppAds(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        this.getApplicationPageData();
-                    } else {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
-                        });
-                    }
+            }
 
-                })
+            this.props.AddAppMonetization(obj).then((res) => {
+                if (res.response.status == 1) {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'success'
+                    });
+                    this.getApplicationPageData();
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+            })
+
+        } else {
+            Swal.fire("Please Select App First!", "", "warning");
+        }
+    }
+
+    handleChangegetAds(data, index) {
+        if(data.ad_id != null) {
+            if (data.ad_status == 1) {
+                if (data.ad_id != null) {
+                    const obj = {
+                        id: data.ad_id
+                    }
+                    this.props.activeAppAds(obj).then((res) => {
+                        if (res.response.status == 1) {
+                            this.getApplicationPageData();
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
+    
+                    })
+                }
+            } else {
+                if (data.ad_id != null) {
+                    const obj = {
+                        id: data.ad_id
+                    }
+                    this.props.InactiveAppAds(obj).then((res) => {
+                        if (res.response.status == 1) {
+                            this.getApplicationPageData();
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
+                    })
+                }
             }
         } else {
-            if (data.ad_id != null) {
-                const obj = {
-                    id: data.ad_id
-                }
-                this.props.InactiveAppAds(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        this.getApplicationPageData();
-                    } else {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
-                        });
-                    }
-                })
-            }
+            this.addAppMonetization(data.id,data.ad_status);
         }
+       
     }
 
     render() {

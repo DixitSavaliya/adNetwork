@@ -114,7 +114,7 @@ class ListApp extends React.Component {
     }
 
     render() {
-        const { auth, applicationCount, applicationPGData, deleteApp, activeAppAds, InactiveAppAds } = this.props;
+        const { auth, applicationCount, applicationPGData, deleteApp, activeAppAds, InactiveAppAds,AddAppMonetization } = this.props;
 
         return (
             <div>
@@ -160,8 +160,8 @@ class ListApp extends React.Component {
                                                                             name="customSelect"
                                                                             onChange={this.handleChangeAppEvent}
                                                                         >
-                                                                            <option value="">All</option>
                                                                             <option value="1">My Only</option>
+                                                                            <option value="">All</option>
                                                                             <option value="2">Advertisers</option>
                                                                         </Input>
                                                                         <input
@@ -235,7 +235,7 @@ class ListApp extends React.Component {
 
                                         </div>
                                         <br />
-                                        <TableApp {...this.props} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                        <TableApp {...this.props} AddAppMonetization = {AddAppMonetization} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                     </CardBody>
                                 </Card>
                             </Col>

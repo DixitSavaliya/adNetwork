@@ -212,3 +212,14 @@
   .rdtTime td {
     cursor: default;
   }
+
+  @media(max-width: 1920px){
+     .media-app{
+      height: 700px !important;
+    }
+  }
+  @media(max-width: 1366px){
+    .media-app{
+     height: 410px !important;
+   }
+ }

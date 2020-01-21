@@ -373,7 +373,7 @@ class Notifications extends Component {
                             <CardHeader>
                                 <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher Application</strong>
                             </CardHeader>
-                            <CardBody className="app_list" style={{height:'410px'}}>
+                            <CardBody className="app_list media-app" style={{height:'410px'}}>
                                 {
                                     this.state.publisherapp.length > 0 ? (
                                         <Row>
@@ -433,7 +433,7 @@ class Notifications extends Component {
                             <CardHeader>
                                 <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Selected Application</strong>
                             </CardHeader>
-                            <CardBody className="app_list" style={{height:'410px'}}>
+                            <CardBody className="app_list media-app" style={{height:'410px'}}>
                                 {
                                     this.state.app_list.length > 0 ? (
                                         <Row>
@@ -492,7 +492,7 @@ class Notifications extends Component {
                                     <CardHeader>
                                         <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Notification Details</strong>
                                     </CardHeader>
-                                    <CardBody className="app_list" style={{height:'410px'}}>
+                                    <CardBody className="app_list media-app" style={{height:'410px'}}>
                                         <Row>
                                             <Col xs="12">
                                                 <FormGroup>

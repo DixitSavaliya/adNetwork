@@ -55,18 +55,20 @@ class Sidebar extends Component {
   render() {
     if (this.props.auth.auth_data.user_group == "admin") {
       if (this.state.rightdata) {
-        var items = [{
+        var roleitems = [{
           name: '',
           url: '',
           icon: ''
         }];
 
         for (var i = 0; i < this.state.rightdata.length; i++) {
-          for (var z = 0; z < items.length; z++) {
-            items[z].name = this.state.rightdata[i].display_name,
-              items[z].url = '/' + this.state.rightdata[i].name
+          for (var z = 0; z < roleitems.length; z++) {
+            // console.log("roleitems",roleitems[z]);
+            roleitems[z].name = this.state.rightdata[i].display_name,
+            roleitems[z].url = '/' + this.state.rightdata[i].name
           }
         }
+        
         // for(var j=0;j<nav.items.length;j++) {
         //   if(this.state.rightdata[i].display_name == nav.items[j].name) {
         //     console.log('ismatch');
@@ -80,7 +82,7 @@ class Sidebar extends Component {
         //   }
         // }
 
-        console.log('items', items);
+        // console.log('roleitems', roleitems);
       }
       this.props.sidebar.nav = nav.items;
     } else if (this.props.auth.auth_data.user_group == "advertiser") {
@@ -131,7 +133,7 @@ class Sidebar extends Component {
     };
 
     // nav link
-    const navLink = (item, key, classes) => {
+    const navLink = (item, key, classes) => { 
       const url = item.url ? item.url : '';
       return (
         <NavItem key={key} className={classes.item}>

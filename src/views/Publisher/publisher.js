@@ -175,10 +175,48 @@ class Publisher extends Component {
         // this.props.history.push("/viewapp/" + id)
     }
 
-    deleteUserData(id) {
-        console.log("id",id);
+    deleteUserData(data) {
+        const obj = {
+            userID: data.id
+        }
+        var array = [];
+        array.push(obj);
+        const user = {
+            data: array,
+            status: data.status == 1 ? 0 : 1
+        }
+        if (user.status == 0) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure you want to InActive?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, InActive it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.value) {
+                    this.props.blockUser(user).then((res) => {
+                        this.UsersPageData();
+                    })
+                }
+            })
+        } else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure you want to Active?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Active it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.value) {
+                    this.props.blockUser(user).then((res) => {
+                        this.UsersPageData();
+                    })
+                }
+            })
+        }
     }
-
 
     btnIncrementClick() {
         this.setState({ upperPageBound: this.state.upperPageBound + this.state.pageBound });
@@ -354,8 +392,14 @@ class Publisher extends Component {
                                                             <tr key={index}>
                                                                 <td className="action">
                                                                     <span className="padding">
-                                                                        {/* <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i> */}
-                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data.id)}></i>
+                                                                        {
+                                                                            data.status == 1 ? (
+                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data)}></i>
+                                                                            ) : (
+                                                                                    <i className="fa fa-check" onClick={() => this.deleteUserData(data)}></i>
+                                                                                )
+                                                                        }
+
                                                                     </span>
                                                                 </td>
                                                                 <td onClick={() => this.appData(data)}>{data.first_name}</td>
@@ -401,8 +445,14 @@ class Publisher extends Component {
                                                                             <tr key={index}>
                                                                                 <td className="action">
                                                                                     <span className="padding">
-                                                                                        {/* <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i> */}
-                                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data.id)}></i>
+                                                                                        {
+                                                                                            data.status == 1 ? (
+                                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserData(data)}></i>
+                                                                                            ) : (
+                                                                                                    <i className="fa fa-check" onClick={() => this.deleteUserData(data)}></i>
+                                                                                                )
+                                                                                        }
+
                                                                                     </span>
                                                                                 </td>
                                                                                 <td onClick={() => this.appData(data)}>{data.first_name}</td>

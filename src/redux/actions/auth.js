@@ -177,6 +177,21 @@ export const searchUsersData = (data) => {
   };
 };
 
+export const blockUser = (data) => {
+  return {
+    [CALL_API]: {
+      endpoint: 'AP/inactiveUser',
+      init: {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      types: ["INACTIVEUSER_REQUEST", "INACTIVEUSER_SUCCESS", "INACTIVEUSER_FAILURE"],
+    }
+  };
+};
+
+
+
 
 
 export const logout = () => {

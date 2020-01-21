@@ -101,3 +101,7 @@ input#no {
     z-index: 999999999999999;
     cursor: pointer;
 }
+
+.btn-group button {
+    margin-left: 8px;
+}
