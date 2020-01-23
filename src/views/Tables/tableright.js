@@ -354,8 +354,8 @@ export default class TableRight extends React.Component {
                                                                     <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRightData(data)}></i>
                                                                 </span>
                                                             </td>
-                                                            <td>{data.name}</td>
-                                                            <td>{data.display_name}</td>
+                                                            <td style={{ wordBreak: ' break-all' }}>{data.name}</td>
+                                                            <td style={{ wordBreak: ' break-all' }}>{data.display_name}</td>
 
                                                         </tr>
                                                     )
@@ -424,8 +424,8 @@ export default class TableRight extends React.Component {
                                                                         <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRightData(data)}></i>
                                                                     </span>
                                                                 </td>
-                                                                <td>{data.name}</td>
-                                                                <td>{data.display_name}</td>
+                                                                <td style={{ wordBreak: ' break-all' }}>{data.name}</td>
+                                                                <td style={{ wordBreak: ' break-all' }}>{data.display_name}</td>
 
                                                             </tr>
                                                         )

@@ -69,13 +69,14 @@ export default class TableNotifications extends React.Component {
         });
 
         EventEmitter.subscribe('send_notification', (value) => {
+            this.setState({
+                _maincheck:this.state._maincheck = false
+            })
             this.getNotificationsCount();
             setTimeout(() => {
                 this.getNotificationPageData();
             }, 120)
         });
-
-
         this.getNotificationsCount();
     }
 
@@ -154,8 +155,7 @@ export default class TableNotifications extends React.Component {
     handleClick(event) {
         if (this.state.currentPage <= '' + event.target.id) {
             this.setState({
-                currentPage: this.state.currentPage + 1,
-                onClickPage: +this.state.onClickPage + +this.state.items_per_page
+                currentPage: this.state.currentPage + 1
                 // render_per_page:
             })
         } else {
@@ -381,8 +381,8 @@ export default class TableNotifications extends React.Component {
                                                     <td onClick={() => this.appData(data)}>
                                                         <img src={REMOTE_URL + data.icon} className="img-nt" alt="admin@bootstrapmaster.com" />
                                                     </td>
-                                                    <td onClick={() => this.appData(data)}>{data.title}</td>
-                                                    <td onClick={() => this.appData(data)}>{data.message}</td>
+                                                    <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.title}</td>
+                                                    <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.message}</td>
                                                     <td onClick={() => this.appData(data)}>{data.type == 1 ? 'Sheduled' : 'Immediate'}</td>
                                                     <td onClick={() => this.appData(data)}>
                                                         {data.true_count}

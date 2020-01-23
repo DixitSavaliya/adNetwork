@@ -355,7 +355,7 @@ export default class TableRole extends React.Component {
                                                                     <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRoleData(data)}></i>
                                                                 </span>
                                                             </td>
-                                                            <td>{data.name}</td>
+                                                            <td style={{ wordBreak: ' break-all' }}>{data.name}</td>
                                                             <td>
                                                                 <div className="btn_size">
                                                                     {
@@ -435,7 +435,7 @@ export default class TableRole extends React.Component {
                                                                         <i className="fa fa-remove fa-lg" onClick={() => this.deleteUserRoleData(data)}></i>
                                                                     </span>
                                                                 </td>
-                                                                <td>{data.name}</td>
+                                                                <td style={{ wordBreak: ' break-all' }}>{data.name}</td>
                                                                 <td>
                                                                     <div className="btn_size">
                                                                         {

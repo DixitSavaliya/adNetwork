@@ -403,10 +403,10 @@ class Publisher extends Component {
 
                                                                     </span>
                                                                 </td>
-                                                                <td onClick={() => this.appData(data)}>{data.first_name}</td>
-                                                                <td onClick={() => this.appData(data)}>{data.last_name}</td>
-                                                                <td onClick={() => this.appData(data)}>{data.email_id}</td>
-                                                                <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
+                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.first_name}</td>
+                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.last_name}</td>
+                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.email_id}</td>
+                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.mobile_no}</td>
                                                                 <td onClick={() => this.appData(data)}>
                                                                     <div className="btn_size">
                                                                         {
@@ -456,10 +456,10 @@ class Publisher extends Component {
 
                                                                                     </span>
                                                                                 </td>
-                                                                                <td onClick={() => this.appData(data)}>{data.first_name}</td>
-                                                                                <td onClick={() => this.appData(data)}>{data.last_name}</td>
-                                                                                <td onClick={() => this.appData(data)}>{data.email_id}</td>
-                                                                                <td onClick={() => this.appData(data)}>{data.mobile_no}</td>
+                                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.first_name}</td>
+                                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.last_name}</td>
+                                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.email_id}</td>
+                                                                                <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.mobile_no}</td>
                                                                                 <td onClick={() => this.appData(data)}>
                                                                                     <div className="btn_size">
                                                                                         {

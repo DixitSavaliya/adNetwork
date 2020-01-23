@@ -311,7 +311,8 @@ class CreateApp extends React.Component {
                         status: this.state.status = 1,
                         statuscheck1: this.state.statuscheck1 = (this.state.App.status == 1) ? true : false,
                         more_apps: this.state.App.more_apps,
-                        version_code: this.state.App.version_code
+                        version_code: this.state.App.version_code,
+                        serverKey: this.state.App.serverKey
                     })
                 } else {
                     this.setState({
@@ -335,7 +336,8 @@ class CreateApp extends React.Component {
                         status: this.state.status = 1,
                         statuscheck1: this.state.statuscheck1 = (this.state.App.status == 1) ? true : false,
                         more_apps: this.state.App.more_apps,
-                        version_code: this.state.App.version_code
+                        version_code: this.state.App.version_code,
+                        serverKey: this.state.App.serverKey
                     })
 
                 }
@@ -932,7 +934,7 @@ class CreateApp extends React.Component {
                                                                     name="customSelect"
                                                                     onChange={this.onItemSelect}
                                                                 >
-                                                                    <option value="">{this.state.App.type == 1 ? 'Android' : 'IOS'}</option>
+                                                                    <option value="">{this.state.App.type == 1 ? 'Android' : (this.state.App.type == 2 ? 'IOS' : (this.state.App.type == 3 ? 'Web' : null))}</option>
                                                                     <option value="1">Android</option>
                                                                     <option value="2">IOS</option>
                                                                     <option value="3">Web</option>
@@ -1004,8 +1006,8 @@ class CreateApp extends React.Component {
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
-                                                </Row>
-                                                <Row>
+                                            </Row>
+                                            <Row>
                                                 <Col xs="6">
                                                     <FormGroup>
                                                         <Label htmlFor="more_apps"><b>More apps:</b></Label>
@@ -1055,7 +1057,6 @@ class CreateApp extends React.Component {
                                                             className="form-control"
                                                             defaultValue={this.state.serverKey}
                                                             onChange={this.handleChangeEvent}
-                                                            rows="4"
                                                             placeholder="Enter ServerKey"
                                                             required
                                                         />
@@ -1371,7 +1372,7 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                <Col xs="6">
+                                                    <Col xs="6">
                                                         <FormGroup>
                                                             <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
                                                             <Input
@@ -1390,7 +1391,7 @@ class CreateApp extends React.Component {
                                                             </div> */}
                                                         </FormGroup>
                                                     </Col>
-                                                   
+
                                                     <Col xs="6">
                                                         {
                                                             this.props.id ? (
@@ -1403,7 +1404,7 @@ class CreateApp extends React.Component {
                                                                         name="customSelect"
                                                                         onChange={this.onItemSelect}
                                                                     >
-                                                                        <option value="">{this.state.App.type == 1 ? 'Android' : 'IOS'}</option>
+                                                                          <option value="">{this.state.App.type == 1 ? 'Android' : (this.state.App.type == 2 ? 'IOS' : (this.state.App.type == 3 ? 'Web' : null))}</option>
                                                                         <option value="1">Android</option>
                                                                         <option value="2">IOS</option>
                                                                         <option value="3">Web</option>
@@ -1477,7 +1478,7 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                <Col xs="12">
+                                                    <Col xs="12">
                                                         <FormGroup>
                                                             <Label htmlFor="description"><b>Description:</b></Label>
                                                             <Input
@@ -1543,12 +1544,12 @@ class CreateApp extends React.Component {
                                                     </Col>
 
                                                     <Col xs="3">
-                                                        <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
+                                                        <Label htmlFor="inline-radio7896"><b>WebView:</b></Label>
                                                         <br />
                                                         <FormGroup check inline>
                                                             <Input
                                                                 type="radio"
-                                                                id="inline-radio789"
+                                                                id="inline-radio7896"
                                                                 defaultValue="1"
                                                                 checked={this.state.webviewstatus == 1 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
                                                                 name="WebView"
@@ -1556,7 +1557,7 @@ class CreateApp extends React.Component {
                                                             />
                                                             <Label
                                                                 className="form-check-label"
-                                                                check htmlFor="inline-radio789"
+                                                                check htmlFor="inline-radio7896"
                                                             >
                                                                 Yes
                                                  </Label>
@@ -1565,7 +1566,7 @@ class CreateApp extends React.Component {
                                                         <FormGroup check inline>
                                                             <Input
                                                                 type="radio"
-                                                                id="inline-radio498"
+                                                                id="inline-radio4986"
                                                                 defaultValue="0"
                                                                 checked={this.state.webviewstatus == 0 ? this.state.webviewstatuscheck1 : !this.state.webviewstatuscheck1}
                                                                 name="WebView"
@@ -1574,15 +1575,15 @@ class CreateApp extends React.Component {
 
                                                             <Label
                                                                 className="form-check-label"
-                                                                check htmlFor="inline-radio498"
+                                                                check htmlFor="inline-radio4986"
                                                             >
                                                                 No
                                                  </Label>
 
                                                         </FormGroup>
                                                         {/* <div style={{ fontSize: 12, color: "red" }}>
-                                                            {this.state.webviewstatuserror}
-                                                        </div> */}
+                                                        {this.state.webviewstatuserror}
+                                                    </div> */}
                                                     </Col>
 
                                                     <Col xs="3">

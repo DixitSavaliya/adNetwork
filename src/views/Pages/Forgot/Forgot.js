@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Container, CardHeader, Form, InputGroupText, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import './forgot.css';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class Forgot extends Component {
   constructor(props) {
@@ -12,7 +13,19 @@ class Forgot extends Component {
     const data = {
       username: this.state.username
     }
-    this.props.ForgotPassword(data);
+    this.props.ForgotPassword(data).then((res) => {
+      if (res.response.status == 1) {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'success'
+        });
+      } else {
+        Swal.fire({
+          text: res.response.message,
+          icon: 'warning'
+        });
+      }
+    });
   }
 
 

@@ -326,14 +326,14 @@ class ViewNotifications extends React.Component {
                                                         <Row>
                                                             <Col md="4">
                                                                 <div>
-                                                                    <h5>Title:</h5>
+                                                                    <h5 style={{ wordBreak: ' break-all' }}>Title:</h5>
                                                                     <p className="blue">{this.state.App[0].title}</p>
                                                                 </div>
 
                                                             </Col>
                                                             <Col md="4">
                                                                 <div >
-                                                                    <h5>Message:</h5>
+                                                                    <h5 style={{ wordBreak: ' break-all' }}>Message:</h5>
                                                                     <p className="blue">{this.state.App[0].message}</p>
                                                                 </div>
 
@@ -341,7 +341,7 @@ class ViewNotifications extends React.Component {
                                                             <Col md="4">
 
                                                                 <div>
-                                                                    <h5 >URL:</h5>
+                                                                    <h5>URL:</h5>
 
                                                                     <p className="blue">{this.state.App[0].data.notification.url}</p>
 

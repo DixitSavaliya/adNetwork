@@ -13,6 +13,20 @@ export const getPublisherApplication = (data) => {
     };
   };
 
+  export const getAdverApplication = (data) => {
+    return {
+      [CALL_API]: {
+        endpoint: 'Application/applicationBySearch',
+        init: {
+          method: 'POST',
+          body: JSON.stringify(data),
+        },
+        types: ["GETAPPBYPUBLISHERID_REQUEST", "GETAPPBYPUBLISHERID_SUCCESS", "GETAPPBYPUBLISHERID_FAILURE"],
+      }
+    };
+  };
+
+
   export const getAPPMonetization = (data) => {
     return {
       [CALL_API]: {

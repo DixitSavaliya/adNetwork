@@ -111,33 +111,87 @@ class MonetizationNetwork extends React.Component {
         this.props.getAPPMonetization(obj).then((res) => {
             if (res.response.data) {
                 if (res.response.message == "No Monetisations Found For This Application!") {
-                } else {
                     this.setState({
-                        mainAds: this.state.mainAds = res.response.data.data.FB_ADS == false && res.response.data.data.GAN_ADS == false && res.response.data.data.MO_ADS == false ? false : true,
-                        id: this.state.id = res.response.data.id,
-                        updateMonetization: this.state.updateMonetization = true,
-                        FB_id: this.state.FB_id = res.response.data.data.FB_id,
-                        FB_rewareded_ads: this.state.FB_rewareded_ads = res.response.data.data.FB_rewareded_ads,
-                        fb_ads: this.state.fb_ads = res.response.data.data.FB_ADS,
-                        fb_banner: this.state.fb_banner = res.response.data.data.FB_banner_ads,
-                        fb_native: this.state.fb_native = res.response.data.data.FB_native_ads,
-                        fb_interstitial: this.state.fb_interstitial = res.response.data.data.FB_interstitial_ads,
-                        fb_native_banner: this.state.fb_native_banner = res.response.data.data.FB_native_banner,
-                        GAN_native_ads: this.state.GAN_native_ads = res.response.data.data.GAN_native_ads,
-                        admob_ads: this.state.admob_ads = res.response.data.data.GAN_ADS,
-                        admob_banner: this.state.admob_banner = res.response.data.data.GAN_banner_ads,
-                        admob_appid: this.state.admob_appid = res.response.data.data.GAN_id,
-                        admob_rewarded: this.state.admob_rewarded = res.response.data.data.GAN_rewareded_ads,
-                        admob_interstitial: this.state.admob_interstitial = res.response.data.data.GAN_interstitial_ads,
-                        admob_native_banner: this.state.admob_native_banner = res.response.data.data.GAN_native_banner,
-                        mopub_ads: this.state.mopub_ads = res.response.data.data.MO_ADS,
-                        MO_id: this.state.MO_id = res.response.data.data.MO_id,
-                        mopub_video: this.state.mopub_video = res.response.data.data.MO_native_ads,
-                        mopub_banner: this.state.mopub_banner = res.response.data.data.MO_banner_ads,
-                        mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.MO_interstitial_ads,
-                        mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.MO_rewareded_ads,
-                        mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.MO_native_banner
+                        updateMonetization: this.state.updateMonetization = false,
+                        fb_ads: this.state.fb_ads = true,
+                        FB_id: this.state.FB_id = "",
+                        FB_rewareded_ads: this.state.FB_rewareded_ads = "",
+                        fb_ads: this.state.fb_ads = "",
+                        fb_banner: this.state.fb_banner = "",
+                        fb_native: this.state.fb_native = "",
+                        fb_interstitial: this.state.fb_interstitial = "",
+                        fb_native_banner: this.state.fb_native_banner = "",
+                        GAN_native_ads: this.state.GAN_native_ads = "",
+                        admob_ads: this.state.admob_ads = "",
+                        admob_banner: this.state.admob_banner = "",
+                        admob_appid: this.state.admob_appid = "",
+                        admob_rewarded: this.state.admob_rewarded = "",
+                        admob_interstitial: this.state.admob_interstitial = "",
+                        admob_native_banner: this.state.admob_native_banner = "",
+                        mopub_ads: this.state.mopub_ads = "",
+                        MO_id: this.state.MO_id = "",
+                        mopub_video: this.state.mopub_video = "",
+                        mopub_banner: this.state.mopub_banner = "",
+                        mopub_interstitial: this.state.mopub_interstitial = "",
+                        mopub_reward_video: this.state.mopub_reward_video = "",
+                        mopub_native_banner: this.state.mopub_native_banner = ""
                     })
+                } else {
+                    if(res.response.data.data.FB_ADS == "" && res.response.data.data.GAN_ADS == "" && res.response.data.data.MO_ADS == "" ) {
+                        this.setState({
+                            mainAds: this.state.mainAds = true,
+                            id: this.state.id = res.response.data.id,
+                            updateMonetization: this.state.updateMonetization = true,
+                            FB_id: this.state.FB_id = res.response.data.data.FB_id,
+                            FB_rewareded_ads: this.state.FB_rewareded_ads = res.response.data.data.FB_rewareded_ads,
+                            fb_ads: this.state.fb_ads = res.response.data.data.FB_ADS,
+                            fb_banner: this.state.fb_banner = res.response.data.data.FB_banner_ads,
+                            fb_native: this.state.fb_native = res.response.data.data.FB_native_ads,
+                            fb_interstitial: this.state.fb_interstitial = res.response.data.data.FB_interstitial_ads,
+                            fb_native_banner: this.state.fb_native_banner = res.response.data.data.FB_native_banner,
+                            GAN_native_ads: this.state.GAN_native_ads = res.response.data.data.GAN_native_ads,
+                            admob_ads: this.state.admob_ads = res.response.data.data.GAN_ADS,
+                            admob_banner: this.state.admob_banner = res.response.data.data.GAN_banner_ads,
+                            admob_appid: this.state.admob_appid = res.response.data.data.GAN_id,
+                            admob_rewarded: this.state.admob_rewarded = res.response.data.data.GAN_rewareded_ads,
+                            admob_interstitial: this.state.admob_interstitial = res.response.data.data.GAN_interstitial_ads,
+                            admob_native_banner: this.state.admob_native_banner = res.response.data.data.GAN_native_banner,
+                            mopub_ads: this.state.mopub_ads = res.response.data.data.MO_ADS,
+                            MO_id: this.state.MO_id = res.response.data.data.MO_id,
+                            mopub_video: this.state.mopub_video = res.response.data.data.MO_native_ads,
+                            mopub_banner: this.state.mopub_banner = res.response.data.data.MO_banner_ads,
+                            mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.MO_interstitial_ads,
+                            mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.MO_rewareded_ads,
+                            mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.MO_native_banner
+                        })
+                    } else {
+                        this.setState({
+                            mainAds: this.state.mainAds = res.response.data.data.FB_ADS == false && res.response.data.data.GAN_ADS == false && res.response.data.data.MO_ADS == false ? false : true,
+                            id: this.state.id = res.response.data.id,
+                            updateMonetization: this.state.updateMonetization = true,
+                            FB_id: this.state.FB_id = res.response.data.data.FB_id,
+                            FB_rewareded_ads: this.state.FB_rewareded_ads = res.response.data.data.FB_rewareded_ads,
+                            fb_ads: this.state.fb_ads = res.response.data.data.FB_ADS,
+                            fb_banner: this.state.fb_banner = res.response.data.data.FB_banner_ads,
+                            fb_native: this.state.fb_native = res.response.data.data.FB_native_ads,
+                            fb_interstitial: this.state.fb_interstitial = res.response.data.data.FB_interstitial_ads,
+                            fb_native_banner: this.state.fb_native_banner = res.response.data.data.FB_native_banner,
+                            GAN_native_ads: this.state.GAN_native_ads = res.response.data.data.GAN_native_ads,
+                            admob_ads: this.state.admob_ads = res.response.data.data.GAN_ADS,
+                            admob_banner: this.state.admob_banner = res.response.data.data.GAN_banner_ads,
+                            admob_appid: this.state.admob_appid = res.response.data.data.GAN_id,
+                            admob_rewarded: this.state.admob_rewarded = res.response.data.data.GAN_rewareded_ads,
+                            admob_interstitial: this.state.admob_interstitial = res.response.data.data.GAN_interstitial_ads,
+                            admob_native_banner: this.state.admob_native_banner = res.response.data.data.GAN_native_banner,
+                            mopub_ads: this.state.mopub_ads = res.response.data.data.MO_ADS,
+                            MO_id: this.state.MO_id = res.response.data.data.MO_id,
+                            mopub_video: this.state.mopub_video = res.response.data.data.MO_native_ads,
+                            mopub_banner: this.state.mopub_banner = res.response.data.data.MO_banner_ads,
+                            mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.MO_interstitial_ads,
+                            mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.MO_rewareded_ads,
+                            mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.MO_native_banner
+                        })
+                    }
                 }
             }
         })
@@ -507,9 +561,9 @@ class MonetizationNetwork extends React.Component {
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.id, item)}>
                                                 <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
-                                                <p style={{ padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                <p style={{wordBreak:'break-all',padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
                                                     {item.name}<br />
-                                                    <small style={{ paddingTop: '0px', display: 'inline-block', wordBreak: 'break-all' }}>{item.package}</small>
+                                                    <small style={{wordBreak:'break-all',paddingTop: '0px', display: 'inline-block', wordBreak: 'break-all' }}>{item.package}</small>
                                                 </p>
                                             </li>
                                         )
@@ -546,8 +600,8 @@ class MonetizationNetwork extends React.Component {
                                             <Col md="9" className="content">
                                                 <div className="app_detail">
 
-                                                    <h5>{this.state.selectApp.name}</h5>
-                                                    <h6>{this.state.selectApp.package}</h6>
+                                                    <h5 style={{wordBreak:' break-all'}}>{this.state.selectApp.name}</h5>
+                                                    <h6 style={{wordBreak:' break-all'}}>{this.state.selectApp.package}</h6>
                                                     {/* {
                                                     this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                         <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>

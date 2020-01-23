@@ -40,7 +40,7 @@ class ListApp extends React.Component {
         this.state = {
             application: [],
             searchData: '',
-            ownership: '',
+            ownership: 1,
             isDisplay: false
         }
 
@@ -68,12 +68,33 @@ class ListApp extends React.Component {
     }
 
     searchApplicationDataKeyUp(e) {
-        if (this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "admin") {
+        if (this.props.auth.auth_data.user_group == "publisher") {
             const obj = {
                 search_string: e.target.value,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'publisher' ? 'publisher' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership
+            }
+            this.props.searchApplicationData(obj).then((res) => {
+                if (res.response.status == 1) {
+                    this.setState({
+                        searchData: this.state.searchData = res.response.data
+                    })
+                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
+            });
+        } else if (this.props.auth.auth_data.user_group == "advertiser") {
+            const obj = {
+                search_string: e.target.value,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.ownership = 2
             }
             this.props.searchApplicationData(obj).then((res) => {
                 if (res.response.status == 1) {
@@ -114,7 +135,7 @@ class ListApp extends React.Component {
     }
 
     render() {
-        const { auth, applicationCount, applicationPGData, deleteApp, activeAppAds, InactiveAppAds,AddAppMonetization } = this.props;
+        const { auth, applicationCount, applicationPGData, deleteApp, activeAppAds, InactiveAppAds, AddAppMonetization } = this.props;
 
         return (
             <div>
@@ -235,7 +256,7 @@ class ListApp extends React.Component {
 
                                         </div>
                                         <br />
-                                        <TableApp {...this.props} AddAppMonetization = {AddAppMonetization} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
+                                        <TableApp {...this.props} AddAppMonetization={AddAppMonetization} InactiveAppAds={InactiveAppAds} activeAppAds={activeAppAds} auth={auth} applicationCount={applicationCount} applicationPGData={applicationPGData} deleteApp={deleteApp} />
                                     </CardBody>
                                 </Card>
                             </Col>
@@ -255,52 +276,94 @@ class ListApp extends React.Component {
                                             <div>
                                                 {
                                                     this.state.isDisplay == true ? (
-                                                        <Row>
-                                                            <Col className="cols" sm="12" md="3" lg="3" xl="3">
-                                                                <div className="rightapp">
-                                                                    {
-                                                                        this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "advertiser" ? (
-                                                                            <Link to="/createapp">
-                                                                                <Button
-                                                                                    className="mb-2 mr-2"
-                                                                                    color="primary"
+                                                        <div>
+                                                            {
+                                                                this.props.auth.auth_data.user_group == "admin" ? (
+                                                                    <Row>
+                                                                        <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                                                            <div className="rightapp">
+                                                                                <input
+                                                                                    className="form-control search"
+                                                                                    type="text"
+                                                                                    placeholder="Search"
+                                                                                    aria-label="Search"
+                                                                                    onKeyUp={this.searchApplicationDataKeyUp}
+                                                                                />
+
+                                                                            </div>
+                                                                        </Col>
+                                                                        <Col className="cols" sm="12" md="3" lg="3" xl="3">
+                                                                            <div className="searchP">
+
+                                                                                <span>Records per page</span>
+                                                                                <Input
+                                                                                    type="select"
+                                                                                    className="form-control drop"
+                                                                                    id="exampleCustomSelect"
+                                                                                    name="customSelect"
+                                                                                    onChange={this.handleChangeEvent}
                                                                                 >
-                                                                                    Add
+                                                                                    <option value="5">5</option>
+                                                                                    <option value="10">10</option>
+                                                                                    <option value="25">25</option>
+                                                                                    <option value="50">50</option>
+                                                                                    <option value="100">100</option>
+                                                                                </Input>
+                                                                            </div>
+                                                                        </Col>
+                                                                    </Row>
+
+                                                                ) : (
+                                                                        <Row>
+                                                                            <Col className="cols" sm="12" md="3" lg="3" xl="3">
+                                                                                <div className="rightapp">
+                                                                                    {
+                                                                                        this.props.auth.auth_data.user_group == "publisher" || this.props.auth.auth_data.user_group == "advertiser" ? (
+                                                                                            <Link to="/createapp">
+                                                                                                <Button
+                                                                                                    className="mb-2 mr-2"
+                                                                                                    color="primary"
+                                                                                                >
+                                                                                                    Add
                                                                         </Button>
-                                                                            </Link>
-                                                                        ) : (null)
-                                                                    }
+                                                                                            </Link>
+                                                                                        ) : (null)
+                                                                                    }
 
-                                                                </div>
-                                                            </Col>
+                                                                                </div>
+                                                                            </Col>
 
 
-                                                            <Col className="cols" sm="12" md="9" lg="9" xl="9">
-                                                                <div className="searchP">
-                                                                    <input
-                                                                        className="form-control search"
-                                                                        type="text"
-                                                                        placeholder="Search"
-                                                                        aria-label="Search"
-                                                                        onKeyUp={this.searchApplicationDataKeyUp}
-                                                                    />
-                                                                    <span>Records per page</span>
-                                                                    <Input
-                                                                        type="select"
-                                                                        className="form-control drop"
-                                                                        id="exampleCustomSelect"
-                                                                        name="customSelect"
-                                                                        onChange={this.handleChangeEvent}
-                                                                    >
-                                                                        <option value="5">5</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="25">25</option>
-                                                                        <option value="50">50</option>
-                                                                        <option value="100">100</option>
-                                                                    </Input>
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
+                                                                            <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                                                                <div className="searchP">
+                                                                                    <input
+                                                                                        className="form-control search"
+                                                                                        type="text"
+                                                                                        placeholder="Search"
+                                                                                        aria-label="Search"
+                                                                                        onKeyUp={this.searchApplicationDataKeyUp}
+                                                                                    />
+                                                                                    <span>Records per page</span>
+                                                                                    <Input
+                                                                                        type="select"
+                                                                                        className="form-control drop"
+                                                                                        id="exampleCustomSelect"
+                                                                                        name="customSelect"
+                                                                                        onChange={this.handleChangeEvent}
+                                                                                    >
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="10">10</option>
+                                                                                        <option value="25">25</option>
+                                                                                        <option value="50">50</option>
+                                                                                        <option value="100">100</option>
+                                                                                    </Input>
+                                                                                </div>
+                                                                            </Col>
+                                                                        </Row>
+                                                                    )
+                                                            }
+
+                                                        </div>
                                                     ) : (
                                                             null
                                                         )

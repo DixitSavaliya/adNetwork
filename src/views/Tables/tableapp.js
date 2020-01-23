@@ -96,7 +96,7 @@ export default class TableApp extends React.Component {
         } else {
             const obj = {
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'admin',
                 ownership: this.state.ownership = ""
             }
             let _this = this;
@@ -146,7 +146,7 @@ export default class TableApp extends React.Component {
                 page_no: "1",
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'admin',
                 ownership: this.state.ownership = ''
             }
             let _this = this;
@@ -179,44 +179,76 @@ export default class TableApp extends React.Component {
         array.push(obj);
         const data1 = {
             data: array,
-            user_id: this.props.auth.auth_data.id
+            user_id: this.props.auth.auth_data.id,
+            status: data.status == 1 ? 0 : 1
         }
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Are you sure you want to inactive?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, inactive it!',
-            cancelButtonText: 'No, keep it'
-        }).then((result) => {
-            if (result.value) {
-                this.props.deleteApp(data1).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        setTimeout(() => {
-                            this.getApplicationPageData();
-                        }, 1200)
-                    } else {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
-                        });
-                    }
-                });
+        if (data.status == 1) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure you want to inactive?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, inactive it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.value) {
+                    this.props.deleteApp(data1).then((res) => {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            setTimeout(() => {
+                                this.getApplicationPageData();
+                            }, 1200)
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
+                    });
 
-            }
-        })
+                }
+            })
+        } else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure you want to active?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes,    active it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.value) {
+                    this.props.deleteApp(data1).then((res) => {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            setTimeout(() => {
+                                this.getApplicationPageData();
+                            }, 1200)
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
+                    });
+
+                }
+            })
+
+        }
     }
 
     handleClick(event) {
         if (this.props.auth.auth_data.user_group == "publisher") {
             if (this.state.currentPage <= '' + event.target.id) {
                 this.setState({
-                    currentPage: this.state.currentPage + 1,
-                    onClickPage: +this.state.onClickPage + +this.state.items_per_page
+                    currentPage: this.state.currentPage + 1
                     // render_per_page:
                 })
             } else {
@@ -260,7 +292,7 @@ export default class TableApp extends React.Component {
                 page_no: '' + event.target.id,
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
-                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'publisher',
+                user_group: this.props.auth.auth_data.user_group == 'advertiser' ? 'advertiser' : 'admin',
                 ownership: this.state.ownership = ""
             }
             let _this = this;
@@ -481,6 +513,13 @@ export default class TableApp extends React.Component {
                                                     <th>App Icon</th>
                                                     <th>Name</th>
                                                     <th>Package</th>
+                                                    {
+                                                        this.props.auth.auth_data.user_group == 'admin' ? (
+                                                            <th>Owner</th>
+                                                        ) : (
+                                                                null
+                                                            )
+                                                    }
                                                     {/* <th>Discription</th> */}
                                                     <th>status</th>
                                                 </tr>
@@ -491,11 +530,18 @@ export default class TableApp extends React.Component {
                                                         <tr key={index}>
                                                             {
                                                                 auth.user_group == "publisher" ? (
+
                                                                     <td className="action">
                                                                         {auth.id == data.user_id && auth.user_group == data.owner ? (
                                                                             <span className="padding">
                                                                                 <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                {
+                                                                                    data.status == "1" ? (
+                                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                    ) : (
+                                                                                            <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                        )
+                                                                                }
                                                                             </span>
                                                                         ) : (
                                                                                 <span className="padding">
@@ -514,7 +560,13 @@ export default class TableApp extends React.Component {
                                                                     <td className="action">
                                                                         <span className="padding">
                                                                             <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                            <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                            {
+                                                                                data.status == "1" ? (
+                                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                ) : (
+                                                                                        <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                    )
+                                                                            }
                                                                         </span>
                                                                     </td>
                                                                 ) : (
@@ -543,9 +595,23 @@ export default class TableApp extends React.Component {
                                                             <td onClick={() => this.appData(data)}>
                                                                 <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
                                                             </td>
-                                                            <td onClick={() => this.appData(data)}>{data.name}</td>
-                                                            <td onClick={() => this.appData(data)}>{data.package}</td>
+                                                            {
+                                                                this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                    <td onClick={() => this.appData(data)} style={{ width: '141px', wordBreak: 'break-all' }}>{data.name}</td>
+                                                                ) : (
+                                                                        <td onClick={() => this.appData(data)} style={{ wordBreak: 'break-all' }}>{data.name}</td>
+                                                                    )
+                                                            }
+                                                            <td onClick={() => this.appData(data)} style={{ wordBreak: 'break-all' }}>{data.package}</td>
                                                             {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
+                                                            {
+                                                                this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                    <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase'}}>{data.owner}</td>
+                                                                ) : (
+                                                                        null
+                                                                    )
+                                                            }
+
                                                             <td onClick={() => this.appData(data)}>
                                                                 <div className="btn_size">
                                                                     {
@@ -610,7 +676,15 @@ export default class TableApp extends React.Component {
                                             <th>App Icon</th>
                                             <th>Name</th>
                                             <th>Package</th>
-                                            <th>Discription</th>
+                                            {
+                                                this.props.auth.auth_data.user_group == 'admin' ? (
+                                                    <th>Owner</th>
+                                                ) : (
+                                                        null
+                                                    )
+                                            }
+
+                                            {/* <th>Discription</th> */}
                                             <th>status</th>
                                         </tr>
                                     </thead>
@@ -624,7 +698,13 @@ export default class TableApp extends React.Component {
                                                                 {auth.id == data.user_id && auth.user_group == data.owner ? (
                                                                     <span className="padding">
                                                                         <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                        {
+                                                                            data.status == "1" ? (
+                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                            ) : (
+                                                                                    <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                )
+                                                                        }
                                                                     </span>
                                                                 ) : (
                                                                         <span className="padding">
@@ -643,7 +723,13 @@ export default class TableApp extends React.Component {
                                                             <td className="action">
                                                                 <span className="padding">
                                                                     <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                    {
+                                                                        data.status == "1" ? (
+                                                                            <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                        ) : (
+                                                                                <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                            )
+                                                                    }
                                                                 </span>
                                                             </td>
                                                         ) : (
@@ -668,9 +754,16 @@ export default class TableApp extends React.Component {
                                                     <td onClick={() => this.appData(data)}>
                                                         <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
                                                     </td>
-                                                    <td onClick={() => this.appData(data)}>{data.name}</td>
-                                                    <td onClick={() => this.appData(data)}>{data.package}</td>
-                                                    <td onClick={() => this.appData(data)}>{data.description}</td>
+                                                    <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.name}</td>
+                                                    <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.package}</td>
+                                                    {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
+                                                    {
+                                                        this.props.auth.auth_data.user_group == 'admin' ? (
+                                                            <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase'}}>{data.owner}</td>
+                                                        ) : (
+                                                                null
+                                                            )
+                                                    }
                                                     <td onClick={() => this.appData(data)}>
                                                         <div className="btn_size">
                                                             {

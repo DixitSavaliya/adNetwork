@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
 import {
     Row,
     Col,
@@ -39,7 +40,19 @@ class ChangePassword extends Component {
             username:this.props.auth.auth_data ? this.props.auth.auth_data.user_email || this.props.auth.auth_data.username : '',
             id:this.props.auth.auth_data.id
         }
-        this.props.changepassword(data);
+        this.props.changepassword(data).then((res) => {
+            if (res.response.status == 1) {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'success'
+                });
+            } else {
+                Swal.fire({
+                    text: res.response.message,
+                    icon: 'warning'
+                });
+            }
+        });
     }
 
 

@@ -159,7 +159,7 @@ class ViewApp extends React.Component {
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
-                                                                            <h5>Name:</h5>
+                                                                            <h5 style={{ wordBreak: ' break-all' }}>Name:</h5>
                                                                             <p className="blue">{data.name}</p>
                                                                         </div>
                                                                     )
@@ -169,7 +169,7 @@ class ViewApp extends React.Component {
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
-                                                                            <h5>Package:</h5>
+                                                                            <h5 style={{ wordBreak: ' break-all' }}>Package:</h5>
                                                                             <p className="blue">{data.package}</p>
                                                                         </div>
                                                                     )

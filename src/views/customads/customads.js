@@ -83,10 +83,13 @@ class CustomAds extends React.Component {
             ownership: 2,
             search_string: ''
         }
-        this.props.getPublisherApplication(obj).then((res) => {
+        this.props.getAdverApplication(obj).then((res) => {
             this.setState({
                 advertiserapp: res.response.data
             })
+            // for (var i = 0; i < this.state.advertiserapp.length; i++) {
+            //     this.state.advertiserapp[i]._rowChecked = false
+            // }
         })
     }
 
@@ -136,6 +139,12 @@ class CustomAds extends React.Component {
         const obj = {
             app_id: this.state.app_id
         }
+        for (var i = 0; i < this.state.advertiserapp.length; i++) {
+            this.state.advertiserapp[i]._rowChecked = false
+        }
+        this.setState({
+            advertiserapp: this.state.advertiserapp = this.state.advertiserapp
+        })
         this.props.getCustomAds(obj).then((res) => {
             if (res.response.status == 1) {
                 let app_list = res.response.data.app_list;
@@ -145,20 +154,12 @@ class CustomAds extends React.Component {
                         listHasApp: this.state.listHasApp = true
                     })
                 }
-
                 let obj = res.response.data.app_list;
                 for (var i = 0; i < this.state.advertiserapp.length; i++) {
                     for (var j = 0; j < obj.length; j++) {
                         if (this.state.advertiserapp[i].id == obj[j].app_id) {
-                            if (this.state.advertiserapp[i]._rowChecked == true && (obj[j].row_checked == 1) ? true : false) {
-                                this.setState({
-                                    _maincheck: this.state._maincheck = true
-                                })
-                            }
-                        }
-                        if (this.state.advertiserapp[i].id == obj[j].app_id) {
                             this.state.advertiserapp[i]._rowChecked = (obj[j].row_checked == 1) ? true : false
-                        }
+                        } 
                     }
                 }
                 this.setState({
@@ -324,9 +325,9 @@ class CustomAds extends React.Component {
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.package, item.id, item)}>
                                                 <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
-                                                <p style={{ padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                <p style={{wordBreak:'break-all',padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
                                                     {item.name}<br />
-                                                    <small style={{ paddingTop: '0px', display: 'inline-block' }}>{item.package}</small>
+                                                    <small style={{ wordBreak:'break-all',paddingTop: '0px', display: 'inline-block' }}>{item.package}</small>
                                                 </p>
                                             </li>
                                         )
@@ -349,9 +350,8 @@ class CustomAds extends React.Component {
                                             </Col>
                                             <Col md="9" className="content">
                                                 <div className="app_detail">
-
-                                                    <h5>{this.state.selectApp.name}</h5>
-                                                    <h6>{this.state.selectApp.package}</h6>
+                                                    <h5 style={{wordBreak:' break-all'}}>{this.state.selectApp.name}</h5>
+                                                    <h6 style={{wordBreak:' break-all'}}>{this.state.selectApp.package}</h6>
                                                     {/* {
                                                     this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                         <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
@@ -440,8 +440,8 @@ class CustomAds extends React.Component {
                                                                             onChange={() => this.handleChange(data)}
                                                                             checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                         /> */}
-                                                                        <h5>{data.name}</h5>
-                                                                        <h6>{data.package}</h6>
+                                                                        <h5 style={{wordBreak:' break-all'}}>{data.name}</h5>
+                                                                        <h6 style={{wordBreak:' break-all'}}>{data.package}</h6>
                                                                         {
                                                                             this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                                                 <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
@@ -472,7 +472,6 @@ class CustomAds extends React.Component {
                         }
                     </CardBody>
                 </Card>
-
             </div>
         );
     }

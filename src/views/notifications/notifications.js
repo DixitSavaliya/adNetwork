@@ -391,8 +391,8 @@ class Notifications extends Component {
                                                                         onChange={() => this.handleChange(data)}
                                                                         checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                     /> */}
-                                                                                <h5>{data.name}</h5>
-                                                                                <h6 style={{ fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
+                                                                                <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
+                                                                                <h6 style={{ wordBreak: ' break-all',fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
                                                                                 {
                                                                                     this.state.publisherapp[index]['_rowChecked'] == true ? (
                                                                                         <Button type="button" className="selectedP" color="primary">
@@ -451,8 +451,8 @@ class Notifications extends Component {
                                                                         onChange={() => this.handleChange(data)}
                                                                         checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                     /> */}
-                                                                                <h5>{data.name}</h5>
-                                                                                <h6 style={{ fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
+                                                                                <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
+                                                                                <h6 style={{ wordBreak: ' break-all',fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
                                                                                 {
                                                                                     this.state.app_list[index]['_rowChecked'] == true ? (
                                                                                         <Button className="selectedP" color="danger" onClick={() => this.handleChange(data)}>

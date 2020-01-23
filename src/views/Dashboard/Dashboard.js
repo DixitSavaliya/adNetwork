@@ -508,8 +508,8 @@ class Dashboard extends Component {
                                             </Col>
                                             <Col sm="3" className="content text-left">
                                               <div className="app_detail">
-                                                <h5>{data.name}</h5>
-                                                <h6>{data.package}</h6>
+                                                <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
+                                                <h6 style={{ wordBreak: ' break-all' }}>{data.package}</h6>
                                               </div>
                                             </Col>
                                             <Col sm="4">
@@ -578,8 +578,8 @@ class Dashboard extends Component {
                                               </Col>
                                               <Col sm="6" className="content text-left">
                                                 <div className="app_detail">
-                                                  <h5>{data.name}</h5>
-                                                  <h6>{data.package}</h6>
+                                                  <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
+                                                  <h6 style={{ wordBreak: ' break-all' }}>{data.package}</h6>
                                                 </div>
                                               </Col>
                                               <Col sm="5">
