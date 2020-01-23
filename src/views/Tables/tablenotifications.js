@@ -379,7 +379,13 @@ export default class TableNotifications extends React.Component {
                                                         </span>
                                                     </td>
                                                     <td onClick={() => this.appData(data)}>
-                                                        <img src={REMOTE_URL + data.icon} className="img-nt" alt="admin@bootstrapmaster.com" />
+                                                        {
+                                                            data.icon != null ? (
+                                                                <img src={REMOTE_URL + data.icon} className="img-nt" alt="admin@bootstrapmaster.com" />
+                                                            ) : (
+                                                                <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                            )
+                                                        }
                                                     </td>
                                                     <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.title}</td>
                                                     <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.message}</td>

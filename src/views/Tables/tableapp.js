@@ -593,7 +593,14 @@ export default class TableApp extends React.Component {
                                                                 ) : (null)
                                                             }
                                                             <td onClick={() => this.appData(data)}>
-                                                                <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                {
+                                                                    data.icon != null ? (
+                                                                        <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                    ) : (
+                                                                            <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                        )
+                                                                }
+
                                                             </td>
                                                             {
                                                                 this.props.auth.auth_data.user_group == 'admin' ? (
@@ -606,7 +613,7 @@ export default class TableApp extends React.Component {
                                                             {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
                                                             {
                                                                 this.props.auth.auth_data.user_group == 'admin' ? (
-                                                                    <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase'}}>{data.owner}</td>
+                                                                    <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner}</td>
                                                                 ) : (
                                                                         null
                                                                     )
@@ -752,14 +759,21 @@ export default class TableApp extends React.Component {
                                                         }
                                                     </td>
                                                     <td onClick={() => this.appData(data)}>
-                                                        <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                        {
+                                                            data.icon != null ? (
+                                                                <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                            ) : (
+                                                                    <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                )
+                                                        }
+
                                                     </td>
                                                     <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.name}</td>
                                                     <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.package}</td>
                                                     {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
                                                     {
                                                         this.props.auth.auth_data.user_group == 'admin' ? (
-                                                            <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase'}}>{data.owner}</td>
+                                                            <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner}</td>
                                                         ) : (
                                                                 null
                                                             )

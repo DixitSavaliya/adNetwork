@@ -181,7 +181,15 @@ class ViewApp extends React.Component {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
                                                                             <h5>Icon:</h5>
-                                                                            <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                            {
+                                                                                data.icon == null ? (
+                                                                                    <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                ) : (
+
+                                                                                        <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                    )
+                                                                            }
+
                                                                         </div>
                                                                     )
                                                                 }
@@ -191,7 +199,14 @@ class ViewApp extends React.Component {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
                                                                             <h5>Banner:</h5>
-                                                                            <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                            {
+                                                                                data.banner == null ? (
+                                                                                    <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                ) : (
+
+                                                                                        <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                    )
+                                                                            }
                                                                         </div>
                                                                     )
                                                                 }
@@ -304,8 +319,8 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                          <br />
-                                                          <Col md="12" style={{ marginTop: '15px' }}>
+                                                            <br />
+                                                            <Col md="12" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -315,7 +330,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <br/>
+                                                            <br />
 
                                                             <Col md="12" className="data">
                                                                 {
@@ -422,7 +437,15 @@ class ViewApp extends React.Component {
                                                                         this.state.App.map((data, index) =>
                                                                             <div key={index}>
                                                                                 <h5>Icon:</h5>
-                                                                                <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                {
+                                                                                    data.icon == null ? (
+                                                                                        <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                    ) : (
+
+                                                                                            <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                        )
+                                                                                }
+
                                                                             </div>
                                                                         )
                                                                     }
@@ -432,7 +455,15 @@ class ViewApp extends React.Component {
                                                                         this.state.App.map((data, index) =>
                                                                             <div key={index}>
                                                                                 <h5>Banner:</h5>
-                                                                                <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                {
+                                                                                    data.banner == null ? (
+                                                                                        <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                    ) : (
+
+                                                                                            <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                                        )
+                                                                                }
+
                                                                             </div>
                                                                         )
                                                                     }

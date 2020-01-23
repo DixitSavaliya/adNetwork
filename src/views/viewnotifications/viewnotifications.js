@@ -120,7 +120,15 @@ class ViewNotifications extends React.Component {
 
                                                             <div>
                                                                 <h5>Icon:</h5>
-                                                                <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                {
+                                                                    this.state.App[0].icon == null ? (
+                                                                        <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                    ) : (
+
+                                                                            <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                        )
+                                                                }
+
                                                             </div>
 
                                                         </Col>
@@ -352,7 +360,15 @@ class ViewNotifications extends React.Component {
 
                                                                 <div>
                                                                     <h5>Icon:</h5>
-                                                                    <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                    {
+                                                                        this.state.App[0].icon == null ? (
+                                                                            <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                        ) : (
+
+                                                                                <img src={REMOTE_URL + this.state.App[0].icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                            )
+                                                                    }
+
                                                                 </div>
 
                                                             </Col>
