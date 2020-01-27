@@ -25,29 +25,33 @@ class HeaderDropdown extends Component {
     this.state = {
       dropdownOpen: false,
       isImage: false,
-      image:''
+      image: ''
     };
     this.toggle = this.toggle.bind(this);
     this.Logout = this.Logout.bind(this);
   }
 
   componentDidMount() {
-    if(this.props.auth.auth_data) {
+    if (this.props.auth.auth_data) {
       this.props.getUser(this.props.auth.auth_data.id).then((res) => {
-    
+
       });
     }
 
     EventEmitter.subscribe('updateImage', (data) => {
       this.setState({
-        isImage:this.state.isImage = true,
-        image:this.state.image = data
+        isImage: this.state.isImage = true,
+        image: this.state.image = data
       })
+    });
+
+    EventEmitter.subscribe('updateProfile', (data) => {
+
     });
 
     EventEmitter.subscribe('removeImage', (data) => {
       this.setState({
-        isImage:this.state.isImage = false
+        isImage: this.state.isImage = false
       })
     });
   }
@@ -91,7 +95,7 @@ class HeaderDropdown extends Component {
                 <div>
                   {
                     this.state.image ? (
-                      <img src={REMOTE_URL +  this.state.image} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                      <img src={REMOTE_URL + this.state.image} className="img-avatar" alt="admin@bootstrapmaster.com" />
                     ) : (
                         <img src={require('./1.jpg')} className="img-avatar" alt="admin@bootstrapmaster.com" />
                       )

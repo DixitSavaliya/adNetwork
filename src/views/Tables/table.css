@@ -132,3 +132,21 @@ th.center {
     overflow-x: scroll;
   }
 }
+
+img.avatar-img {
+  width: 50px !important;
+  height: 50px;
+  border-radius: 10px;
+}
+
+td.name p , td.package p{
+  white-space: nowrap; 
+  width: 170px !important; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.btn-theme{
+  display: block;
+}
+

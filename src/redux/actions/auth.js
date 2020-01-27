@@ -78,7 +78,7 @@ export const getUser = (id) => {
 };
 
 export const avatarUpload = (data) => {
-  console.log("avatarUpload data", data)
+
   return {
     [CALL_API]: {
       endpoint: 'User/uploadUserImage',
@@ -92,7 +92,7 @@ export const avatarUpload = (data) => {
 };
 
 export const updateprofile = (data) => {
-  console.log("updateprofile data", data)
+
   return {
     [CALL_API]: {
       endpoint: 'User/updateUserDetailsById',

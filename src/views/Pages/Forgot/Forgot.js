@@ -7,25 +7,32 @@ import Swal from 'sweetalert2';
 class Forgot extends Component {
   constructor(props) {
     super(props);
-  }
+    this.state = {
+      username:''
+    }
+}
 
   forgotPassword() {
-    const data = {
-      username: this.state.username
-    }
-    this.props.ForgotPassword(data).then((res) => {
-      if (res.response.status == 1) {
-        Swal.fire({
-          text: res.response.message,
-          icon: 'success'
-        });
-      } else {
-        Swal.fire({
-          text: res.response.message,
-          icon: 'warning'
-        });
+    if (this.state.username) {
+      const data = {
+        username: this.state.username
       }
-    });
+      this.props.ForgotPassword(data).then((res) => {
+        if (res.response.status == 1) {
+          Swal.fire({
+            text: res.response.message,
+            icon: 'success'
+          });
+        } else {
+          Swal.fire({
+            text: res.response.message,
+            icon: 'warning'
+          });
+        }
+      });
+    } else {
+      Swal.fire("PLease Enter Username!", "", "warning");
+    }
   }
 
 
@@ -47,9 +54,8 @@ class Forgot extends Component {
                         type="text"
                         name="username"
                         className="form-control"
-                        onChange={(e) => this.setState({
-                          username: e.target.value.trim()
-                        })
+                        onChange={(e) =>
+                          this.state.username = e.target.value
                         }
                         placeholder="Username"
                         autoComplete="username"

@@ -67,6 +67,7 @@ class Profile extends Component {
           text: res.response.message,
           icon: 'success'
         });
+        EventEmitter.dispatch('updateProfile', 1);
       } else {
         Swal.fire({
           text: res.response.message,

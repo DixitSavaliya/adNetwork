@@ -58,7 +58,6 @@ class CustomAds extends React.Component {
         this.handleAppClick = this.handleAppClick.bind(this);
         this.select = this.select.bind(this);
         this.unselect = this.unselect.bind(this);
-
     }
 
     componentDidMount() {
@@ -420,7 +419,6 @@ class CustomAds extends React.Component {
                     <CardBody className="app_list">
                         {
                             this.state.advertiserapp.length > 0 ? (
-
                                 <Row>
                                     {
                                         this.state.advertiserapp.map((data, index) =>
@@ -464,7 +462,6 @@ class CustomAds extends React.Component {
                                             </Col>
                                         )
                                     }
-
                                 </Row>
                             ) : (
                                     null

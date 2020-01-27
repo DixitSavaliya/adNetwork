@@ -383,7 +383,7 @@ export default class TableNotifications extends React.Component {
                                                             data.icon != null ? (
                                                                 <img src={REMOTE_URL + data.icon} className="img-nt" alt="admin@bootstrapmaster.com" />
                                                             ) : (
-                                                                <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                <img src={require('../../../public/img/cat.jpg')} className="img-avatar" alt="admin@bootstrapmaster.com" />
                                                             )
                                                         }
                                                     </td>

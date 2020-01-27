@@ -183,7 +183,7 @@ class ViewApp extends React.Component {
                                                                             <h5>Icon:</h5>
                                                                             {
                                                                                 data.icon == null ? (
-                                                                                    <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                    <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
                                                                                 ) : (
 
                                                                                         <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
@@ -201,7 +201,7 @@ class ViewApp extends React.Component {
                                                                             <h5>Banner:</h5>
                                                                             {
                                                                                 data.banner == null ? (
-                                                                                    <img src={require('./2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                                    <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
                                                                                 ) : (
 
                                                                                         <img src={REMOTE_URL + data.banner} className="avatar-img" alt="admin@bootstrapmaster.com" />

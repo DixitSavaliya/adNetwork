@@ -45,7 +45,6 @@ class Notifications extends Component {
             titleerror: '',
             message: '',
             messageerror:'',
-            time: '',
             status: 0,
             statuserror: '',
             statuscheck1: true,
@@ -57,7 +56,7 @@ class Notifications extends Component {
             selectedFile: null,
             selectedFileerror: '',
             app_list: '',
-            time: '',
+            time: new Date(),
             inputFormat: "YY-MM-DD h:mm A",
             once: true,
             daily: false,
@@ -80,6 +79,7 @@ class Notifications extends Component {
     }
 
     componentDidMount() {
+        this.convert(this.state.time);
         const obj = {
             user_id: this.props.auth.auth_data.id,
             user_group: this.props.auth.auth_data.user_group,
@@ -115,6 +115,7 @@ class Notifications extends Component {
         this.setState({
             app_list: this.state.app_list = applist
         })
+        // console.log("selected array",this.state.app_list);
     }
 
     handleChange(item, e) {
@@ -342,6 +343,7 @@ class Notifications extends Component {
                     }
                 }
             }
+           
             this.props.sendNotification(obj).then((res) => {
                 if (res.response.status == 1) {
                     Swal.fire({
@@ -678,6 +680,7 @@ class Notifications extends Component {
                                                             <Datetime
                                                                 dateFormat="YYYY-MM-DD"
                                                                 timeFormat="h:mm A"
+                                                                defaultValue={new Date()}
                                                                 onChange={this.onChange}
                                                                 utc={false}
                                                                 inputProps={this.state.inputProps}

@@ -137,7 +137,7 @@ class MonetizationNetwork extends React.Component {
                         mopub_native_banner: this.state.mopub_native_banner = ""
                     })
                 } else {
-                    if(res.response.data.data.FB_ADS == "" && res.response.data.data.GAN_ADS == "" && res.response.data.data.MO_ADS == "" ) {
+                    if (res.response.data.data.FB_ADS == "" && res.response.data.data.GAN_ADS == "" && res.response.data.data.MO_ADS == "") {
                         this.setState({
                             mainAds: this.state.mainAds = true,
                             id: this.state.id = res.response.data.id,
@@ -206,36 +206,36 @@ class MonetizationNetwork extends React.Component {
         this.setState({
             fb_ads: this.state.fb_ads = checkedvalue
         })
-        if (this.state.fb_ads == true) {
-            this.setState({
-                admob_ads: this.state.admob_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.fb_ads == true) {
+        //     this.setState({
+        //         admob_ads: this.state.admob_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeAdMobAds(checkedvalue) {
         this.setState({
             admob_ads: this.state.admob_ads = checkedvalue
         })
-        if (this.state.admob_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.admob_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeMopubAds(checkedvalue) {
         this.setState({
             mopub_ads: this.state.mopub_ads = checkedvalue
         })
-        if (this.state.mopub_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                admob_ads: this.state.admob_ads = false
-            })
-        }
+        // if (this.state.mopub_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         admob_ads: this.state.admob_ads = false
+        //     })
+        // }
     }
 
     handleChangeMainAds(checkedvalue) {
@@ -286,7 +286,6 @@ class MonetizationNetwork extends React.Component {
                         MO_native_banner: this.state.mopub_native_banner
                     }
                 }
-
                 this.props.AddAppMonetization(obj).then((res) => {
                     if (res.response.status == 1) {
                         this.setState({
@@ -303,7 +302,6 @@ class MonetizationNetwork extends React.Component {
                         });
                     }
                 })
-
             } else {
                 Swal.fire("Please Select App First!", "", "warning");
             }
@@ -341,7 +339,6 @@ class MonetizationNetwork extends React.Component {
                         MO_native_banner: this.state.mopub_native_banner
                     }
                 }
-
                 this.props.AddAppMonetization(obj).then((res) => {
                     if (res.response.status == 1) {
                         Swal.fire({
@@ -355,7 +352,6 @@ class MonetizationNetwork extends React.Component {
                         });
                     }
                 })
-
             } else {
                 Swal.fire("Please Select App First!", "", "warning");
             }
@@ -561,9 +557,9 @@ class MonetizationNetwork extends React.Component {
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.id, item)}>
                                                 <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
-                                                <p style={{wordBreak:'break-all',padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                <p style={{ wordBreak: 'break-all', padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
                                                     {item.name}<br />
-                                                    <small style={{wordBreak:'break-all',paddingTop: '0px', display: 'inline-block', wordBreak: 'break-all' }}>{item.package}</small>
+                                                    <small style={{ wordBreak: 'break-all', paddingTop: '0px', display: 'inline-block', wordBreak: 'break-all' }}>{item.package}</small>
                                                 </p>
                                             </li>
                                         )
@@ -600,8 +596,8 @@ class MonetizationNetwork extends React.Component {
                                             <Col md="9" className="content">
                                                 <div className="app_detail">
 
-                                                    <h5 style={{wordBreak:' break-all'}}>{this.state.selectApp.name}</h5>
-                                                    <h6 style={{wordBreak:' break-all'}}>{this.state.selectApp.package}</h6>
+                                                    <h5 style={{ wordBreak: ' break-all' }}>{this.state.selectApp.name}</h5>
+                                                    <h6 style={{ wordBreak: ' break-all' }}>{this.state.selectApp.package}</h6>
                                                     {/* {
                                                     this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                         <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
@@ -1131,11 +1127,8 @@ class MonetizationNetwork extends React.Component {
                                         </Col>
                                     </Row>
                                 </div>
-
                             </CardBody>
                         </Card>
-
-
                     </Col>
                 </Row>
             </div >

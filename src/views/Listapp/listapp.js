@@ -41,12 +41,14 @@ class ListApp extends React.Component {
             application: [],
             searchData: '',
             ownership: 1,
-            isDisplay: false
+            isDisplay: false,
+            adminownership:''
         }
 
         this.searchApplicationDataKeyUp = this.searchApplicationDataKeyUp.bind(this);
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
         this.handleChangeAppEvent = this.handleChangeAppEvent.bind(this);
+        this.handleChangeAppEventAdmin = this.handleChangeAppEventAdmin.bind(this);
 
     }
 
@@ -64,6 +66,13 @@ class ListApp extends React.Component {
         EventEmitter.dispatch('select_app', e.target.value);
         this.setState({
             ownership: this.state.ownership = e.target.value
+        })
+    }
+
+    handleChangeAppEventAdmin(e) {
+        EventEmitter.dispatch('select_app_admin', e.target.value);
+        this.setState({
+            adminownership: this.state.adminownership = e.target.value
         })
     }
 
@@ -95,6 +104,27 @@ class ListApp extends React.Component {
                 user_id: this.props.auth.auth_data.id,
                 user_group: this.props.auth.auth_data.user_group,
                 ownership: this.state.ownership = 2
+            }
+            this.props.searchApplicationData(obj).then((res) => {
+                if (res.response.status == 1) {
+                    this.setState({
+                        searchData: this.state.searchData = res.response.data
+                    })
+                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+
+            });
+        } else if (this.props.auth.auth_data.user_group == "admin") {
+            const obj = {
+                search_string: e.target.value,
+                user_id: this.props.auth.auth_data.id,
+                user_group: this.props.auth.auth_data.user_group,
+                ownership: this.state.adminownership
             }
             this.props.searchApplicationData(obj).then((res) => {
                 if (res.response.status == 1) {
@@ -280,8 +310,26 @@ class ListApp extends React.Component {
                                                             {
                                                                 this.props.auth.auth_data.user_group == "admin" ? (
                                                                     <Row>
-                                                                        <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                                                        <Col className="cols" sm="12" md="4" lg="4" xl="4">
                                                                             <div className="rightapp">
+                                                                                <Input
+                                                                                    type="select"
+                                                                                    style={{ width: '170px' }}
+                                                                                    className="form-control"
+                                                                                    id="exampleCustomSelect1"
+                                                                                    name="customSelect1"
+                                                                                    onChange={this.handleChangeAppEventAdmin}
+                                                                                >
+                                                                                    <option value="">All</option>
+                                                                                    <option value="1">Publisher</option>
+                                                                                    <option value="2">Advertisers</option>
+                                                                                </Input>
+
+
+                                                                            </div>
+                                                                        </Col>
+                                                                        <Col className="cols" sm="12" md="8" lg="8" xl="8">
+                                                                            <div className="searchP">
                                                                                 <input
                                                                                     className="form-control search"
                                                                                     type="text"
@@ -289,12 +337,6 @@ class ListApp extends React.Component {
                                                                                     aria-label="Search"
                                                                                     onKeyUp={this.searchApplicationDataKeyUp}
                                                                                 />
-
-                                                                            </div>
-                                                                        </Col>
-                                                                        <Col className="cols" sm="12" md="3" lg="3" xl="3">
-                                                                            <div className="searchP">
-
                                                                                 <span>Records per page</span>
                                                                                 <Input
                                                                                     type="select"
