@@ -106,6 +106,7 @@ class CustomAds extends React.Component {
     }
 
     handleChange(item, e) {
+     
         let _id = item.id;
         let ind = this.state.advertiserapp.findIndex((x) => x.id == _id);
         let data = this.state.advertiserapp;

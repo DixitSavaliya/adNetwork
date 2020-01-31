@@ -26,8 +26,10 @@ class Footer extends Component {
   render() {
     return (
       <footer className="app-footer">
-       <span>© {this.state.Year} All Rights Reserved By RKWebtechnology</span>
-        <span className="ml-auto">Developed By , <a href="http://www.rkwebtechnology.com">RKWebtechnology</a></span>
+       <span >© {this.state.Year}  All Rights Reserved By 
+          <span style = {{color:'#20a8d8',fontWeight:'bold'}}> InitioTechMedia</span>
+        </span>
+        <span className="ml-auto">Developed By , <a   href="https://initiotechmedia.com" target="_blank">InitioTechMedia</a></span>
       </footer>
     )
   }

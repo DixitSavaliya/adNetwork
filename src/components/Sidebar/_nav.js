@@ -29,7 +29,7 @@ export default {
         // },
         {
           name: 'List-App',
-          url: '/ListApp',
+          url: '/listapp',
           icon: 'fa fa-reorder',
         },
       ]

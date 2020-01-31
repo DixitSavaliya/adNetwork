@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { REMOTE_URL } from '../../redux/constants/index';
 import { EventEmitter } from '../../event';
 import history from '../../history';
+import "@babel/polyfill";
 // import './table.css';
 import { HashRouter, Link, Route } from "react-router-dom";
 
@@ -37,6 +38,7 @@ export default class TableApp extends React.Component {
             ads: false,
             switch: false,
             adminownership: '',
+            isHide:false
         }
 
         // this.checkAllHandler = this.checkAllHandler.bind(this);
@@ -54,31 +56,67 @@ export default class TableApp extends React.Component {
                 isData: this.state.isData = true
             })
         });
+
+        EventEmitter.subscribe('hide', (data) => {
+            this.setState({
+                isHide:this.state.isHide = true
+            })
+         });
     }
 
-    componentDidMount() {
-        EventEmitter.subscribe('per_page_app_value', (value) => {
+    async componentDidMount() {
+        EventEmitter.subscribe('per_page_app_value', async (value) => {
             this.setState({ items_per_page: this.state.items_per_page = value });
-            this.getApplicationCount();
+            await this.getApplicationCount();
+            this.getApplicationPageData();
         });
 
-        EventEmitter.subscribe('select_app', (value) => {
+        EventEmitter.subscribe('select_app', async (value) => {
             this.setState({
                 ownership: this.state.ownership = value
             });
-            this.getApplicationCount();
+            await this.getApplicationCount();
+            this.getApplicationPageData();
         });
 
-        EventEmitter.subscribe('select_app_admin', (value) => {
+       
+
+        EventEmitter.subscribe('select_app_admin', async (value) => {
             this.setState({
                 adminownership: this.state.adminownership = value
             });
-            this.getApplicationCount();
+            await this.getApplicationCount();
+            this.getApplicationPageData();
         });
 
-        this.getApplicationCount();
+        await this.getApplicationCount();
+        this.getApplicationPageData();
 
     }
+
+    // componentDidMount() {
+    //     EventEmitter.subscribe('per_page_app_value', (value) => {
+    //         this.setState({ items_per_page: this.state.items_per_page = value });
+    //         this.getApplicationCount();
+    //     });
+
+    //     EventEmitter.subscribe('select_app', (value) => {
+    //         this.setState({
+    //             ownership: this.state.ownership = value
+    //         });
+    //         this.getApplicationCount();
+    //     });
+
+    //     EventEmitter.subscribe('select_app_admin', (value) => {
+    //         this.setState({
+    //             adminownership: this.state.adminownership = value
+    //         });
+    //         this.getApplicationCount();
+    //     });
+
+    //     this.getApplicationCount();
+
+    // }
 
     getApplicationCount() {
         if (this.props.auth.auth_data.user_group == "publisher") {
@@ -93,7 +131,7 @@ export default class TableApp extends React.Component {
                     _this.setState({
                         count: _this.state.count = res.response.data
                     })
-                    _this.getApplicationPageData();
+
                 } else {
                     Swal.fire({
                         text: res.response.message,
@@ -113,7 +151,7 @@ export default class TableApp extends React.Component {
                     _this.setState({
                         count: _this.state.count = res.response.data
                     })
-                    _this.getApplicationPageData();
+
                 } else {
                     Swal.fire({
                         text: res.response.message,
@@ -133,7 +171,7 @@ export default class TableApp extends React.Component {
                     _this.setState({
                         count: _this.state.count = res.response.data
                     })
-                    _this.getApplicationPageData();
+
                 } else {
                     Swal.fire({
                         text: res.response.message,
@@ -591,43 +629,70 @@ export default class TableApp extends React.Component {
                             {
                                 this.state.paginationdata ? (
                                     <div>
-                                        <Table hover className="mb-0 table_responsive" bordered>
-                                            <thead>
-                                                <tr>
-                                                    {this.props.auth.auth_data.user_group == 'publisher' || this.props.auth.auth_data.user_group == 'advertiser' ? (<th className="action">Action</th>) : (null)}
-                                                    {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '85px', fontSize: '12px', fontWeight: '600' }}>Manage Ads</th>) : (null)}
-                                                    <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>App Icon</th>
-                                                    <th style={{ width: '170px', fontSize: '12px', fontWeight: '600', textAlign: 'left' }}>Name</th>
-                                                    <th style={{ width: '200px', fontSize: '12px', fontWeight: '600' }}>Package</th>
-                                                    {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '230px', fontSize: '12px', fontWeight: '600' }}>Features</th>) : (null)}
-
+                                        {
+                                            this.state.isHide == false ? (
+                                                <Table hover className="mb-0 table_responsive" bordered>
+                                                <thead>
+                                                    <tr>
+                                                        {this.props.auth.auth_data.user_group == 'publisher' || this.props.auth.auth_data.user_group == 'advertiser' ? (<th className="action">Action</th>) : (null)}
+                                                        {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '85px', fontSize: '12px', fontWeight: '600' }}>Manage Ads</th>) : (null)}
+                                                        <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>App Icon</th>
+                                                        <th style={{ width: '170px', fontSize: '12px', fontWeight: '600', textAlign: 'left' }}>Name</th>
+                                                        <th style={{ width: '200px', fontSize: '12px', fontWeight: '600' }}>Package</th>
+                                                        {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '230px', fontSize: '12px', fontWeight: '600' }}>Features</th>) : (null)}
+    
+                                                        {
+                                                            this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerShip</th>
+                                                            ) : (
+                                                                    null
+                                                                )
+                                                        }
+                                                        {
+                                                            this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerName</th>
+                                                            ) : (
+                                                                    null
+                                                                )
+                                                        }
+                                                        {/* <th>Discription</th> */}
+                                                        <th style={{ width: '55px', fontSize: '12px', fontWeight: '600' }}>status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     {
-                                                        this.props.auth.auth_data.user_group == 'admin' ? (
-                                                            <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerShip</th>
-                                                        ) : (
-                                                                null
-                                                            )
-                                                    }
-                                                    {
-                                                        this.props.auth.auth_data.user_group == 'admin' ? (
-                                                            <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerName</th>
-                                                        ) : (
-                                                                null
-                                                            )
-                                                    }
-                                                    {/* <th>Discription</th> */}
-                                                    <th style={{ width: '55px', fontSize: '12px', fontWeight: '600' }}>status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    this.state.paginationdata.map((data, index) =>
-                                                        <tr key={index}>
-                                                            {
-                                                                auth.user_group == "publisher" ? (
-
-                                                                    <td className="action">
-                                                                        {auth.id == data.user_id && auth.user_group == data.owner ? (
+                                                        this.state.paginationdata.map((data, index) =>
+                                                            <tr key={index}>
+                                                                {
+                                                                    auth.user_group == "publisher" ? (
+    
+                                                                        <td className="action">
+                                                                            {auth.id == data.user_id && auth.user_group == data.owner ? (
+                                                                                <span className="padding">
+                                                                                    <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
+                                                                                    {
+                                                                                        data.status == "1" ? (
+                                                                                            <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                        ) : (
+                                                                                                <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                            )
+                                                                                    }
+                                                                                </span>
+                                                                            ) : (
+                                                                                    <span className="padding">
+                                                                                        No Access
+                                                                            </span>
+                                                                                )}
+                                                                        </td>
+                                                                    ) : (
+    
+                                                                            null
+    
+                                                                        )
+                                                                }
+                                                                {
+                                                                    auth.user_group == "advertiser" ? (
+                                                                        <td className="action">
                                                                             <span className="padding">
                                                                                 <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
                                                                                 {
@@ -638,128 +703,280 @@ export default class TableApp extends React.Component {
                                                                                         )
                                                                                 }
                                                                             </span>
-                                                                        ) : (
-                                                                                <span className="padding">
-                                                                                    No Access
-                                                                        </span>
-                                                                            )}
-                                                                    </td>
-                                                                ) : (
-
-                                                                        null
-
-                                                                    )
-                                                            }
-                                                            {
-                                                                auth.user_group == "advertiser" ? (
-                                                                    <td className="action">
-                                                                        <span className="padding">
-                                                                            <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
-                                                                            {
-                                                                                data.status == "1" ? (
-                                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
-                                                                                ) : (
-                                                                                        <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
-                                                                                    )
-                                                                            }
-                                                                        </span>
-                                                                    </td>
-                                                                ) : (
-                                                                        null
-                                                                    )
-                                                            }
-                                                            {
-                                                                this.props.auth.auth_data.user_group == 'publisher' ? (
-                                                                    <td>
-                                                                        {
-                                                                            data.owner !== 'advertiser' ? (
-                                                                                <Switch
-                                                                                    checked={data.ad_status == 1 ? true : false}
-                                                                                    onChange={() => this.handleChangegetAds(data, index)}
-                                                                                />
-                                                                            ) : (
-                                                                                    <Switch
-                                                                                        checked={data.ad_status == 1 ? true : false}
-                                                                                        onChange={() => this.handleLog()}
-                                                                                    />
-                                                                                )
-                                                                        }
-                                                                    </td>
-                                                                ) : (null)
-                                                            }
-                                                            <td onClick={() => this.appData(data)}>
-                                                                {
-                                                                    data.icon != null ? (
-                                                                        <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                        </td>
                                                                     ) : (
-                                                                            <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                            null
                                                                         )
                                                                 }
-
-                                                            </td>
-                                                            {
-                                                                this.props.auth.auth_data.user_group == 'admin' ? (
-                                                                    <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
-                                                                ) : (
-                                                                        <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
-                                                                    )
-                                                            }
-                                                            <td className="package" onClick={() => this.appData(data)} style={{ wordBreak: 'break-all' }}><p>{data.package}</p></td>
-                                                            {this.props.auth.auth_data.user_group == 'publisher' ?
-                                                                (
-                                                                    <td>
-                                                                        {
-                                                                            data.owner !== 'advertiser' ? (
-                                                                                <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
-                                                                                    <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} onClick={() => this.redirect(1)}>Notification</Button>
-                                                                                    <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} onClick={() => this.redirect(2)}>Custom Ads</Button>
-                                                                                    <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} onClick={() => this.redirect(3)}>Ads</Button>
-                                                                                </div>
-                                                                            ) : (
-                                                                                    <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
-                                                                                        <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} disabled>Notification</Button>
-                                                                                        <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} disabled>Custom Ads</Button>
-                                                                                        <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} disabled>Ads</Button>
-                                                                                    </div>
-                                                                                )
-                                                                        }
-
-                                                                    </td>
-                                                                ) :
-                                                                (null)}
-
-                                                            {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
-                                                            {
-                                                                this.props.auth.auth_data.user_group == 'admin' ? (
-                                                                    <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner}</td>
-                                                                ) : (
-                                                                        null
-                                                                    )
-                                                            }
-                                                            {
-                                                                this.props.auth.auth_data.user_group == 'admin' ? (
-                                                                    <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner_name}</td>
-                                                                ) : (
-                                                                        null
-                                                                    )
-                                                            }
-
-                                                            <td onClick={() => this.appData(data)}>
-                                                                <div className="btn_size">
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'publisher' ? (
+                                                                        <td>
+                                                                            {
+                                                                                data.owner !== 'advertiser' ? (
+                                                                                    <Switch
+                                                                                        className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
+                                                                                        checked={data.ad_status == 1 ? true : false}
+                                                                                        onChange={() => this.handleChangegetAds(data, index)}
+                                                                                    />
+                                                                                ) : (
+                                                                                        <Switch
+                                                                                            className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
+                                                                                            checked={data.ad_status == 1 ? true : false}
+                                                                                            onChange={() => this.handleLog()}
+                                                                                        />
+                                                                                    )
+                                                                            }
+                                                                        </td>
+                                                                    ) : (null)
+                                                                }
+                                                                <td onClick={() => this.appData(data)}>
                                                                     {
-                                                                        data.status == 1 ? (
-                                                                            <span className="badge badge-success">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                        data.icon != null ? (
+                                                                            <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
                                                                         ) : (
-                                                                                <span className="badge badge-danger">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
                                                                             )
                                                                     }
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                }
-                                            </tbody>
-                                        </Table>
+    
+                                                                </td>
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
+                                                                    ) : (
+                                                                            <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
+                                                                        )
+                                                                }
+                                                                <td className="package" onClick={() => this.appData(data)} style={{ wordBreak: 'break-all' }}><p>{data.package}</p></td>
+                                                                {this.props.auth.auth_data.user_group == 'publisher' ?
+                                                                    (
+                                                                        <td>
+                                                                            {
+                                                                                data.owner !== 'advertiser' ? (
+                                                                                    <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
+                                                                                        <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} onClick={() => this.redirect(1)}>Notification</Button>
+                                                                                        <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} onClick={() => this.redirect(2)}>Custom Ads</Button>
+                                                                                        <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} onClick={() => this.redirect(3)}>Ads</Button>
+                                                                                    </div>
+                                                                                ) : (
+                                                                                        <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
+                                                                                            <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} disabled>Notification</Button>
+                                                                                            <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} disabled>Custom Ads</Button>
+                                                                                            <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} disabled>Ads</Button>
+                                                                                        </div>
+                                                                                    )
+                                                                            }
+    
+                                                                        </td>
+                                                                    ) :
+                                                                    (null)}
+    
+                                                                {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner}</td>
+                                                                    ) : (
+                                                                            null
+                                                                        )
+                                                                }
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner_name}</td>
+                                                                    ) : (
+                                                                            null
+                                                                        )
+                                                                }
+    
+                                                                <td onClick={() => this.appData(data)}>
+                                                                    <div className="btn_size">
+                                                                        {
+                                                                            data.status == 1 ? (
+                                                                                <span className="badge badge-success">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                            ) : (
+                                                                                    <span className="badge badge-danger">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                )
+                                                                        }
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                </tbody>
+                                            </Table>
+                                            ) : (
+                                                <Table hover className="mb-0 table_Inresponsive" bordered>
+                                                <thead>
+                                                    <tr>
+                                                        {this.props.auth.auth_data.user_group == 'publisher' || this.props.auth.auth_data.user_group == 'advertiser' ? (<th className="action">Action</th>) : (null)}
+                                                        {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '85px', fontSize: '12px', fontWeight: '600' }}>Manage Ads</th>) : (null)}
+                                                        <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>App Icon</th>
+                                                        <th style={{ width: '170px', fontSize: '12px', fontWeight: '600', textAlign: 'left' }}>Name</th>
+                                                        <th style={{ width: '200px', fontSize: '12px', fontWeight: '600' }}>Package</th>
+                                                        {this.props.auth.auth_data.user_group == 'publisher' ? (<th style={{ width: '230px', fontSize: '12px', fontWeight: '600' }}>Features</th>) : (null)}
+    
+                                                        {
+                                                            this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerShip</th>
+                                                            ) : (
+                                                                    null
+                                                                )
+                                                        }
+                                                        {
+                                                            this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                <th style={{ width: '80px', fontSize: '12px', fontWeight: '600' }}>OwnerName</th>
+                                                            ) : (
+                                                                    null
+                                                                )
+                                                        }
+                                                        {/* <th>Discription</th> */}
+                                                        <th style={{ width: '55px', fontSize: '12px', fontWeight: '600' }}>status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        this.state.paginationdata.map((data, index) =>
+                                                            <tr key={index}>
+                                                                {
+                                                                    auth.user_group == "publisher" ? (
+    
+                                                                        <td className="action">
+                                                                            {auth.id == data.user_id && auth.user_group == data.owner ? (
+                                                                                <span className="padding">
+                                                                                    <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
+                                                                                    {
+                                                                                        data.status == "1" ? (
+                                                                                            <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                        ) : (
+                                                                                                <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                            )
+                                                                                    }
+                                                                                </span>
+                                                                            ) : (
+                                                                                    <span className="padding">
+                                                                                        No Access
+                                                                            </span>
+                                                                                )}
+                                                                        </td>
+                                                                    ) : (
+    
+                                                                            null
+    
+                                                                        )
+                                                                }
+                                                                {
+                                                                    auth.user_group == "advertiser" ? (
+                                                                        <td className="action">
+                                                                            <span className="padding">
+                                                                                <i className="fa fa-pencil-square fa-lg" onClick={() => this.editAppData(data.id)}></i>
+                                                                                {
+                                                                                    data.status == "1" ? (
+                                                                                        <i className="fa fa-remove fa-lg" onClick={() => this.deleteAppData(data)}></i>
+                                                                                    ) : (
+                                                                                            <i className="fa fa-check" onClick={() => this.deleteAppData(data)}></i>
+                                                                                        )
+                                                                                }
+                                                                            </span>
+                                                                        </td>
+                                                                    ) : (
+                                                                            null
+                                                                        )
+                                                                }
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'publisher' ? (
+                                                                        <td>
+                                                                            {
+                                                                                data.owner !== 'advertiser' ? (
+                                                                                    <Switch
+                                                                                        className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
+                                                                                        checked={data.ad_status == 1 ? true : false}
+                                                                                        onChange={() => this.handleChangegetAds(data, index)}
+                                                                                    />
+                                                                                ) : (
+                                                                                        <Switch
+                                                                                            className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
+                                                                                            checked={data.ad_status == 1 ? true : false}
+                                                                                            onChange={() => this.handleLog()}
+                                                                                        />
+                                                                                    )
+                                                                            }
+                                                                        </td>
+                                                                    ) : (null)
+                                                                }
+                                                                <td onClick={() => this.appData(data)}>
+                                                                    {
+                                                                        data.icon != null ? (
+                                                                            <img src={REMOTE_URL + data.icon} className="avatar-img" alt="admin@bootstrapmaster.com" />
+                                                                        ) : (
+                                                                                <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                            )
+                                                                    }
+    
+                                                                </td>
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
+                                                                    ) : (
+                                                                            <td className="name" onClick={() => this.appData(data)} style={{ textAlign: 'left' }}><p>{data.name}</p></td>
+                                                                        )
+                                                                }
+                                                                <td className="package" onClick={() => this.appData(data)} style={{ wordBreak: 'break-all' }}><p>{data.package}</p></td>
+                                                                {this.props.auth.auth_data.user_group == 'publisher' ?
+                                                                    (
+                                                                        <td>
+                                                                            {
+                                                                                data.owner !== 'advertiser' ? (
+                                                                                    <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
+                                                                                        <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} onClick={() => this.redirect(1)}>Notification</Button>
+                                                                                        <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} onClick={() => this.redirect(2)}>Custom Ads</Button>
+                                                                                        <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} onClick={() => this.redirect(3)}>Ads</Button>
+                                                                                    </div>
+                                                                                ) : (
+                                                                                        <div className="btn-group" style={{ display: 'block', marginTop: '5px' }}>
+                                                                                            <Button size="sm" className="btn-theme" color="warning" style={{ color: '#fff' }} disabled>Notification</Button>
+                                                                                            <Button size="sm" className="btn-theme" color="danger" style={{ marginLeft: '7px' }} disabled>Custom Ads</Button>
+                                                                                            <Button size="sm" className="btn-theme" color="primary" style={{ marginLeft: '7px', marginTop: '0px' }} disabled>Ads</Button>
+                                                                                        </div>
+                                                                                    )
+                                                                            }
+    
+                                                                        </td>
+                                                                    ) :
+                                                                    (null)}
+    
+                                                                {/* <td onClick={() => this.appData(data)}>{data.description}</td> */}
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner}</td>
+                                                                    ) : (
+                                                                            null
+                                                                        )
+                                                                }
+                                                                {
+                                                                    this.props.auth.auth_data.user_group == 'admin' ? (
+                                                                        <td onClick={() => this.appData(data)} style={{ textTransform: 'uppercase' }}>{data.owner_name}</td>
+                                                                    ) : (
+                                                                            null
+                                                                        )
+                                                                }
+    
+                                                                <td onClick={() => this.appData(data)}>
+                                                                    <div className="btn_size">
+                                                                        {
+                                                                            data.status == 1 ? (
+                                                                                <span className="badge badge-success">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                            ) : (
+                                                                                    <span className="badge badge-danger">{data.status == "1" ? "active" : "inactive"}</span>
+                                                                                )
+                                                                        }
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                </tbody>
+                                            </Table>
+                                            )
+                                        }
+                                       
                                         {
                                             this.state.paginationdata ? (
                                                 <div>
@@ -884,16 +1101,19 @@ export default class TableApp extends React.Component {
                                                                 {
                                                                     data.owner !== 'advertiser' ? (
                                                                         <Switch
+                                                                            className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
                                                                             checked={data.ad_status == 1 ? true : false}
                                                                             onChange={() => this.handleChangegetAds(data, index)}
                                                                         />
                                                                     ) : (
                                                                             <Switch
+                                                                                className={data.ad_status == 1 ? 'custom-switch active' : 'custom-switch'}
                                                                                 checked={data.ad_status == 1 ? true : false}
                                                                                 onChange={() => this.handleLog()}
                                                                             />
                                                                         )
                                                                 }
+
                                                             </td>
                                                         ) : (null)
                                                     }

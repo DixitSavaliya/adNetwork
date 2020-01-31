@@ -96,7 +96,7 @@ th.center {
   margin-left: 0 !important;
 }
 
-.react-switch-handle {
+/* .react-switch-handle {
   height: 20px !important;
     width: 22px !important;
     background: rgb(255, 255, 255);
@@ -109,9 +109,25 @@ th.center {
     outline: 0px;
     border: 0px;
     transition: background-color 0.25s ease 0s, transform 0.25s ease 0s, box-shadow 0.15s ease 0s;
-}
+} */
 
-.react-switch-bg{
+.custom-switch .react-switch-handle {
+  height: 11px!important;
+  width: 11px!important;
+  background: #fff;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  transform: translateX(1px);
+  top: 6px!important;
+  right: 34px;
+  outline: 0;
+  border: 0;
+  transition: background-color .25s ease 0s,transform .25s ease 0s,box-shadow .15s ease 0s;
+  }
+
+/* .react-switch-bg{
   height: 29px !important;
     width: 50px !important;
     margin: 0px;
@@ -119,15 +135,59 @@ th.center {
     background: rgb(136, 136, 136);
     border-radius: 14px;
     cursor: pointer;
-}
+} */
+
+.custom-switch .react-switch-bg {
+  height: 23px !important;
+  width: 50px !important;
+  margin: 0;
+  position: relative;
+  background: #888;
+  border-radius: 14px;
+  cursor: pointer;
+  }
+
+  .custom-switch .react-switch-bg>div {
+    height: 20px !important;
+    width: 20px !important;
+    position: relative;
+    vertical-align: middle;
+    opacity: 1;
+    pointer-events: none;
+    margin: auto 0;
+    transition: opacity 0.25s ease 0s;
+    top: 1px !important;
+    /* left: 2px !important; */
+  }
+  .custom-switch.active .react-switch-bg>div {
+    height: 20px !important;
+    width: 20px !important;
+    position: relative;
+    vertical-align: middle;
+    opacity: 1;
+    pointer-events: none;
+    margin: auto 0;
+    transition: opacity 0.25s ease 0s;
+    top: 2px !important;
+    left: 2px !important;
+  }
 
 .img-nt{
   width: 50px;
 }
 
-@media screen and (max-width: 1200px) {
+
+@media screen and (max-width: 993px) {
   .table_responsive {
     display: block;
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+}
+
+@media screen and (max-width: 993px) {
+  .table_Inresponsive {
+    display: inline-block;
     overflow: hidden;
     overflow-x: scroll;
   }

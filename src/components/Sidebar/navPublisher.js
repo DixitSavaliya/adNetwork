@@ -12,12 +12,12 @@ export default {
         children: [
           {
             name: 'Create-App',
-            url: '/CreateApp',
+            url: '/createapp',
             icon: 'fa fa-plus-square',
           },
           {
             name: 'List-App',
-            url: '/ListApp',
+            url: '/listapp',
             icon: 'fa fa-reorder',
           },
         ]

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { EventEmitter } from '../../event';
 import {
   Nav,
   NavbarBrand,
@@ -21,6 +22,7 @@ class Header extends Component {
   }
 
   sidebarToggle(e) {
+    EventEmitter.dispatch('hide',1);
     e.preventDefault();
     document.body.classList.toggle('sidebar-hidden');
   }

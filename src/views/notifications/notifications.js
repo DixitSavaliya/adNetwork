@@ -119,26 +119,33 @@ class Notifications extends Component {
     }
 
     handleChange(item, e) {
-        let _id = item.id;
-        this.setState({
-            app_id: this.state.app_id = _id
-        })
-        let ind = this.state.publisherapp.findIndex((x) => x.id == _id);
-        let data = this.state.publisherapp;
-        if (ind > -1) {
-            let newState = !item._rowChecked;
-            data[ind]._rowChecked = newState;
-            if (!newState) {
-                data[ind]._rowChecked = false;
-
-            } else {
-                data[ind]._rowChecked = true;
-            }
+        if(item.serverKey != "") {
+            let _id = item.id;
             this.setState({
-                publisherapp: data
+                app_id: this.state.app_id = _id
+            })
+            let ind = this.state.publisherapp.findIndex((x) => x.id == _id);
+            let data = this.state.publisherapp;
+            if (ind > -1) {
+                let newState = !item._rowChecked;
+                data[ind]._rowChecked = newState;
+                if (!newState) {
+                    data[ind]._rowChecked = false;
+    
+                } else {
+                    data[ind]._rowChecked = true;
+                }
+                this.setState({
+                    publisherapp: data
+                });
+            }
+            this.checkMaster(data);
+        } else {
+            Swal.fire({
+                text: 'App does not have firebase Auth key! please, set server key first',
+                icon: 'warning'
             });
         }
-        this.checkMaster(data);
     }
 
     handleChangeStatus(event) {
@@ -316,50 +323,55 @@ class Notifications extends Component {
     sendNotifications() {
         const isValid = this.validate();
         if (isValid) {
-            const obj = {
-                id: "",
-                user_id: this.props.auth.auth_data.id,
-                type: this.state.status,
-                status: 1,
-                time: this.state.time,
-                time_type: this.state.time_type,
-                data: {
-                    notification: {
-                        title: this.state.title,
-                        message: this.state.message,
-                        icon: this.state.selectedFile,
-                        url: this.state.url,
-                        click_action: this.state.click_action
-                    },
-                    app_list: this.state.app_list,
-                    status: 1,
+            if(this.state.app_list.length > 0) {
+                const obj = {
+                    id: "",
+                    user_id: this.props.auth.auth_data.id,
                     type: this.state.status,
+                    status: 1,
                     time: this.state.time,
-                    time_type: {
-                        once: this.state.once,
-                        daily: this.state.daily,
-                        weekly: this.state.weekly,
-                        monthly: this.state.monthly
+                    time_type: this.state.time_type,
+                    data: {
+                        notification: {
+                            title: this.state.title,
+                            message: this.state.message,
+                            icon: this.state.selectedFile,
+                            url: this.state.url,
+                            click_action: this.state.click_action
+                        },
+                        app_list: this.state.app_list,
+                        status: 1,
+                        type: this.state.status,
+                        time: this.state.time,
+                        time_type: {
+                            once: this.state.once,
+                            daily: this.state.daily,
+                            weekly: this.state.weekly,
+                            monthly: this.state.monthly
+                        }
                     }
                 }
+                this.props.sendNotification(obj).then((res) => {
+                    if (res.response.status == 1) {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                        this.props.history.push(this.props.from || { pathname: '/list-notifications' });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
+                })
+            } else {
+                Swal.fire({
+                    text: 'Please Select App First',
+                    icon: 'warning'
+                });
             }
-           
-            this.props.sendNotification(obj).then((res) => {
-                if (res.response.status == 1) {
-                    Swal.fire({
-                        text: res.response.message,
-                        icon: 'success'
-                    });
-                    this.props.history.push(this.props.from || { pathname: '/list-notifications' });
-                } else {
-                    Swal.fire({
-                        text: res.response.message,
-                        icon: 'warning'
-                    });
-                }
-            })
         }
-
     }
 
     render() {

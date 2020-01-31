@@ -65,63 +65,63 @@ class ViewApp extends React.Component {
             })
         }
 
-        this.getAppMonetisation();
+        // this.getAppMonetisation();
     }
 
-    getAppMonetisation() {
-        const obj = {
-            id: this.state.id,
-            app_id: this.props.id
-        }
-        this.props.getAPPMonetization(obj).then((res) => {
-            if (res.response.data) {
-                if (res.response.message == "No Monetisations Found For This Application!") {
+    // getAppMonetisation() {
+    //     const obj = {
+    //         id: this.state.id,
+    //         app_id: this.props.id
+    //     }
+    //     this.props.getAPPMonetization(obj).then((res) => {
+    //         if (res.response.data) {
+    //             if (res.response.message == "No Monetisations Found For This Application!") {
 
-                } else {
-                    this.setState({
-                        fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
-                        admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
-                        mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
-                    })
-                }
-            }
-        })
-    }
+    //             } else {
+    //                 this.setState({
+    //                     fb_ads: this.state.fb_ads = res.response.data.data.fb_ads,
+    //                     admob_ads: this.state.admob_ads = res.response.data.data.admob_ads,
+    //                     mopub_ads: this.state.mopub_ads = res.response.data.data.mopub_ads,
+    //                 })
+    //             }
+    //         }
+    //     })
+    // }
 
     handleChangeFBAds(checkedvalue) {
         this.setState({
             fb_ads: this.state.fb_ads = checkedvalue
         })
-        if (this.state.fb_ads == true) {
-            this.setState({
-                admob_ads: this.state.admob_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.fb_ads == true) {
+        //     this.setState({
+        //         admob_ads: this.state.admob_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeAdMobAds(checkedvalue) {
         this.setState({
             admob_ads: this.state.admob_ads = checkedvalue
         })
-        if (this.state.admob_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                mopub_ads: this.state.mopub_ads = false
-            })
-        }
+        // if (this.state.admob_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         mopub_ads: this.state.mopub_ads = false
+        //     })
+        // }
     }
 
     handleChangeMopubAds(checkedvalue) {
         this.setState({
             mopub_ads: this.state.mopub_ads = checkedvalue
         })
-        if (this.state.mopub_ads == true) {
-            this.setState({
-                fb_ads: this.state.fb_ads = false,
-                admob_ads: this.state.admob_ads = false
-            })
-        }
+        // if (this.state.mopub_ads == true) {
+        //     this.setState({
+        //         fb_ads: this.state.fb_ads = false,
+        //         admob_ads: this.state.admob_ads = false
+        //     })
+        // }
     }
 
     render() {
@@ -348,7 +348,7 @@ class ViewApp extends React.Component {
                                                 </Card>
                                             </Col>
                                         </Row>
-                                        <Row>
+                                        {/* <Row>
                                             <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                                 <Card className="main-card mb-3">
                                                     <CardHeader>
@@ -385,7 +385,7 @@ class ViewApp extends React.Component {
                                                     </CardBody>
                                                 </Card>
                                             </Col>
-                                        </Row>
+                                        </Row> */}
                                     </div>
 
                                 ) : (
@@ -573,7 +573,7 @@ class ViewApp extends React.Component {
                                                     </Card>
                                                 </Col>
                                             </Row>
-                                            <Row>
+                                            {/* <Row>
                                                 <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                                     <Card className="main-card mb-3">
                                                         <CardHeader>
@@ -610,7 +610,7 @@ class ViewApp extends React.Component {
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
-                                            </Row>
+                                            </Row> */}
                                         </div>
                                     )
                             }

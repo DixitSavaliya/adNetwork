@@ -8,7 +8,6 @@ import { HashRouter, Link, Route } from "react-router-dom";
 
 export default class TableRole extends React.Component {
     constructor(props) {
-
         super(props);
         this.state = {
             auth: JSON.parse(window.sessionStorage.getItem('ad_network_auth')),

@@ -80,38 +80,37 @@ class ListNotifications extends React.Component {
                 delete: this.state.delete = true
             })
         });
-        this.getNotificationsCount();
+        // this.getNotificationsCount();
     }
 
-    getNotificationsCount() {
-        const obj = {
-            user_id: this.props.auth.auth_data.id
-        }
-        let _this = this;
-        this.props.notificationCount(obj).then((res) => {
+    // getNotificationsCount() {
+    //     const obj = {
+    //         user_id: this.props.auth.auth_data.id
+    //     }
+    //     let _this = this;
+    //     this.props.notificationCount(obj).then((res) => {
+    //         _this.setState({
+    //             count: _this.state.count = res.response.data
+    //         })
+    //         _this.getNotificationPageData();
+    //     })
 
-            _this.setState({
-                count: _this.state.count = res.response.data
-            })
-            _this.getNotificationPageData();
-        })
+    // }
 
-    }
-
-    getNotificationPageData() {
-        const obj = {
-            page_no: "1",
-            items_per_page: this.state.items_per_page,
-            user_id: this.props.auth.auth_data.id
-        }
-        let _this = this;
-        this.props.notificationPGData(obj).then(function (res) {
-            _this.setState({
-                paginationdata: res.response.data,
-                isFetch: true
-            })
-        })
-    }
+    // getNotificationPageData() {
+    //     const obj = {
+    //         page_no: "1",
+    //         items_per_page: this.state.items_per_page,
+    //         user_id: this.props.auth.auth_data.id
+    //     }
+    //     let _this = this;
+    //     this.props.notificationPGData(obj).then(function (res) {
+    //         _this.setState({
+    //             paginationdata: res.response.data,
+    //             isFetch: true
+    //         })
+    //     })
+    // }
 
 
     handleChangeEvent(e) {
