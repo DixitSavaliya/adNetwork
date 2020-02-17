@@ -326,7 +326,7 @@ class Notifications extends Component {
             if(this.state.app_list.length > 0) {
                 const obj = {
                     id: "",
-                    user_id: this.props.auth.auth_data.id,
+                    user_id: this.props.auth.user.user_group_id,
                     type: this.state.status,
                     status: 1,
                     time: this.state.time,

@@ -1236,7 +1236,7 @@ class CreateApp extends React.Component {
                                                                         this.state.selectedFile ? (
                                                                             <div>
                                                                                 <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
-                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
+                                                                                <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.state.selectedFile)}></i>
                                                                             </div>
                                                                         ) : (null)
                                                                     }
@@ -1285,7 +1285,7 @@ class CreateApp extends React.Component {
                                                                         this.state.bannerselectedFile ? (
                                                                             <div>
                                                                                 <img className="picture" src={REMOTE_URL + this.state.bannerselectedFile} />
-                                                                                <i className="fa fa-remove fa-lg" onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
+                                                                                <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
                                                                             </div>
                                                                         ) : (null)
                                                                     }
@@ -1647,7 +1647,7 @@ class CreateApp extends React.Component {
                                                                             this.state.selectedFile ? (
                                                                                 <div>
                                                                                     <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
-                                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
+                                                                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.state.selectedFile)}></i>
                                                                                 </div>
                                                                             ) : (null)
                                                                         }
@@ -1696,7 +1696,7 @@ class CreateApp extends React.Component {
                                                                             this.state.bannerselectedFile ? (
                                                                                 <div>
                                                                                     <img className="picture" src={REMOTE_URL + this.state.bannerselectedFile} />
-                                                                                    <i className="fa fa-remove fa-lg" onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
+                                                                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
                                                                                 </div>
                                                                             ) : (null)
                                                                         }

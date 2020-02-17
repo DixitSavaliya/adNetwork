@@ -192,7 +192,7 @@ class Profile extends Component {
                               this.state.selectedFile ? (
                                 <div>
                                   <img className="pic" src={config.REMOTE_URL + this.state.selectedFile} />
-                                  <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
+                                  <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                 </div>
                               ) : (null)
                             }
@@ -203,7 +203,7 @@ class Profile extends Component {
                                 this.props.profile.avatar ? (
                                   <div>
                                     <img className="pic" src={config.REMOTE_URL + this.props.profile.avatar} />
-                                    <i className="fa fa-remove fa-lg" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
+                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                   </div>
                                 ) : (
                                     <div>

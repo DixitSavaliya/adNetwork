@@ -54,36 +54,6 @@ class Sidebar extends Component {
 
   render() {
     if (this.props.auth.auth_data.user_group == "admin") {
-      if (this.state.rightdata) {
-        var roleitems = [{
-          name: '',
-          url: '',
-          icon: ''
-        }];
-
-        for (var i = 0; i < this.state.rightdata.length; i++) {
-          for (var z = 0; z < roleitems.length; z++) {
-            // console.log("roleitems",roleitems[z]);
-            roleitems[z].name = this.state.rightdata[i].display_name,
-            roleitems[z].url = '/' + this.state.rightdata[i].name
-          }
-        }
-        
-        // for(var j=0;j<nav.items.length;j++) {
-        //   if(this.state.rightdata[i].display_name == nav.items[j].name) {
-        //     console.log('ismatch');
-        //     console.log('nav.items[j].name',nav.items[j].name);
-        //     nav.items[j].name = this.state.rightdata[i].display_name;
-        //     console.log('nav.items[j].name',nav.items[j].name);
-        //     for(var z=0;z<items.length;z++){
-
-        //       items[z].name = nav.items[j].name;
-        //     }
-        //   }
-        // }
-
-        // console.log('roleitems', roleitems);
-      }
       this.props.sidebar.nav = nav.items;
     } else if (this.props.auth.auth_data.user_group == "advertiser") {
       this.props.sidebar.nav = navRight.items;

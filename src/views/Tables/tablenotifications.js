@@ -82,7 +82,7 @@ export default class TableNotifications extends React.Component {
 
     getNotificationsCount() {
         const obj = {
-            user_id: this.props.auth.auth_data.id
+            user_id: this.props.auth.user.user_group_id
         }
         let _this = this;
         this.props.notificationCount(obj).then((res) => {
@@ -99,7 +99,7 @@ export default class TableNotifications extends React.Component {
         const obj = {
             page_no: "1",
             items_per_page: this.state.items_per_page,
-            user_id: this.props.auth.auth_data.id
+            user_id: this.props.auth.user.user_group_id
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {
@@ -166,7 +166,7 @@ export default class TableNotifications extends React.Component {
         const obj = {
             page_no: '' + event.target.id,
             items_per_page: this.state.items_per_page,
-            user_id: this.props.auth.auth_data.id
+            user_id: this.props.auth.user.user_group_id,
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {

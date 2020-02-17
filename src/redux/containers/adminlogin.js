@@ -10,7 +10,6 @@ import Auth from '../Auth';
 
 class AdminLoginContainer extends Component {
     
-    
     transferToDashboardIfLoggedIn(){
         if (!this.props.auth.auth_data.access_token){
             this.props.history.push(this.props.from || {pathname: '/admin/'});
@@ -43,7 +42,7 @@ class AdminLoginContainer extends Component {
     render() {
       const { auth, login , getUser,userroletoright } = this.props;
       return (
-        <AdminLogin auth={auth} login={login} getUser={getUser} userroletoright={userroletoright} {...this.props} />
+        <AdminLogin auth={auth} login={login} getUser={getUser} userroletoright={userroletoright} />
       );
     }
 }

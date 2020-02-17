@@ -49,7 +49,7 @@ class ViewNotifications extends React.Component {
         if (this.props.id) {
             const obj = {
                 shedule_id: this.props.id,
-                user_id: this.props.auth.auth_data.id
+                user_id: this.props.auth.user.user_group_id
             }
             this.props.getViewNotificationsDetailsById(obj).then((res) => {
                 this.setState({

@@ -69,8 +69,11 @@ class Advertiser extends Component {
     }
 
     countUser() {
+        const obj = {
+            type:1
+        }
         let _this = this;
-        this.props.countuser().then((res) => {
+        this.props.countuser(obj).then((res) => {
             _this.setState({
                 count: _this.state.count = res.response.data
             })
@@ -81,7 +84,8 @@ class Advertiser extends Component {
     UsersPageData() {
         const obj = {
             page_no: "1",
-            items_per_page: this.state.items_per_page
+            items_per_page: this.state.items_per_page,
+            type:1
         }
         let _this = this;
         this.props.usersPGData(obj).then(function (res) {
@@ -117,6 +121,7 @@ class Advertiser extends Component {
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
                 user_group: this.props.auth.auth_data.user_group,
+                type:2,
                 ownership: this.state.ownership
             }
             let _this = this;
@@ -148,7 +153,8 @@ class Advertiser extends Component {
                 items_per_page: this.state.items_per_page,
                 user_id: this.props.auth.auth_data.id,
                 user_group: this.props.auth.auth_data.user_group,
-                ownership: this.state.ownership = ""
+                ownership: this.state.ownership = "",
+                type:1
             }
             let _this = this;
             this.props.usersPGData(obj).then(function (res) {
@@ -258,7 +264,8 @@ class Advertiser extends Component {
 
     searchUserDataKeyUp(e) {
         const obj = {
-            search_string: e.target.value
+            search_string: e.target.value,
+            type:1
         }
         this.props.searchUsersData(obj).then((res) => {
             this.setState({
@@ -365,6 +372,9 @@ class Advertiser extends Component {
                                                     >
                                                         <option value="5">5</option>
                                                         <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
                                                     </Input>
                                                 </Col>
                                             </Row>

@@ -83,10 +83,18 @@ ReactDOM.render((
     <Provider store={store}>
         <Router>
             <Switch>
-                <Route exact path="/login" name="Login Page" component={Login} />
-                <Route exact path="/admin/" name="AdminLogin Page" component={AdminLogin} />
-                <Route exact path="/register" name="Register Page" component={Register} />
-                <Route exact path="/forgot-password" name="Forgot Password" component={ForgotPassword} />
+                <Route exact path="/login" exact render={(props) => (
+                    Auth.isUserAuthenticated() == true ? (<Redirect to="/" />) : (<Login {...props}/>)
+                )} />
+                <Route exact path="/admin/" exact render={(props) => (
+                    Auth.isUserAuthenticated() == true ? (<Redirect to="/" />) : (<AdminLogin {...props}/>)
+                )} />
+                <Route exact path="/register" exact render={() => (
+                    Auth.isUserAuthenticated() == true ? (<Redirect to="/" />) : (<Register />)
+                )} />
+                <Route exact path="/forgot-password" exact render={() => (
+                    Auth.isUserAuthenticated() == true ? (<Redirect to="/" />) : (<ForgotPassword />)
+                )} />
                 <PrivateRoute path="/" name="Home" component={Full} />
             </Switch>
         </Router>

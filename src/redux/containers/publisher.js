@@ -38,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    countuser:() => dispatch(countuser()),
+    countuser:(obj) => dispatch(countuser(obj)),
     usersPGData:(data) => dispatch(usersPGData(data)),
     searchUsersData:(data) => dispatch(searchUsersData(data)),
     blockUser:(data) => dispatch(blockUser(data))
