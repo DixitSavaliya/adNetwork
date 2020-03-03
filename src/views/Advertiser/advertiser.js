@@ -349,25 +349,26 @@ class Advertiser extends Component {
                         <CardBody>
                             <div>
                                 <Row>
-                                    <Col md="6">
+                                    <Col className="cols" sm="12" md="11" lg="11" xl="11">
+                                    <div className="searchA">
                                         <input
                                             className="form-control search"
                                             type="text"
                                             placeholder="Search"
                                             aria-label="Search"
+                                            style={{marginLeft:'0px'}}
                                             onKeyUp={this.searchUserDataKeyUp}
                                         />
-                                    </Col>
-                                    <Col md="6">
-
-                                        <div className="pull-right">
-                                            <Row>
-                                                <span style={{ marginTop: '8px' }}>Records per page</span>
+                                 
+                                        
+                                                <span>Records per page</span>
                                                 <Col md="2">
                                                     <Input
                                                         type="select"
+                                                        className="form-control drop"
                                                         id="rightid"
                                                         name="customSelect"
+                                                        style={{width:'87px'}}
                                                         onChange={this.handleChangeEvent}
                                                     >
                                                         <option value="5">5</option>
@@ -377,9 +378,14 @@ class Advertiser extends Component {
                                                         <option value="100">100</option>
                                                     </Input>
                                                 </Col>
-                                            </Row>
+                                            
                                         </div>
+                                       
                                     </Col>
+                                    {/* <Col md="6">
+
+                                        
+                                    </Col> */}
                                 </Row>
                             </div>
                             <br />
@@ -387,7 +393,7 @@ class Advertiser extends Component {
                                 {
                                     this.state.searchData.length > 0 ? (
                                         <div>
-                                            <Table hover className="mb-0 table_responsive" bordered>
+                                            <Table hover className="mb-0 table_responsive2" bordered>
                                                 <thead>
                                                     <tr>
                                                         <th>Action</th>
@@ -440,7 +446,7 @@ class Advertiser extends Component {
                                                 {
                                                     this.state.paginationdata ? (
                                                         <div>
-                                                            <Table hover className="mb-0 table_responsive" bordered>
+                                                            <Table hover className="mb-0 table_responsive2" bordered>
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Action</th>

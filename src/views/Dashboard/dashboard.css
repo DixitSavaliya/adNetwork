@@ -5,6 +5,7 @@
 .inline_content h5{
     display: inline-block;
     font-size: 15px;
+    margin: 0px;
 }
 .inline_content h5:first-child{
     margin-right: 15px;
@@ -15,3 +16,53 @@
     text-align: center;
     font-weight: bold;
 }
+.count_div{
+    text-align: center;
+}
+@media(max-width: 768px){
+    .count_div{
+        
+        margin-top: 5px;
+    }
+ }
+ .blue {
+     margin-bottom: 0px;
+ }
+
+ .app-title-icon {
+
+ }
+ .app-title-icon img {
+     display: inline-block;
+     width: 70px;
+     height: 50px;
+     margin-right:20px;
+     vertical-align: top;
+     border-radius: 5px;
+}
+.app-title-icon .app_detail {
+    display: inline-block;
+}
+@media(max-width: 768px){
+    .app-title-icon {
+        text-align: center;
+        margin: 0 auto 5px auto;
+        border-bottom: 1px solid #c2cfd6;
+        padding-bottom: 15px;
+    }
+    .app-title-icon img {
+        display:block;
+        text-align:center;
+        margin: 0 auto;
+    }
+   .app-title-icon .app_detail {
+       display: block;
+       text-align:center;
+       margin: 10px auto 0px auto;
+   }
+   .app-title-icon .count_div {
+    display: block;
+    text-align:center;
+     margin: 0 auto;
+    }
+ }

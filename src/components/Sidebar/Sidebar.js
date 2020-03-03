@@ -38,10 +38,14 @@ class Sidebar extends Component {
 
       let _this = this;
       this.props.userroletoright(obj).then(function (res) {
-        let data = res.response.data;
-        _this.setState({
-          rightdata: _this.state.rightdata = data
-        })
+        if(res && res.response && res.response.data) {
+          let data = res.response.data;
+          _this.setState({
+            rightdata: _this.state.rightdata = data
+          })
+        } else {
+          console.log("something went wrong")
+        }
       })
     }
   }

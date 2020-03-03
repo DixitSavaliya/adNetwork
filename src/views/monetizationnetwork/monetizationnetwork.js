@@ -31,6 +31,7 @@ import {
     Label,
     Row,
 } from 'reactstrap';
+import './monetization.css';
 import thunk from 'redux-thunk';
 
 class MonetizationNetwork extends React.Component {
@@ -64,7 +65,7 @@ class MonetizationNetwork extends React.Component {
             checked: false,
             mopub_ads: false,
             admob_ads: false,
-            fb_ads: true,
+            fb_ads: false,
             updateMonetization: false,
             mainAds: false,
             showsection: false,
@@ -80,6 +81,7 @@ class MonetizationNetwork extends React.Component {
         this.removeAppMonetization = this.removeAppMonetization.bind(this);
         this.filterList = this.filterList.bind(this);
         this.handleAppClick = this.handleAppClick.bind(this);
+        this.handleChangeData = this.handleChangeData.bind(this);
     }
 
     componentDidMount() {
@@ -109,90 +111,67 @@ class MonetizationNetwork extends React.Component {
             app_id: this.state.app_id
         }
         this.props.getAPPMonetization(obj).then((res) => {
-            if (res.response.data) {
-                if (res.response.message == "No Monetisations Found For This Application!") {
-                    this.setState({
-                        updateMonetization: this.state.updateMonetization = false,
-                        fb_ads: this.state.fb_ads = true,
-                        FB_id: this.state.FB_id = "",
-                        FB_rewareded_ads: this.state.FB_rewareded_ads = "",
-                        fb_ads: this.state.fb_ads = "",
-                        fb_banner: this.state.fb_banner = "",
-                        fb_native: this.state.fb_native = "",
-                        fb_interstitial: this.state.fb_interstitial = "",
-                        fb_native_banner: this.state.fb_native_banner = "",
-                        GAN_native_ads: this.state.GAN_native_ads = "",
-                        admob_ads: this.state.admob_ads = "",
-                        admob_banner: this.state.admob_banner = "",
-                        admob_appid: this.state.admob_appid = "",
-                        admob_rewarded: this.state.admob_rewarded = "",
-                        admob_interstitial: this.state.admob_interstitial = "",
-                        admob_native_banner: this.state.admob_native_banner = "",
-                        mopub_ads: this.state.mopub_ads = "",
-                        MO_id: this.state.MO_id = "",
-                        mopub_video: this.state.mopub_video = "",
-                        mopub_banner: this.state.mopub_banner = "",
-                        mopub_interstitial: this.state.mopub_interstitial = "",
-                        mopub_reward_video: this.state.mopub_reward_video = "",
-                        mopub_native_banner: this.state.mopub_native_banner = ""
-                    })
-                } else {
-                    if (res.response.data.data.FB_ADS == "" && res.response.data.data.GAN_ADS == "" && res.response.data.data.MO_ADS == "") {
-                        this.setState({
-                            mainAds: this.state.mainAds = true,
-                            id: this.state.id = res.response.data.id,
-                            updateMonetization: this.state.updateMonetization = true,
-                            FB_id: this.state.FB_id = res.response.data.data.FB_id,
-                            FB_rewareded_ads: this.state.FB_rewareded_ads = res.response.data.data.FB_rewareded_ads,
-                            fb_ads: this.state.fb_ads = res.response.data.data.FB_ADS,
-                            fb_banner: this.state.fb_banner = res.response.data.data.FB_banner_ads,
-                            fb_native: this.state.fb_native = res.response.data.data.FB_native_ads,
-                            fb_interstitial: this.state.fb_interstitial = res.response.data.data.FB_interstitial_ads,
-                            fb_native_banner: this.state.fb_native_banner = res.response.data.data.FB_native_banner,
-                            GAN_native_ads: this.state.GAN_native_ads = res.response.data.data.GAN_native_ads,
-                            admob_ads: this.state.admob_ads = res.response.data.data.GAN_ADS,
-                            admob_banner: this.state.admob_banner = res.response.data.data.GAN_banner_ads,
-                            admob_appid: this.state.admob_appid = res.response.data.data.GAN_id,
-                            admob_rewarded: this.state.admob_rewarded = res.response.data.data.GAN_rewareded_ads,
-                            admob_interstitial: this.state.admob_interstitial = res.response.data.data.GAN_interstitial_ads,
-                            admob_native_banner: this.state.admob_native_banner = res.response.data.data.GAN_native_banner,
-                            mopub_ads: this.state.mopub_ads = res.response.data.data.MO_ADS,
-                            MO_id: this.state.MO_id = res.response.data.data.MO_id,
-                            mopub_video: this.state.mopub_video = res.response.data.data.MO_native_ads,
-                            mopub_banner: this.state.mopub_banner = res.response.data.data.MO_banner_ads,
-                            mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.MO_interstitial_ads,
-                            mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.MO_rewareded_ads,
-                            mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.MO_native_banner
-                        })
-                    } else {
-                        this.setState({
-                            mainAds: this.state.mainAds = res.response.data.data.FB_ADS == false && res.response.data.data.GAN_ADS == false && res.response.data.data.MO_ADS == false ? false : true,
-                            id: this.state.id = res.response.data.id,
-                            updateMonetization: this.state.updateMonetization = true,
-                            FB_id: this.state.FB_id = res.response.data.data.FB_id,
-                            FB_rewareded_ads: this.state.FB_rewareded_ads = res.response.data.data.FB_rewareded_ads,
-                            fb_ads: this.state.fb_ads = res.response.data.data.FB_ADS,
-                            fb_banner: this.state.fb_banner = res.response.data.data.FB_banner_ads,
-                            fb_native: this.state.fb_native = res.response.data.data.FB_native_ads,
-                            fb_interstitial: this.state.fb_interstitial = res.response.data.data.FB_interstitial_ads,
-                            fb_native_banner: this.state.fb_native_banner = res.response.data.data.FB_native_banner,
-                            GAN_native_ads: this.state.GAN_native_ads = res.response.data.data.GAN_native_ads,
-                            admob_ads: this.state.admob_ads = res.response.data.data.GAN_ADS,
-                            admob_banner: this.state.admob_banner = res.response.data.data.GAN_banner_ads,
-                            admob_appid: this.state.admob_appid = res.response.data.data.GAN_id,
-                            admob_rewarded: this.state.admob_rewarded = res.response.data.data.GAN_rewareded_ads,
-                            admob_interstitial: this.state.admob_interstitial = res.response.data.data.GAN_interstitial_ads,
-                            admob_native_banner: this.state.admob_native_banner = res.response.data.data.GAN_native_banner,
-                            mopub_ads: this.state.mopub_ads = res.response.data.data.MO_ADS,
-                            MO_id: this.state.MO_id = res.response.data.data.MO_id,
-                            mopub_video: this.state.mopub_video = res.response.data.data.MO_native_ads,
-                            mopub_banner: this.state.mopub_banner = res.response.data.data.MO_banner_ads,
-                            mopub_interstitial: this.state.mopub_interstitial = res.response.data.data.MO_interstitial_ads,
-                            mopub_reward_video: this.state.mopub_reward_video = res.response.data.data.MO_rewareded_ads,
-                            mopub_native_banner: this.state.mopub_native_banner = res.response.data.data.MO_native_banner
-                        })
-                    }
+            let data = res.response.data
+            console.log("getAPPMonetization data", data);
+            if (data && data.id) {
+                let mainAds = false;
+                if (data.data.FB_ADS == true || data.data.GAN_ADS == true || data.data.MO_ADS == true) {
+                    mainAds = true;
                 }
+                this.setState({
+                    mainAds: this.state.mainAds = mainAds,
+                    id: this.state.id = data.id,
+                    updateMonetization: this.state.updateMonetization = true,
+                    FB_id: this.state.FB_id = data.data.FB_id,
+                    FB_rewareded_ads: this.state.FB_rewareded_ads = data.data.FB_rewareded_ads,
+                    fb_ads: this.state.fb_ads = data.data.FB_ADS,
+                    fb_banner: this.state.fb_banner = data.data.FB_banner_ads,
+                    fb_native: this.state.fb_native = data.data.FB_native_ads,
+                    fb_interstitial: this.state.fb_interstitial = data.data.FB_interstitial_ads,
+                    fb_native_banner: this.state.fb_native_banner = data.data.FB_native_banner,
+                    GAN_native_ads: this.state.GAN_native_ads = data.data.GAN_native_ads,
+                    admob_ads: this.state.admob_ads = data.data.GAN_ADS,
+                    admob_banner: this.state.admob_banner = data.data.GAN_banner_ads,
+                    admob_appid: this.state.admob_appid = data.data.GAN_id,
+                    admob_rewarded: this.state.admob_rewarded = data.data.GAN_rewareded_ads,
+                    admob_interstitial: this.state.admob_interstitial = data.data.GAN_interstitial_ads,
+                    admob_native_banner: this.state.admob_native_banner = data.data.GAN_native_banner,
+                    mopub_ads: this.state.mopub_ads = data.data.MO_ADS,
+                    MO_id: this.state.MO_id = data.data.MO_id,
+                    mopub_video: this.state.mopub_video = data.data.MO_native_ads,
+                    mopub_banner: this.state.mopub_banner = data.data.MO_banner_ads,
+                    mopub_interstitial: this.state.mopub_interstitial = data.data.MO_interstitial_ads,
+                    mopub_reward_video: this.state.mopub_reward_video = data.data.MO_rewareded_ads,
+                    mopub_native_banner: this.state.mopub_native_banner = data.data.MO_native_banner
+                })
+            } else {
+                this.setState({
+                    mainAds: this.state.mainAds = false,
+                    id: this.state.id = "",
+                    updateMonetization: this.state.updateMonetization = false,
+                    FB_id: this.state.FB_id = "",
+                    FB_rewareded_ads: this.state.FB_rewareded_ads = "",
+                    fb_ads: this.state.fb_ads = false,
+                    fb_banner: this.state.fb_banner = "",
+                    fb_native: this.state.fb_native = "",
+                    fb_interstitial: this.state.fb_interstitial = "",
+                    fb_native_banner: this.state.fb_native_banner = "",
+                    GAN_native_ads: this.state.GAN_native_ads = "",
+                    admob_ads: this.state.admob_ads = false,
+                    admob_banner: this.state.admob_banner = "",
+                    admob_appid: this.state.admob_appid = "",
+                    admob_rewarded: this.state.admob_rewarded = "",
+                    admob_interstitial: this.state.admob_interstitial = "",
+                    admob_native_banner: this.state.admob_native_banner = "",
+                    mopub_ads: this.state.mopub_ads = false,
+                    MO_id: this.state.MO_id = "",
+                    mopub_video: this.state.mopub_video = "",
+                    mopub_banner: this.state.mopub_banner = "",
+                    mopub_interstitial: this.state.mopub_interstitial = "",
+                    mopub_reward_video: this.state.mopub_reward_video = "",
+                    mopub_native_banner: this.state.mopub_native_banner = "",
+                })
+                console.log("else called ", this.state)
             }
         })
         this.setState({
@@ -253,43 +232,49 @@ class MonetizationNetwork extends React.Component {
     }
 
     addAppMonetization() {
-        if (this.state.fb_ads == false && this.state.admob_ads == false && this.state.mopub_ads == false) {
-            if (this.state.app_id) {
-                var obj = {
+        let state = false;
+        if (this.state.fb_ads == true || this.state.admob_ads == true || this.state.mopub_ads == true) {
+            state = true;
+        }
+
+        if (this.state.app_id) {
+            var obj = {
+                id: this.state.id,
+                app_id: this.state.app_id,
+                status: state == true ? "1" : "0",
+                data: {
                     id: this.state.id,
                     app_id: this.state.app_id,
-                    status: "0",
-                    data: {
-                        id: this.state.id,
-                        app_id: this.state.app_id,
-                        status: "0",
-                        FB_ADS: this.state.fb_ads,
-                        FB_id: this.state.FB_id,
-                        FB_banner_ads: this.state.fb_banner,
-                        FB_native_ads: this.state.fb_native,
-                        FB_interstitial_ads: this.state.fb_interstitial,
-                        FB_native_banner: this.state.fb_native_banner,
-                        FB_rewareded_ads: this.state.FB_rewareded_ads,
-                        GAN_ADS: this.state.admob_ads,
-                        GAN_id: this.state.admob_appid,
-                        GAN_banner_ads: this.state.admob_banner,
-                        GAN_rewareded_ads: this.state.admob_rewarded,
-                        GAN_interstitial_ads: this.state.admob_interstitial,
-                        GAN_native_banner: this.state.admob_native_banner,
-                        GAN_native_ads: this.state.GAN_native_ads,
-                        MO_id: this.state.MO_id,
-                        MO_native_ads: this.state.mopub_video,
-                        MO_banner_ads: this.state.mopub_banner,
-                        MO_interstitial_ads: this.state.mopub_interstitial,
-                        MO_ADS: this.state.mopub_ads,
-                        MO_rewareded_ads: this.state.mopub_reward_video,
-                        MO_native_banner: this.state.mopub_native_banner
-                    }
+                    status: state == true ? "1" : "0",
+                    FB_ADS: this.state.fb_ads,
+                    FB_id: this.state.FB_id,
+                    FB_banner_ads: this.state.fb_banner,
+                    FB_native_ads: this.state.fb_native,
+                    FB_interstitial_ads: this.state.fb_interstitial,
+                    FB_native_banner: this.state.fb_native_banner,
+                    FB_rewareded_ads: this.state.FB_rewareded_ads,
+                    GAN_ADS: this.state.admob_ads,
+                    GAN_id: this.state.admob_appid,
+                    GAN_banner_ads: this.state.admob_banner,
+                    GAN_rewareded_ads: this.state.admob_rewarded,
+                    GAN_interstitial_ads: this.state.admob_interstitial,
+                    GAN_native_banner: this.state.admob_native_banner,
+                    GAN_native_ads: this.state.GAN_native_ads,
+                    MO_id: this.state.MO_id,
+                    MO_native_ads: this.state.mopub_video,
+                    MO_banner_ads: this.state.mopub_banner,
+                    MO_interstitial_ads: this.state.mopub_interstitial,
+                    MO_ADS: this.state.mopub_ads,
+                    MO_rewareded_ads: this.state.mopub_reward_video,
+                    MO_native_banner: this.state.mopub_native_banner
                 }
-                this.props.AddAppMonetization(obj).then((res) => {
+            }
+            this.props.AddAppMonetization(obj).then((res) => {
+                if (res && res.response) {
                     if (res.response.status == 1) {
                         this.setState({
-                            updateMonetization: this.state.updateMonetization = true
+                            updateMonetization: this.state.updateMonetization = true,
+                            id: this.state.id = res.response.data,
                         })
                         Swal.fire({
                             text: res.response.message,
@@ -301,103 +286,59 @@ class MonetizationNetwork extends React.Component {
                             icon: 'warning'
                         });
                     }
-                })
-            } else {
-                Swal.fire("Please Select App First!", "", "warning");
-            }
-        } else {
-            if (this.state.app_id) {
-                // this.state.mainAds == true
-                var obj = {
-                    id: this.state.id,
-                    app_id: this.state.app_id,
-                    status: "1",
-                    data: {
-                        id: this.state.id,
-                        app_id: this.state.app_id,
-                        status: "1",
-                        FB_ADS: this.state.fb_ads,
-                        FB_id: this.state.FB_id,
-                        FB_banner_ads: this.state.fb_banner,
-                        FB_native_ads: this.state.fb_native,
-                        FB_interstitial_ads: this.state.fb_interstitial,
-                        FB_native_banner: this.state.fb_native_banner,
-                        FB_rewareded_ads: this.state.FB_rewareded_ads,
-                        GAN_ADS: this.state.admob_ads,
-                        GAN_id: this.state.admob_appid,
-                        GAN_banner_ads: this.state.admob_banner,
-                        GAN_rewareded_ads: this.state.admob_rewarded,
-                        GAN_interstitial_ads: this.state.admob_interstitial,
-                        GAN_native_banner: this.state.admob_native_banner,
-                        GAN_native_ads: this.state.GAN_native_ads,
-                        MO_id: this.state.MO_id,
-                        MO_native_ads: this.state.mopub_video,
-                        MO_banner_ads: this.state.mopub_banner,
-                        MO_interstitial_ads: this.state.mopub_interstitial,
-                        MO_ADS: this.state.mopub_ads,
-                        MO_rewareded_ads: this.state.mopub_reward_video,
-                        MO_native_banner: this.state.mopub_native_banner
-                    }
+                } else {
+                    Swal.fire({
+                        text: res.error,
+                        icon: 'warning'
+                    });
                 }
-                this.props.AddAppMonetization(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                    } else {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
-                        });
-                    }
-                })
-            } else {
-                Swal.fire("Please Select App First!", "", "warning");
-            }
+            })
+        } else {
+            Swal.fire("Please Select App First!", "", "warning");
         }
     }
 
     UpdateAppMonetization() {
-        if (this.state.fb_ads == false && this.state.admob_ads == false && this.state.mopub_ads == false) {
-            if (this.state.app_id) {
-                var obj = {
+        let state = false;
+        if (this.state.fb_ads == true || this.state.admob_ads == true || this.state.mopub_ads == true) {
+            state = true;
+        }
+        if (this.state.app_id) {
+            var obj = {
+                id: this.state.id,
+                app_id: this.state.app_id,
+                status: state == true ? "1" : "0",
+                data: {
                     id: this.state.id,
                     app_id: this.state.app_id,
-                    status: "0",
-                    data: {
-                        id: this.state.id,
-                        app_id: this.state.app_id,
-                        status: "0",
-                        FB_ADS: this.state.fb_ads,
-                        FB_id: this.state.FB_id,
-                        FB_banner_ads: this.state.fb_banner,
-                        FB_native_ads: this.state.fb_native,
-                        FB_interstitial_ads: this.state.fb_interstitial,
-                        FB_native_banner: this.state.fb_native_banner,
-                        FB_rewareded_ads: this.state.FB_rewareded_ads,
-                        GAN_ADS: this.state.admob_ads,
-                        GAN_id: this.state.admob_appid,
-                        GAN_banner_ads: this.state.admob_banner,
-                        GAN_rewareded_ads: this.state.admob_rewarded,
-                        GAN_interstitial_ads: this.state.admob_interstitial,
-                        GAN_native_banner: this.state.admob_native_banner,
-                        GAN_native_ads: this.state.GAN_native_ads,
-                        MO_id: this.state.MO_id,
-                        MO_native_ads: this.state.mopub_video,
-                        MO_banner_ads: this.state.mopub_banner,
-                        MO_interstitial_ads: this.state.mopub_interstitial,
-                        MO_ADS: this.state.mopub_ads,
-                        MO_rewareded_ads: this.state.mopub_reward_video,
-                        MO_native_banner: this.state.mopub_native_banner
-                    }
+                    status: state == true ? "1" : "0",
+                    FB_ADS: this.state.fb_ads,
+                    FB_id: this.state.FB_id,
+                    FB_banner_ads: this.state.fb_banner,
+                    FB_native_ads: this.state.fb_native,
+                    FB_interstitial_ads: this.state.fb_interstitial,
+                    FB_native_banner: this.state.fb_native_banner,
+                    FB_rewareded_ads: this.state.FB_rewareded_ads,
+                    GAN_ADS: this.state.admob_ads,
+                    GAN_id: this.state.admob_appid,
+                    GAN_banner_ads: this.state.admob_banner,
+                    GAN_rewareded_ads: this.state.admob_rewarded,
+                    GAN_interstitial_ads: this.state.admob_interstitial,
+                    GAN_native_banner: this.state.admob_native_banner,
+                    GAN_native_ads: this.state.GAN_native_ads,
+                    MO_id: this.state.MO_id,
+                    MO_native_ads: this.state.mopub_video,
+                    MO_banner_ads: this.state.mopub_banner,
+                    MO_interstitial_ads: this.state.mopub_interstitial,
+                    MO_ADS: this.state.mopub_ads,
+                    MO_rewareded_ads: this.state.mopub_reward_video,
+                    MO_native_banner: this.state.mopub_native_banner
                 }
+            }
 
-                this.props.updateAppMonetization(obj).then((res) => {
+            this.props.updateAppMonetization(obj).then((res) => {
+                if (res && res.response) {
                     if (res.response.status == 1) {
-                        this.setState({
-                            updateMonetization: this.state.updateMonetization = true
-                        })
                         Swal.fire({
                             text: res.response.message,
                             icon: 'success'
@@ -408,62 +349,16 @@ class MonetizationNetwork extends React.Component {
                             icon: 'warning'
                         });
                     }
-                })
+                } else {
+                    Swal.fire({
+                        text: res.error,
+                        icon: 'warning'
+                    });
+                }
+            })
 
-            } else {
-                Swal.fire("Please Active Main Switch!", "", "warning");
-            }
         } else {
-            if (this.state.app_id && this.state.mainAds == true) {
-                var obj = {
-                    id: this.state.id,
-                    app_id: this.state.app_id,
-                    status: "1",
-                    data: {
-                        id: this.state.id,
-                        app_id: this.state.app_id,
-                        status: "1",
-                        FB_ADS: this.state.fb_ads,
-                        FB_id: this.state.FB_id,
-                        FB_banner_ads: this.state.fb_banner,
-                        FB_native_ads: this.state.fb_native,
-                        FB_interstitial_ads: this.state.fb_interstitial,
-                        FB_native_banner: this.state.fb_native_banner,
-                        FB_rewareded_ads: this.state.FB_rewareded_ads,
-                        GAN_ADS: this.state.admob_ads,
-                        GAN_id: this.state.admob_appid,
-                        GAN_banner_ads: this.state.admob_banner,
-                        GAN_rewareded_ads: this.state.admob_rewarded,
-                        GAN_interstitial_ads: this.state.admob_interstitial,
-                        GAN_native_banner: this.state.admob_native_banner,
-                        GAN_native_ads: this.state.GAN_native_ads,
-                        MO_id: this.state.MO_id,
-                        MO_native_ads: this.state.mopub_video,
-                        MO_banner_ads: this.state.mopub_banner,
-                        MO_interstitial_ads: this.state.mopub_interstitial,
-                        MO_ADS: this.state.mopub_ads,
-                        MO_rewareded_ads: this.state.mopub_reward_video,
-                        MO_native_banner: this.state.mopub_native_banner
-                    }
-                }
-
-                this.props.updateAppMonetization(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                    } else {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
-                        });
-                    }
-                })
-
-            } else {
-                Swal.fire("Please Select App First!", "", "warning");
-            }
+            Swal.fire("Please Select App First!", "", "warning");
         }
     }
 
@@ -501,17 +396,24 @@ class MonetizationNetwork extends React.Component {
                 }
             }
             this.props.RemoveAppMonetization(obj).then((res) => {
-                if (res.response.status == 1) {
-                    this.setState({
-                        updateMonetization: this.state.updateMonetization = false
-                    })
-                    Swal.fire({
-                        text: res.response.message,
-                        icon: 'success'
-                    });
+                if (res && res.response) {
+                    if (res.response.status == 1) {
+                        this.setState({
+                            updateMonetization: this.state.updateMonetization = false
+                        })
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 } else {
                     Swal.fire({
-                        text: res.response.message,
+                        text: res.error,
                         icon: 'warning'
                     });
                 }
@@ -534,12 +436,18 @@ class MonetizationNetwork extends React.Component {
         });
     }
 
+    handleChangeData(event) {
+
+        this.setState({
+            FB_id: this.state.FB_id = event.target.value
+        });
+    }
+
     render() {
-        const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
         return (
             <div>
-                <Row style={{ height: '170px' }}>
-                    <Col xl="3" lg="3" md="4">
+                <Row className="custom-ads">
+                    <Col sm="12" xl="3" lg="3" md="4">
                         <Form>
                             <FormGroup>
                                 {/* <Label for="exampleCustomSelect"><b>Select Application</b></Label> */}
@@ -556,10 +464,10 @@ class MonetizationNetwork extends React.Component {
                                     <ul className="list-group">{
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.id, item)}>
-                                                <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
-                                                <p style={{ wordBreak: 'break-all', padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                <img className="item_image" src={REMOTE_URL + item.icon} />
+                                                <p className="item_name">
                                                     {item.name}<br />
-                                                    <small style={{ wordBreak: 'break-all', paddingTop: '0px', display: 'inline-block', wordBreak: 'break-all' }}>{item.package}</small>
+                                                    <small className="break-word">{item.package}</small>
                                                 </p>
                                             </li>
                                         )
@@ -583,21 +491,19 @@ class MonetizationNetwork extends React.Component {
                     </Col>
                     {
                         this.state.selectApp != null ? (
-                            <Col md="4">
+                            <Col sm="12" md="4">
                                 <Card>
                                     <CardHeader>
-                                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Selected Application</strong>
+                                        <strong className="app_color">Selected Application</strong>
                                     </CardHeader>
                                     <CardBody>
                                         <Row>
-                                            <Col md="3">
-                                                <img src={REMOTE_URL + this.state.selectApp.icon} style={{ height: '50px' }} className="app-img" alt="admin@bootstrapmaster.com" />
-                                            </Col>
-                                            <Col md="9" className="content">
-                                                <div className="app_detail">
+                                            <Col md="12" className="media">
+                                                <img src={REMOTE_URL + this.state.selectApp.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                <div className="app_detail content media-body">
 
-                                                    <h5 style={{ wordBreak: ' break-all' }}>{this.state.selectApp.name}</h5>
-                                                    <h6 style={{ wordBreak: ' break-all' }}>{this.state.selectApp.package}</h6>
+                                                    <h5 className="details_break">{this.state.selectApp.name}</h5>
+                                                    <h6 className="details_break">{this.state.selectApp.package}</h6>
                                                     {/* {
                                                     this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                         <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
@@ -626,10 +532,10 @@ class MonetizationNetwork extends React.Component {
                         this.state.updateMonetization == false ? (
                             null
                         ) : (
-                                <Col md="1" style={{ textAlign: 'end' }}>
+                                <Col md="1" className="update">
                                     <Row>
                                         <Col md="8">
-                                            <span style={{ color: 'black', fontSize: '16px' }}>Inactive Ads:</span>
+                                            <span className="inactive_ads">Inactive Ads:</span>
                                         </Col>
                                         <Col md="4">
                                             <Switch onChange={this.handleChangeMainAds} checked={this.state.mainAds} />
@@ -639,7 +545,7 @@ class MonetizationNetwork extends React.Component {
                             )
                     }
 
-                    <Col md="4">
+                    <Col sm="12" md="4" className="btn-center">
                         <div className="btn-group">
                             {
                                 this.state.updateMonetization == false ? (
@@ -671,7 +577,7 @@ class MonetizationNetwork extends React.Component {
                                                      </Button>
                                             ) : (
                                                     <Button className="" color="success" onClick={this.UpdateAppMonetization}>
-                                                        Save Settings
+                                                        Update Settings
                                                          </Button>
                                                 )
                                         }
@@ -690,21 +596,21 @@ class MonetizationNetwork extends React.Component {
 
                         <Card>
                             <CardHeader>
-                                <strong style={{ color: '#20a8d8', fontSize: '25px' }}>Monetization Setup</strong>
+                                <strong className="app_color">Monetization Setup</strong>
                             </CardHeader>
                             <CardBody>
 
                                 <div>
                                     {/* Facebook ads*/}
                                     < Row >
-                                        <Col xs="12" sm="12">
+                                        <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                             <Card>
                                                 <CardHeader>
                                                     <Row>
                                                         <Col xs="6">
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>FACEBOOK</strong>
+                                                            <strong className="app_color">FACEBOOK</strong>
                                                         </Col>
-                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                        <Col xs="6" className="ads">
                                                             <FormGroup>
                                                                 {/* <Label>
                                                                             <b>Facebook Ads</b>
@@ -716,7 +622,7 @@ class MonetizationNetwork extends React.Component {
                                                 </CardHeader>
                                                 <CardBody>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="FB_id"><b>FB_id</b></Label>
                                                                 <Input
@@ -724,16 +630,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="FB_id"
                                                                     name="FB_id"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.FB_id}
-                                                                    onChange={(e) =>
-                                                                        this.state.FB_id = e.target.value
-                                                                    }
+
+                                                                    value={this.state.FB_id}
+                                                                    onChange={(e) => {
+                                                                        this.setState({
+                                                                            FB_id: this.state.FB_id = e.target.value
+                                                                        })
+                                                                    }}
                                                                     placeholder="Enter FB_id"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="FB_rewareded_ads"><b>FB_rewareded_ads</b></Label>
                                                                 <Input
@@ -741,9 +650,11 @@ class MonetizationNetwork extends React.Component {
                                                                     id="FB_rewareded_ads"
                                                                     name="FB_rewareded_ads"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.FB_rewareded_ads}
+                                                                    value={this.state.FB_rewareded_ads}
                                                                     onChange={(e) =>
-                                                                        this.state.FB_rewareded_ads = e.target.value
+                                                                        this.setState({
+                                                                            FB_rewareded_ads: this.state.FB_rewareded_ads = e.target.value
+                                                                        })
                                                                     }
                                                                     placeholder="Enter FB_rewareded_ads"
                                                                     required
@@ -752,7 +663,7 @@ class MonetizationNetwork extends React.Component {
                                                         </Col>
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="fb_interstitial"><b>FB_interstitial_ads</b></Label>
                                                                 <Input
@@ -760,16 +671,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="fb_interstitial"
                                                                     name="fb_interstitial"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.fb_interstitial}
+                                                                    value={this.state.fb_interstitial}
                                                                     onChange={(e) =>
-                                                                        this.state.fb_interstitial = e.target.value
+                                                                        this.setState({
+                                                                            fb_interstitial: this.state.fb_interstitial = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter FB_interstitial_ads"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="fb_banner"><b>FB_banner_ads</b></Label>
                                                                 <Input
@@ -777,9 +691,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="fb_banner"
                                                                     name="fb_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.fb_banner}
+                                                                    value={this.state.fb_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.fb_banner = e.target.value
+                                                                        this.setState({
+                                                                            fb_banner: this.state.fb_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter FB_banner_ads"
                                                                     required
@@ -788,7 +705,7 @@ class MonetizationNetwork extends React.Component {
                                                         </Col>
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="fb_native_banner"><b>FB_native_banner</b></Label>
                                                                 <Input
@@ -796,16 +713,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="fb_native_banner"
                                                                     name="fb_native_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.fb_native_banner}
+                                                                    value={this.state.fb_native_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.fb_native_banner = e.target.value
+                                                                        this.setState({
+                                                                            fb_native_banner: this.state.fb_native_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter FB_native_banner"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="fb_native"><b>FB_native_ads</b></Label>
                                                                 <Input
@@ -813,9 +733,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="fb_native"
                                                                     name="fb_native"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.fb_native}
+                                                                    value={this.state.fb_native}
                                                                     onChange={(e) =>
-                                                                        this.state.fb_native = e.target.value
+                                                                        this.setState({
+                                                                            fb_native: this.state.fb_native = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter FB_native_ads"
                                                                     required
@@ -841,14 +764,14 @@ class MonetizationNetwork extends React.Component {
 
                                     {/* Admob ads*/}
                                     <Row>
-                                        <Col xs="12" sm="12">
+                                        <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                             <Card>
                                                 <CardHeader>
                                                     <Row>
                                                         <Col xs="6">
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>GOOGLE</strong>
+                                                            <strong className="app_color">GOOGLE</strong>
                                                         </Col>
-                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                        <Col xs="6" className="ads">
                                                             <FormGroup>
                                                                 {/* <Label>
                                                                             <b>Facebook Ads</b>
@@ -861,7 +784,7 @@ class MonetizationNetwork extends React.Component {
 
                                                 <CardBody>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="admob_appid"><b>GAN_id</b></Label>
                                                                 <Input
@@ -869,16 +792,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="admob_appid"
                                                                     name="admob_appid"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.admob_appid}
+                                                                    value={this.state.admob_appid}
                                                                     onChange={(e) =>
-                                                                        this.state.admob_appid = e.target.value
+                                                                        this.setState({
+                                                                            admob_appid: this.state.admob_appid = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_id"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="admob_interstitial"><b>GAN_interstitial_ads</b></Label>
                                                                 <Input
@@ -886,9 +812,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="admob_interstitial"
                                                                     name="admob_interstitial"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.admob_interstitial}
+                                                                    value={this.state.admob_interstitial}
                                                                     onChange={(e) =>
-                                                                        this.state.admob_interstitial = e.target.value
+                                                                        this.setState({
+                                                                            admob_interstitial: this.state.admob_interstitial = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_interstitial_ads"
                                                                     required
@@ -897,7 +826,7 @@ class MonetizationNetwork extends React.Component {
                                                         </Col>
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="admob_banner"><b>GAN_banner_ads</b></Label>
                                                                 <Input
@@ -905,16 +834,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="admob_banner"
                                                                     name="admob_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.admob_banner}
+                                                                    value={this.state.admob_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.admob_banner = e.target.value
+                                                                        this.setState({
+                                                                            admob_banner: this.state.admob_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_banner_ads"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="admob_native_banner"><b>GAN_native_banner</b></Label>
                                                                 <Input
@@ -922,9 +854,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="admob_native_banner"
                                                                     name="admob_native_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.admob_native_banner}
+                                                                    value={this.state.admob_native_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.admob_native_banner = e.target.value
+                                                                        this.setState({
+                                                                            admob_native_banner: this.state.admob_native_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_native_banner"
                                                                     required
@@ -933,7 +868,7 @@ class MonetizationNetwork extends React.Component {
                                                         </Col>
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="GAN_native_ads"><b>GAN_native_ads </b></Label>
                                                                 <Input
@@ -941,16 +876,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="GAN_native_ads"
                                                                     name="GAN_native_ads"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.GAN_native_ads}
+                                                                    value={this.state.GAN_native_ads}
                                                                     onChange={(e) =>
-                                                                        this.state.GAN_native_ads = e.target.value
+                                                                        this.setState({
+                                                                            GAN_native_ads: this.state.GAN_native_ads = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_native_ads "
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="admob_rewarded"><b>GAN_rewareded_ads </b></Label>
                                                                 <Input
@@ -958,9 +896,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="admob_rewarded"
                                                                     name="admob_rewarded"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.admob_rewarded}
+                                                                    value={this.state.admob_rewarded}
                                                                     onChange={(e) =>
-                                                                        this.state.admob_rewarded = e.target.value
+                                                                        this.setState({
+                                                                            admob_rewarded: this.state.admob_rewarded = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter GAN_rewareded_ads "
                                                                     required
@@ -984,14 +925,14 @@ class MonetizationNetwork extends React.Component {
 
                                     {/* Mopub ads*/}
                                     <Row>
-                                        <Col xs="12" sm="12">
+                                        <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                             <Card>
                                                 <CardHeader>
                                                     <Row>
                                                         <Col xs="6">
-                                                            <strong style={{ color: '#20a8d8', fontSize: '20px' }}>MOPUB</strong>
+                                                            <strong className="app_color">MOPUB</strong>
                                                         </Col>
-                                                        <Col xs="6" style={{ textAlign: 'right' }}>
+                                                        <Col xs="6" className="ads">
                                                             <FormGroup>
                                                                 {/* <Label>
                                                                             <b>Facebook Ads</b>
@@ -1004,7 +945,7 @@ class MonetizationNetwork extends React.Component {
 
                                                 <CardBody>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="MO_id"><b>MO_id</b></Label>
                                                                 <Input
@@ -1012,16 +953,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="MO_id"
                                                                     name="MO_id"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.MO_id}
+                                                                    value={this.state.MO_id}
                                                                     onChange={(e) =>
-                                                                        this.state.MO_id = e.target.value
+                                                                        this.setState({
+                                                                            MO_id: this.state.MO_id = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter MO_id"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="mopub_interstitial"><b>MO_interstitial_ads</b></Label>
                                                                 <Input
@@ -1029,9 +973,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="mopub_interstitial"
                                                                     name="mopub_interstitial"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.mopub_interstitial}
+                                                                    value={this.state.mopub_interstitial}
                                                                     onChange={(e) =>
-                                                                        this.state.mopub_interstitial = e.target.value
+                                                                        this.setState({
+                                                                            mopub_interstitial: this.state.mopub_interstitial = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter MO_interstitial_ads"
                                                                     required
@@ -1041,7 +988,7 @@ class MonetizationNetwork extends React.Component {
 
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="mopub_native_banner"><b>MO_native_banner</b></Label>
                                                                 <Input
@@ -1049,16 +996,19 @@ class MonetizationNetwork extends React.Component {
                                                                     id="mopub_native_banner"
                                                                     name="mopub_native_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.mopub_native_banner}
+                                                                    value={this.state.mopub_native_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.mopub_native_banner = e.target.value
+                                                                        this.setState({
+                                                                            mopub_native_banner: this.state.mopub_native_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter MO_native_banner"
                                                                     required
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="mopub_video"><b>MO_native_ads</b></Label>
                                                                 <Input
@@ -1066,9 +1016,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="mopub_video"
                                                                     name="mopub_video"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.mopub_video}
+                                                                    value={this.state.mopub_video}
                                                                     onChange={(e) =>
-                                                                        this.state.mopub_video = e.target.value
+                                                                        this.setState({
+                                                                            mopub_video: this.state.mopub_video = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter MO_native_ads"
                                                                     required
@@ -1077,7 +1030,7 @@ class MonetizationNetwork extends React.Component {
                                                         </Col>
                                                     </Row>
                                                     <Row>
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="mopub_banner"><b>MO_banner_ads</b></Label>
                                                                 <Input
@@ -1085,9 +1038,12 @@ class MonetizationNetwork extends React.Component {
                                                                     id="mopub_banner"
                                                                     name="mopub_banner"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.mopub_banner}
+                                                                    value={this.state.mopub_banner}
                                                                     onChange={(e) =>
-                                                                        this.state.mopub_banner = e.target.value
+                                                                        this.setState({
+                                                                            mopub_banner: this.state.mopub_banner = e.target.value
+                                                                        })
+
                                                                     }
                                                                     placeholder="Enter MO_banner_ads"
                                                                     required
@@ -1095,7 +1051,7 @@ class MonetizationNetwork extends React.Component {
                                                             </FormGroup>
                                                         </Col>
 
-                                                        <Col xs="6">
+                                                        <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                             <FormGroup>
                                                                 <Label htmlFor="mopub_reward_video"><b>MO_rewareded_ads </b></Label>
                                                                 <Input
@@ -1103,9 +1059,11 @@ class MonetizationNetwork extends React.Component {
                                                                     id="mopub_reward_video"
                                                                     name="mopub_reward_video"
                                                                     className="form-control"
-                                                                    defaultValue={this.state.mopub_reward_video}
+                                                                    value={this.state.mopub_reward_video}
                                                                     onChange={(e) =>
-                                                                        this.state.mopub_reward_video = e.target.value
+                                                                        this.setState({
+                                                                            mopub_reward_video: this.state.mopub_reward_video = e.target.value
+                                                                        })
                                                                     }
                                                                     placeholder="Enter MO_rewareded_ads "
                                                                     required

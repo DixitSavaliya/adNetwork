@@ -42,7 +42,7 @@ class ListApp extends React.Component {
             searchData: '',
             ownership: 1,
             isDisplay: false,
-            adminownership:''
+            adminownership: ''
         }
 
         this.searchApplicationDataKeyUp = this.searchApplicationDataKeyUp.bind(this);
@@ -85,14 +85,21 @@ class ListApp extends React.Component {
                 ownership: this.state.ownership
             }
             this.props.searchApplicationData(obj).then((res) => {
-                if (res.response.status == 1) {
-                    this.setState({
-                        searchData: this.state.searchData = res.response.data
-                    })
-                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res && res.response) {
+                    if (res.response.status == 1) {
+                        this.setState({
+                            searchData: this.state.searchData = res.response.data
+                        })
+                        EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 } else {
                     Swal.fire({
-                        text: res.response.message,
+                        text: res.error,
                         icon: 'warning'
                     });
                 }
@@ -106,14 +113,21 @@ class ListApp extends React.Component {
                 ownership: this.state.ownership = 2
             }
             this.props.searchApplicationData(obj).then((res) => {
-                if (res.response.status == 1) {
-                    this.setState({
-                        searchData: this.state.searchData = res.response.data
-                    })
-                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res && res.response) {
+                    if (res.response.status == 1) {
+                        this.setState({
+                            searchData: this.state.searchData = res.response.data
+                        })
+                        EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 } else {
                     Swal.fire({
-                        text: res.response.message,
+                        text: res.error,
                         icon: 'warning'
                     });
                 }
@@ -127,14 +141,21 @@ class ListApp extends React.Component {
                 ownership: this.state.adminownership
             }
             this.props.searchApplicationData(obj).then((res) => {
-                if (res.response.status == 1) {
-                    this.setState({
-                        searchData: this.state.searchData = res.response.data
-                    })
-                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res && res.response) {
+                    if (res.response.status == 1) {
+                        this.setState({
+                            searchData: this.state.searchData = res.response.data
+                        })
+                        EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 } else {
                     Swal.fire({
-                        text: res.response.message,
+                        text: res.error,
                         icon: 'warning'
                     });
                 }
@@ -148,14 +169,21 @@ class ListApp extends React.Component {
                 ownership: this.state.ownership = ""
             }
             this.props.searchApplicationData(obj).then((res) => {
-                if (res.response.status == 1) {
-                    this.setState({
-                        searchData: this.state.searchData = res.response.data
-                    })
-                    EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                if (res && res.response) {
+                    if (res.response.status == 1) {
+                        this.setState({
+                            searchData: this.state.searchData = res.response.data
+                        })
+                        EventEmitter.dispatch('searchDataApp', this.state.searchData);
+                    } else {
+                        Swal.fire({
+                            text: res.response.message,
+                            icon: 'warning'
+                        });
+                    }
                 } else {
                     Swal.fire({
-                        text: res.response.message,
+                        text: res.error,
                         icon: 'warning'
                     });
                 }
@@ -188,7 +216,6 @@ class ListApp extends React.Component {
                                                     <Row>
                                                         <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                                             <div className="rightapp">
-
                                                                 <Link to="/createapp">
                                                                     <Button
                                                                         className="mb-2 mr-2"
@@ -205,8 +232,7 @@ class ListApp extends React.Component {
                                                                     <div className="searchA">
                                                                         <Input
                                                                             type="select"
-                                                                            style={{ width: '170px' }}
-                                                                            className="form-control"
+                                                                            className="form-control role_select"
                                                                             id="exampleCustomSelect"
                                                                             name="customSelect"
                                                                             onChange={this.handleChangeAppEvent}
@@ -237,41 +263,7 @@ class ListApp extends React.Component {
                                                                             <option value="100">100</option>
                                                                         </Input>
                                                                     </div>
-                                                                    //     <div className="searchP">
-                                                                    //     <Input
-                                                                    //         type="select"
-                                                                    //         style={{width:'150px'}}
-                                                                    //         className="form-control"
-                                                                    //         id="exampleCustomSelect"
-                                                                    //         name="customSelect"
-                                                                    //         onChange={this.handleChangeAppEvent}
-                                                                    //     >
-                                                                    //         <option value="">All</option>
-                                                                    //         <option value="1">My Only</option>
-                                                                    //         <option value="2">Advertisers</option>
-                                                                    //     </Input>
-                                                                    //      <input
-                                                                    //          className="form-control searchP"
-                                                                    //          type="text"
-                                                                    //          placeholder="Search"
-                                                                    //          aria-label="Search"
-                                                                    //          onKeyUp={this.searchApplicationDataKeyUp}
-                                                                    //      />
-                                                                    //      <span>Records per page</span>
-                                                                    //      <Input
-                                                                    //          type="select"
-                                                                    //          className="form-control drop"
-                                                                    //          id="exampleCustomSelect"
-                                                                    //          name="customSelect"
-                                                                    //          onChange={this.handleChangeEvent}
-                                                                    //      >
-                                                                    //          <option value="5">5</option>
-                                                                    //          <option value="10">10</option>
-                                                                    //          <option value="25">25</option>
-                                                                    //          <option value="50">50</option>
-                                                                    //          <option value="100">100</option>
-                                                                    //      </Input>
-                                                                    //  </div>
+                                                                 
                                                                 ) : (
                                                                         null
                                                                     )
@@ -314,8 +306,8 @@ class ListApp extends React.Component {
                                                                             <div className="rightapp">
                                                                                 <Input
                                                                                     type="select"
-                                                                                    style={{ width: '170px' }}
-                                                                                    className="form-control"
+                                                                                 
+                                                                                    className="form-control role_select"
                                                                                     id="exampleCustomSelect1"
                                                                                     name="customSelect1"
                                                                                     onChange={this.handleChangeAppEventAdmin}

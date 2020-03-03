@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Container, Row, Col, CardGroup, Card, CardBody, Button, Input, FormGroup, InputGroup, InputGroupAddon } from 'reactstrap';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import './login.css';
 
 class Login extends Component {
   /** First Constructor Call */
@@ -104,13 +105,13 @@ class Login extends Component {
       <div className="app flex-row align-items-center">
         <Container>
           <Row className="justify-content-center">
-            <Col md="8">
+            <Col xs="12" sm="12" md="12" lg="8" xl="8">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
-                    <InputGroup>
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -121,10 +122,10 @@ class Login extends Component {
                         autoComplete="username"
                       />
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.usernameerror}
                     </div>
-                    <InputGroup>
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-lock"></i></InputGroupAddon>
                       <Input
                         type="password"
@@ -135,10 +136,10 @@ class Login extends Component {
                         autoComplete="current-password"
                       />
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.passworderror}
                     </div>
-                    <InputGroup>
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="fa fa-user-secret"></i></InputGroupAddon>
                       <Input
                         type="select"
@@ -152,22 +153,22 @@ class Login extends Component {
                         <option value="advertiser">Advertiser</option>
                       </Input>
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.customSelectNameerror}
                     </div>
-                    <Row>
-                      <Col xs="6">
+                    <Row className="btn_center">
+                      <Col xs="12" sm="12" md="6" lg="6" xl="6">
                         <Button type="button" color="primary" className="px-4"
                           onClick={this.handleLogin.bind(this)}
                         >Login</Button>
                       </Col>
-                      <Col xs="6" className="text-right">
+                      <Col xs="12" sm="12" md="6" lg="6" xl="6" className="forgot_text">
                         <Link to="/forgot-password"><Button color="link" className="px-0">Forgot password?</Button></Link>
                       </Col>
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5" style={{ width: 44 + '%' }}>
+                <Card className="text-white bg-primary py-5">
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>

@@ -11,3 +11,22 @@ img.pic {
 input#profile {
     pointer-events: none;
 }
+
+.form-control.profile_search{
+    display: inline-block; 
+    width: calc(100% - 240px); 
+    margin-left: 20px;
+}
+
+@media(max-width: 768px)  {
+    .form-control.profile_search{
+        display: block; 
+        margin-left: 0;
+        width: 100%;
+    }
+
+    button.mt-0.btn.btn-primary.btn-sm {
+        margin-left: 0px;
+        margin-top: 5px !important;
+    }
+}

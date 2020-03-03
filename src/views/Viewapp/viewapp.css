@@ -7,3 +7,6 @@ img.avatar-img {
 .data.col-md-12 {
     margin-top: 25px;
 }
+.card-title {
+    margin-bottom: 5px !important;
+}

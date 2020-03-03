@@ -212,6 +212,9 @@
   .rdtTime td {
     cursor: default;
   }
+  .media-body .btn-danger {
+    width: 100px;
+}
 
   @media(max-width: 1920px){
      .media-app{
@@ -223,3 +226,8 @@
      height: 410px !important;
    }
  }
+ @media(max-width: 768px){
+  .media-app{
+   height: 207px !important;
+ }
+}

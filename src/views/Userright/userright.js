@@ -134,15 +134,22 @@ class UserRight extends Component {
                     group_display_name: this.state.group_display_name
                 }
                 this.props.addUserRight(data).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        EventEmitter.dispatch('right_added', 1);
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            EventEmitter.dispatch('right_added', 1);
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -175,17 +182,24 @@ class UserRight extends Component {
         }).then((result) => {
             if (result.value) {
                 this.props.deleteRightData(role).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        setTimeout(() => {
-                            this.userRightData();
-                        }, 1200)
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            setTimeout(() => {
+                                this.userRightData();
+                            }, 1200)
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -216,19 +230,26 @@ class UserRight extends Component {
                     id: this.state.rightId
                 }
                 this.props.updateRight(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        EventEmitter.dispatch('right_updated', 1);
-                        this.setState({
-                            updateRightBtn: this.state.updateRightBtn = false,
-                        })
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            EventEmitter.dispatch('right_updated', 1);
+                            this.setState({
+                                updateRightBtn: this.state.updateRightBtn = false,
+                            })
 
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -283,7 +304,7 @@ class UserRight extends Component {
                                                 placeholder="Enter your Right Name"
                                                 required
                                             />
-                                            <div style={{ fontSize: 12, color: "red" }}>
+                                            <div className="text-danger">
                                                 {this.state.userrighterror}
                                             </div>
 
@@ -306,7 +327,7 @@ class UserRight extends Component {
                                                 placeholder="Enter your Display Name"
                                                 required
                                             />
-                                            <div style={{ fontSize: 12, color: "red" }}>
+                                            <div className="text-danger">
                                                 {this.state.displaynameerror}
                                             </div>
 
@@ -329,7 +350,7 @@ class UserRight extends Component {
                                                 placeholder="Enter your Group Name"
                                                 required
                                             />
-                                            <div style={{ fontSize: 12, color: "red" }}>
+                                            <div className="text-danger">
                                                 {this.state.group_nameerror}
                                             </div>
 
@@ -352,7 +373,7 @@ class UserRight extends Component {
                                                 placeholder="Enter your Group Display Name"
                                                 required
                                             />
-                                            <div style={{ fontSize: 12, color: "red" }}>
+                                            <div className="text-danger">
                                                 {this.state.group_display_nameerrror}
                                             </div>
 

@@ -35,6 +35,35 @@
     float: right;
     width: 70px;
 }
+
+.searchA{
+    display:flex;
+    /* width: calc(100% - 258px); */
+}
+
+.searchA span {
+    padding: 0 10px;
+    display: inline-block;
+    margin: 0 auto 10px auto;
+}
+
+.searchA .form-control.search {
+    height: 35px;
+    margin-left: 15px;
+    /* width: calc(100% - 430px); */
+    margin-right: 33px;
+}
+.searchA .drop {
+    display: block;
+    float: none;
+    width: 70px;
+    margin: 0 auto 10px auto;
+}
+
+.form-control.role_select {
+    width:170px;
+}
+
 @media(max-width: 768px){
     .rightapp {
         overflow: hidden;
@@ -62,15 +91,18 @@
     }
 
     .searchA{
-        display:block;
+        display:block !important;
         /* width: calc(100% - 258px); */
     }
     
-    .searchA .search {
-        height: 35px;
+    .searchA .form-control.search {
+        display: block;
+        width: calc(100%);
+        margin: 0 auto 10px auto;
+        /* height: 35px;
         margin-left: 15px;
-        /* width: calc(100% - 378px); */
-        margin-right: 33px;
+        width: calc(100%);
+        margin-right: 33px; */
     }
     .searchA .drop {
         display: block;
@@ -85,29 +117,12 @@
         margin: 0 auto 10px auto;
         text-align: center;
     }
+
+    .form-control.role_select {
+        width:170px;
+        margin: 0 auto 10px auto !important;
+    }
     
     
-}
-.searchA{
-    display:flex;
-    /* width: calc(100% - 258px); */
-}
-
-.searchA span {
-    padding: 0 10px;
-    display: inline-block;
-    margin: 0 auto 10px auto;
-}
-
-.searchA .search {
-    height: 35px;
-    margin-left: 15px;
-    width: calc(100% - 430px);
-    margin-right: 33px;
-}
-.searchA .drop {
-    display: block;
-    float: none;
-    width: 70px;
-    margin: 0 auto 10px auto;
+    
 }

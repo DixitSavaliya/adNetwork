@@ -132,18 +132,25 @@ class ListNotifications extends React.Component {
         }).then((result) => {
             if (result.value) {
                 this.props.deleteNotificationData(remove).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        EventEmitter.dispatch('send_notification', 1);
-                        this.setState({
-                            delete:this.state.delete = false
-                        })
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            EventEmitter.dispatch('send_notification', 1);
+                            this.setState({
+                                delete: this.state.delete = false
+                            })
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -170,66 +177,55 @@ class ListNotifications extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <div>
-
                                     <Row>
-                                        <Col md="4">
+                                        <Col className="cols" sm="12" md="3" lg="3" xl="3">
                                             <Row>
-                                                <Col md="4">
-                                                    <Row>
-                                                        <Col md="6">
-                                                            <div className="rightapp">
-                                                                <Link to="/notifications">
-                                                                    <Button
-                                                                        className="mb-2 mr-2"
-                                                                        color="primary"
-                                                                    >
-                                                                        Add
-                                                                    </Button>
-                                                                </Link>
-
-                                                            </div>
-                                                        </Col>
-                                                        <Col md="6">
-                                                            <div className="rightapp">
-                                                                <Button
-                                                                    className="mb-2 mr-2"
-                                                                    color="danger"
-                                                                    onClick={this.deleteNotificationData}
-                                                                    disabled={!this.state.delete}
-                                                                >
-                                                                    Delete
-                                                                    </Button>
-
-                                                            </div>
-                                                        </Col>
-
-                                                    </Row>
-
+                                                <Col sm="12" md="3" lg="3" xl="3">
+                                                    <div className="rightapp">
+                                                        <Link to="/notifications">
+                                                            <Button
+                                                                className="mb-2 mr-2"
+                                                                color="primary"
+                                                            >
+                                                                Add
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
                                                 </Col>
-
+                                                <Col sm="12" md="2" lg="2" xl="2">
+                                                    <div className="rightapp">
+                                                        <Button
+                                                            className="mb-2 mr-2"
+                                                            color="danger"
+                                                            onClick={this.deleteNotificationData}
+                                                            disabled={!this.state.delete}
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </Col>
                                             </Row>
-
                                         </Col>
-                                        <Col md="8">
-                                            <div className="pull-right">
+                                        <Col className="cols" sm="12" md="9" lg="9" xl="9">
+                                            <div className="searchN">
                                                 <Row>
-                                                    <span style={{ marginTop: '8px' }}>Records per page</span>
+                                                    <span className="page_per">Records per page</span>
                                                     <Col md="2">
                                                         <Input
                                                             type="select"
                                                             id="rightid"
+                                                            className="form-control drop"
                                                             name="customSelect"
                                                             onChange={this.handleChangeEvent}
                                                         >
                                                             <option value="5">5</option>
-                                                        <option value="10">10</option>
-                                                        <option value="25">25</option>
-                                                        <option value="50">50</option>
-                                                        <option value="100">100</option>
+                                                            <option value="10">10</option>
+                                                            <option value="25">25</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
                                                         </Input>
                                                     </Col>
                                                 </Row>
-
                                             </div>
                                         </Col>
                                     </Row>

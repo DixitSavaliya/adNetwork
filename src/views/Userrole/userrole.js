@@ -118,15 +118,22 @@ class UserRole extends Component {
                     status: this.state.status
                 }
                 this.props.addUserRole(data).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        EventEmitter.dispatch('role_added', 1);
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            EventEmitter.dispatch('role_added', 1);
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -164,19 +171,26 @@ class UserRole extends Component {
                     id: this.state.roleId
                 }
                 this.props.updateRole(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        EventEmitter.dispatch('role_updated', 1);
-                        this.setState({
-                            updateRoleBtn: this.state.updateRoleBtn = false
-                        })
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            EventEmitter.dispatch('role_updated', 1);
+                            this.setState({
+                                updateRoleBtn: this.state.updateRoleBtn = false
+                            })
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
-                            icon: 'warning'
+                            text: res.error,
+                            icon: 'success'
                         });
                     }
                 });
@@ -204,22 +218,29 @@ class UserRole extends Component {
         }).then((result) => {
             if (result.value) {
                 this.props.deleteRoleData(role).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        setTimeout(() => {
-                            this.userRoleData();
-                        }, 1200)
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            setTimeout(() => {
+                                this.userRoleData();
+                            }, 1200)
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
                 });
-               
+
             }
         })
     }
@@ -267,7 +288,7 @@ class UserRole extends Component {
                                             />
 
                                         </FormGroup>
-                                        <div style={{ fontSize: 12, color: "red" }}>
+                                        <div className="text-danger">
                                             {this.state.userroleerror}
                                         </div>
                                     </Col>
@@ -313,7 +334,7 @@ class UserRole extends Component {
                                              </Label>
 
                                         </FormGroup>
-                                        <div style={{ fontSize: 12, color: "red" }}>
+                                        <div className="text-danger">
                                             {this.state.statuserror}
                                         </div>
                                     </Col>

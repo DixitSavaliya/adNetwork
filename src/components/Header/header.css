@@ -18,3 +18,8 @@ input#profile {
     border-radius: 50em;
     width: 50px;
 }
+@media screen and (max-width: 992px) {
+    .img-avatar {
+        margin-right: 5px;
+    } 
+}    

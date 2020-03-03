@@ -214,6 +214,7 @@ class UserRoleToRight extends React.Component {
             right: this.state.selectroledata
         }
         this.props.edituserroletoright(obj).then((res) => {
+            if (res && res.response) {
             if (res.response.status == 1) {
                 Swal.fire({
                     text: res.response.message,
@@ -225,6 +226,12 @@ class UserRoleToRight extends React.Component {
                     icon: 'warning'
                 });
             }
+        } else {
+            Swal.fire({
+                text: res.error,
+                icon: 'warning'
+            });
+        }
         }) 
    }
 

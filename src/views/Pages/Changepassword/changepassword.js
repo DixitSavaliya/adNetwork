@@ -67,7 +67,7 @@ class ChangePassword extends Component {
         return (
             <div className="animated fadeIn">
                 <Row>
-                    <Col xs="12" sm="12">
+                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
                         <Card>
                             <CardHeader>
                                 <strong>Change Password</strong>
@@ -75,7 +75,7 @@ class ChangePassword extends Component {
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                    <Col xs="6">
+                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                         <FormGroup>
                                             <Label htmlFor="old_password">OldPassword</Label>
                                             <Input
@@ -92,7 +92,7 @@ class ChangePassword extends Component {
 
                                         </FormGroup>
                                     </Col>
-                                    <Col xs="6">
+                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                         <FormGroup>
                                             <Label htmlFor="new_password">NewPassword</Label>
                                             <Input

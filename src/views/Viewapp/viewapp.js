@@ -155,7 +155,7 @@ class ViewApp extends React.Component {
                                                     </CardHeader>
                                                     <CardBody>
                                                         <Row>
-                                                            <Col md="6">
+                                                            <Col sm="6" md="6">
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -165,7 +165,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6">
+                                                            <Col sm="6" md="6">
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -176,7 +176,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
                                                             <br />
-                                                            <Col md="6">
+                                                            <Col sm="6" md="6">
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -194,7 +194,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6">
+                                                            <Col sm="6" md="6">
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -212,7 +212,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
 
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -222,7 +222,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -233,7 +233,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
                                                             <br />
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -251,7 +251,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -262,7 +262,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
                                                             <br />
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -280,7 +280,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -299,7 +299,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
                                                             <br />
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -309,7 +309,7 @@ class ViewApp extends React.Component {
                                                                     )
                                                                 }
                                                             </Col>
-                                                            <Col md="6" style={{ marginTop: '15px' }}>
+                                                            <Col sm="6" md="6" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -320,7 +320,7 @@ class ViewApp extends React.Component {
                                                                 }
                                                             </Col>
                                                             <br />
-                                                            <Col md="12" style={{ marginTop: '15px' }}>
+                                                            <Col sm="12" md="12" style={{ marginTop: '15px' }}>
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>
@@ -332,7 +332,7 @@ class ViewApp extends React.Component {
                                                             </Col>
                                                             <br />
 
-                                                            <Col md="12" className="data">
+                                                            <Col sm="12" md="12" className="data">
                                                                 {
                                                                     this.state.App.map((data, index) =>
                                                                         <div key={index}>

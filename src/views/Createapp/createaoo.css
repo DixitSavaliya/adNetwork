@@ -9,9 +9,55 @@ button.btn.btn-primary.btn-sm {
     display:none;
 }
 
+.fa .fa-remove .fa-lg .cursor {
+    cursor: pointer;
+}
+
+span.ml-20 {
+    margin-left: 20px;
+}
+
+button.mt-0.ml-15.btn.btn-primary.btn-sm {
+    margin-left: 15px;
+}
+
 i.fa.fa-upload.fa-lg {
     font-size: 50px;
 }
 .main .container-fluid {
     padding: 0 20px !important;
 }
+
+.form-control.app_search {
+    display: inline-block;
+    margin-left: 20px;
+    width: calc(100% - 240px);
+}
+
+@media(max-width: 768px)  {
+    .form-control.app_search{
+        display: block;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    button.mt-0.ml-15.btn.btn-primary.btn-sm {
+        margin-left: 0px;
+        margin-top: 5px !important;
+    }
+    /* .mainBody * {
+        display: block !important;
+    }
+    .mainBody span, .mainBody input[type="text"]{
+        margin: 5px auto;
+        margin-left: 0 !important;
+    } */
+}
+
+/* @media screen and (min-width: 1174px) {
+    .app_search{
+        display: 'block';
+        width: 'calc(100% - 240px)';
+        margin-left: '20px' 
+    }
+    } */

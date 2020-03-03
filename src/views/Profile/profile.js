@@ -62,6 +62,7 @@ class Profile extends Component {
       username: this.props.auth.auth_data.username
     }
     this.props.updateprofile(data).then((res) => {
+      if (res && res.response) {
       if (res.response.status == 1) {
         Swal.fire({
           text: res.response.message,
@@ -74,6 +75,12 @@ class Profile extends Component {
           icon: 'warning'
         });
       }
+    } else {
+      Swal.fire({
+        text: res.error,
+        icon: 'warning'
+      });
+    }
     })
   }
 
@@ -146,6 +153,7 @@ class Profile extends Component {
       image_path: this.props.auth.user.avatar
     }
     this.props.removeImage(obj).then((res) => {
+      if (res && res.response) {
       if (res.response.status == 1) {
         Swal.fire({
           text: res.response.message,
@@ -162,6 +170,12 @@ class Profile extends Component {
           icon: 'warning'
         });
       }
+    } else {
+      Swal.fire({
+        text: res.error,
+        icon: 'warning'
+      });
+    }
     })
   }
 
@@ -176,14 +190,14 @@ class Profile extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="12">
+          <Col xs="12" sm="12" md="12" lg="12" xl="12">
             <Card>
               <CardHeader>
                 <strong>My Profile</strong>
               </CardHeader>
               <CardBody>
                 <Row>
-                  <Col xs="12">
+                  <Col xs="12" sm="12" md="12" lg="12" xl="12">
                     <FormGroup className="img-upload">
                       {
                         this.state.selectedFile != null ? (
@@ -192,7 +206,7 @@ class Profile extends Component {
                               this.state.selectedFile ? (
                                 <div>
                                   <img className="pic" src={config.REMOTE_URL + this.state.selectedFile} />
-                                  <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
+                                  <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                 </div>
                               ) : (null)
                             }
@@ -203,27 +217,26 @@ class Profile extends Component {
                                 this.props.profile.avatar ? (
                                   <div>
                                     <img className="pic" src={config.REMOTE_URL + this.props.profile.avatar} />
-                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
+                                    <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIcon(this.props.profile.avatar)}></i>
                                   </div>
                                 ) : (
                                     <div>
                                       <p>Select File:</p>
                                       <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg"></i></Label>
-                                      <span style={{ marginLeft: '20px' }}> <b>Or</b> Enter URL</span>
+                                      <span className="ml-20"> <b>Or</b> Enter URL</span>
                                       <Input
                                         type="url"
                                         id="image"
                                         name="filename"
-                                        className="form-control"
+                                        className="form-control profile_search"
                                         defaultValue={this.state.filename}
                                         onChange={(e) =>
                                           this.state.filename = e.target.value
                                         }
-                                        style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
                                         placeholder="Please Enter URL"
                                         required
                                       />
-                                      <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
+                                      <Button className="mt-0 ml-15" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
                                       <Input
                                         id="file-input"
                                         type="file"
@@ -243,7 +256,7 @@ class Profile extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs="6">
+                  <Col xs="12" sm="12" md="6" lg="6" xl="6">
                     <FormGroup>
                       <Label htmlFor="first_name">First_Name</Label>
                       <Input
@@ -262,7 +275,7 @@ class Profile extends Component {
 
                     </FormGroup>
                   </Col>
-                  <Col xs="6">
+                  <Col xs="12" sm="12" md="6" lg="6" xl="6">
                     <FormGroup>
                       <Label htmlFor="last_name">Last_Name</Label>
                       <Input
@@ -284,7 +297,7 @@ class Profile extends Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs="6">
+                  <Col xs="12" sm="12" md="6" lg="6" xl="6">
                     <FormGroup>
                       <Label htmlFor="profile">E-Mail</Label>
                       <Input
@@ -304,7 +317,7 @@ class Profile extends Component {
 
                     </FormGroup>
                   </Col>
-                  <Col xs="6">
+                  <Col xs="12" sm="12" md="6" lg="6" xl="6">
                     <FormGroup>
                       <Label htmlFor="mobile_no">Mobile_Number</Label>
                       <Input

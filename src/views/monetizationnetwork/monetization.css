@@ -1,0 +1,13 @@
+.ads{
+    text-align: right;
+}
+.inactive_ads {
+    color: black;
+    font-size:16px;
+}
+.update{
+    text-align: end;
+}
+.ads .form-group {
+    margin-bottom: 0rem;
+}

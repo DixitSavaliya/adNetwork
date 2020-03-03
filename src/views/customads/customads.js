@@ -106,7 +106,7 @@ class CustomAds extends React.Component {
     }
 
     handleChange(item, e) {
-     
+
         let _id = item.id;
         let ind = this.state.advertiserapp.findIndex((x) => x.id == _id);
         let data = this.state.advertiserapp;
@@ -146,43 +146,50 @@ class CustomAds extends React.Component {
             advertiserapp: this.state.advertiserapp = this.state.advertiserapp
         })
         this.props.getCustomAds(obj).then((res) => {
-            if (res.response.status == 1) {
-                let app_list = res.response.data.app_list;
-                if (res.response.data.app_list.length > 0) {
-                    this.setState({
-                        isDelete: this.state.isDelete = true,
-                        listHasApp: this.state.listHasApp = true
-                    })
-                }
-                let obj = res.response.data.app_list;
-                for (var i = 0; i < this.state.advertiserapp.length; i++) {
-                    for (var j = 0; j < obj.length; j++) {
-                        if (this.state.advertiserapp[i].id == obj[j].app_id) {
-                            this.state.advertiserapp[i]._rowChecked = (obj[j].row_checked == 1) ? true : false
-                        } 
+            if (res && res.response) {
+                if (res.response.status == 1) {
+                    let app_list = res.response.data.app_list;
+                    if (res.response.data.app_list.length > 0) {
+                        this.setState({
+                            isDelete: this.state.isDelete = true,
+                            listHasApp: this.state.listHasApp = true
+                        })
                     }
-                }
-                this.setState({
-                    advertiserapp: this.state.advertiserapp = this.state.advertiserapp,
-                    items: this.state.items = [],
-                })
-                this.state.items = [];
-                document.getElementById('searchInput').value = '';
-                if (res.response.data.app_list.length == this.state.advertiserapp.length) {
+                    let obj = res.response.data.app_list;
+                    for (var i = 0; i < this.state.advertiserapp.length; i++) {
+                        for (var j = 0; j < obj.length; j++) {
+                            if (this.state.advertiserapp[i].id == obj[j].app_id) {
+                                this.state.advertiserapp[i]._rowChecked = (obj[j].row_checked == 1) ? true : false
+                            }
+                        }
+                    }
                     this.setState({
-                        isShow: this.state.isShow = true,
+                        advertiserapp: this.state.advertiserapp = this.state.advertiserapp,
+                        items: this.state.items = [],
                     })
+                    this.state.items = [];
+                    document.getElementById('searchInput').value = '';
+                    if (res.response.data.app_list.length == this.state.advertiserapp.length) {
+                        this.setState({
+                            isShow: this.state.isShow = true,
+                        })
+                    } else {
+                        this.setState({
+                            isShow: this.state.isShow = false,
+                        })
+                    }
                 } else {
                     this.setState({
+                        isDelete: this.state.isDelete = false,
                         isShow: this.state.isShow = false,
+                        listHasApp: this.state.listHasApp = false,
                     })
                 }
             } else {
-                this.setState({
-                    isDelete: this.state.isDelete = false,
-                    isShow: this.state.isShow = false,
-                    listHasApp: this.state.listHasApp = false,
-                })
+                Swal.fire({
+                    text: res.error,
+                    icon: 'warning'
+                });
             }
         })
     }
@@ -245,17 +252,24 @@ class CustomAds extends React.Component {
             app_list: selectedAppArray,
         }
         this.props.insertCustomAds(appList).then((res) => {
-            if (res.response.status == 1) {
-                this.setState({
-                    isDelete: this.state.isDelete = true
-                })
-                Swal.fire({
-                    text: res.response.message,
-                    icon: 'success'
-                });
+            if (res && res.response) {
+                if (res.response.status == 1) {
+                    this.setState({
+                        isDelete: this.state.isDelete = true
+                    })
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             } else {
                 Swal.fire({
-                    text: res.response.message,
+                    text: res.error,
                     icon: 'warning'
                 });
             }
@@ -267,19 +281,26 @@ class CustomAds extends React.Component {
             app_id: this.state.app_id
         }
         this.props.deleteCustomAds(appList).then((res) => {
-            if (res.response.status == 1) {
-                Swal.fire({
-                    text: res.response.message,
-                    icon: 'success'
-                });
-                this.getAdvertiserApplication();
-                this.setState({
-                    isDelete: this.state.isDelete = false,
-                    isShow: this.state.isShow = false
-                })
+            if (res && res.response) {
+                if (res.response.status == 1) {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'success'
+                    });
+                    this.getAdvertiserApplication();
+                    this.setState({
+                        isDelete: this.state.isDelete = false,
+                        isShow: this.state.isShow = false
+                    })
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
             } else {
                 Swal.fire({
-                    text: res.response.message,
+                    text: res.error,
                     icon: 'warning'
                 });
             }
@@ -304,11 +325,10 @@ class CustomAds extends React.Component {
 
 
     render() {
-        const { auth, applicationCount, applicationPGData, deleteApp } = this.props;
         return (
             <div>
-                <Row style={{ height: '170px' }}>
-                    <Col md="4">
+                <Row className="custom-ads">
+                    <Col sm="12" md="4">
                         <Form>
                             <FormGroup>
                                 <div className="filter-list">
@@ -324,10 +344,10 @@ class CustomAds extends React.Component {
                                     <ul className="list-group">{
                                         this.state.items.map((item, index) =>
                                             <li className="list-group-item" key={index} value={item.id} onClick={() => this.handleAppClick(item.package, item.id, item)}>
-                                                <img style={{ width: '70px', height: '50px', padding: '0 10px', borderRadius: '7px', display: 'inline-block', marginTop: '3px' }} src={REMOTE_URL + item.icon} />
-                                                <p style={{wordBreak:'break-all',padding: '0 10px', display: 'inline-block', verticalAlign: 'top', width: 'calc(100% - 70px)' }}>
+                                                <img className="item_image" src={REMOTE_URL + item.icon} />
+                                                <p className="item_name">
                                                     {item.name}<br />
-                                                    <small style={{ wordBreak:'break-all',paddingTop: '0px', display: 'inline-block' }}>{item.package}</small>
+                                                    <small className="break-word">{item.package}</small>
                                                 </p>
                                             </li>
                                         )
@@ -338,33 +358,18 @@ class CustomAds extends React.Component {
                     </Col>
                     {
                         this.state.selectApp != null ? (
-                            <Col md="4">
-                                <Card>
+                            <Col sm="12" md="4">
+                                <Card className="m-b-0">
                                     <CardHeader>
-                                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Selected Application</strong>
+                                        <strong className="app_color">Selected Application</strong>
                                     </CardHeader>
                                     <CardBody>
                                         <Row>
-                                            <Col md="3">
-                                                <img src={REMOTE_URL + this.state.selectApp.icon} style={{ height: '50px' }} className="app-img" alt="admin@bootstrapmaster.com" />
-                                            </Col>
-                                            <Col md="9" className="content">
-                                                <div className="app_detail">
-                                                    <h5 style={{wordBreak:' break-all'}}>{this.state.selectApp.name}</h5>
-                                                    <h6 style={{wordBreak:' break-all'}}>{this.state.selectApp.package}</h6>
-                                                    {/* {
-                                                    this.state.advertiserapp[index]['_rowChecked'] == true ? (
-                                                        <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>
-                                                            SELECTED
-                                                                            </Button>
-
-                                                    ) : (
-                                                            <Button className="selectP" color="primary" onClick={() => this.handleChange(data)}>
-                                                                SELECT
-                                                                            </Button>
-                                                        )
-
-                                                } */}
+                                            <Col md="12" className="media">
+                                                <img src={REMOTE_URL + this.state.selectApp.icon} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                <div className="app_detail content media-body">
+                                                    <h5 className="details_break">{this.state.selectApp.name}</h5>
+                                                    <h6 className="details_break">{this.state.selectApp.package}</h6>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -375,7 +380,7 @@ class CustomAds extends React.Component {
                                 null
                             )
                     }
-                    <Col md="4">
+                    <Col sm="12" md="4" className="btn-center">
                         <div className="btn-group">
                             {
                                 this.state.selectApp != null ? (
@@ -403,7 +408,7 @@ class CustomAds extends React.Component {
                             }
                             {
                                 this.state.listHasApp == true ? (
-                                    <Button style={{ marginLeft: '8px' }} className="" color="success" onClick={this.addCustomAds}>Save Settings</Button>
+                                    <Button className="listhasapp" color="success" onClick={this.addCustomAds}>Save Settings</Button>
                                 ) : (
                                         null
                                     )
@@ -415,7 +420,7 @@ class CustomAds extends React.Component {
 
                 <Card>
                     <CardHeader>
-                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser Application</strong>
+                        <strong className="app_color">Advertiser Application</strong>
                     </CardHeader>
                     <CardBody className="app_list">
                         {
@@ -428,19 +433,18 @@ class CustomAds extends React.Component {
                                                     <Card className="shadow_card">
                                                         <CardBody className="padding">
                                                             <Row>
-                                                                <Col md="3">
+                                                                <Col className="media">
                                                                     <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                </Col>
-                                                                <Col md="9" className="content">
-                                                                    <div className="app_detail">
+                                                                
+                                                                    <div className="app_detail media-body">
                                                                         {/* <Input
                                                                             type="checkbox"
                                                                             id="no"
                                                                             onChange={() => this.handleChange(data)}
                                                                             checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                         /> */}
-                                                                        <h5 style={{wordBreak:' break-all'}}>{data.name}</h5>
-                                                                        <h6 style={{wordBreak:' break-all'}}>{data.package}</h6>
+                                                                        <h5 className="details_break">{data.name}</h5>
+                                                                        <h6 className="details_break">{data.package}</h6>
                                                                         {
                                                                             this.state.advertiserapp[index]['_rowChecked'] == true ? (
                                                                                 <Button className="selectedP" color="primary" onClick={() => this.handleChange(data)}>

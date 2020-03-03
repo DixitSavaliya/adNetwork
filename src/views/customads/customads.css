@@ -44,7 +44,7 @@ input#no {
 }
 .app-img{
     width: 70px;
-    height: 89px;
+    height: 50px;
     border-radius: 5px;
 }
 .app_list{
@@ -104,4 +104,137 @@ input#no {
 
 .btn-group button {
     margin-left: 8px;
+}
+
+@media(max-width: 768px){
+    .custom-ads{
+        width:auto !important;
+    }
+
+    .btn-group button {
+        margin-left: 0px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .content {
+        padding-left: 5px !important;
+        margin-top: 5px !important;
+    }
+}
+
+.break-word{
+    word-break: break-all;
+    padding-top: 0px; 
+    display: inline-block;
+}
+
+.item_name {
+    word-break: break-all; 
+    padding: 0 10px; 
+    display: inline-block; 
+    vertical-align: top; 
+    width: calc(100% - 70px); 
+}
+
+.item_image {
+    width: 70px; 
+    height: 50px; 
+    padding: 0 10px; 
+    border-radius: 7px; 
+    display: inline-block; 
+    margin-top: 3px; 
+}
+
+.app_color {
+    color: #20a8d8; 
+    font-size: 20px;
+}
+
+.details_break{
+    word-break:break-all;
+}
+
+.listhasapp{
+    margin-left: 8px;
+}
+.app-title-icon2 {
+
+}
+.app-title-icon2 img {
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    margin-right:20px;
+    vertical-align: top;
+    border-radius: 5px;
+}
+.app-title-icon2 .app_detail {
+   display: inline-block;
+}
+.app_detail2 h5 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 0px;
+    font-weight: 100;
+    color: #000;
+}
+.app_detail2 h6 {
+    padding-top: 5px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #20a8d8;
+    font-weight: 600;
+    padding-right: 0px;
+    padding-left: 10px;
+}
+.media-body {
+    flex: 1;
+    display: grid;
+}
+.media-body .btn-primary {
+    width: 100px;
+}
+.btn-group button {
+    margin-left: 5px !important;
+}
+@media(max-width: 1200px){
+    .btn-group {
+        display: block !important;
+    }
+}
+@media(max-width: 768px){
+   .app-title-icon2 {
+       text-align: center;
+       margin: 0 auto 5px auto;
+   }
+   .m-b-0 {
+       margin-bottom:15px !important;
+    }
+   .btn-center {
+       text-align: center;
+       margin-bottom: 10px;
+    }
+   .btn-center .btn-group {
+        display: block;
+    }
+    .btn-group button {
+        margin-left: 5px !important;
+    }
+    .app-title-icon2 img {
+       display:block;
+       text-align:center;
+       margin: 0 auto;
+    }
+    .app-title-icon2 .app_detail {
+      display: block;
+      text-align:center;
+      margin: 10px auto 0px auto;
+    }
+    
 }

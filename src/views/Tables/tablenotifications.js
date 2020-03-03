@@ -70,7 +70,7 @@ export default class TableNotifications extends React.Component {
 
         EventEmitter.subscribe('send_notification', (value) => {
             this.setState({
-                _maincheck:this.state._maincheck = false
+                _maincheck: this.state._maincheck = false
             })
             this.getNotificationsCount();
             setTimeout(() => {
@@ -86,12 +86,32 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationCount(obj).then((res) => {
-
-            _this.setState({
-                count: _this.state.count = res.response.data
-            })
-            _this.getNotificationPageData();
+            if (res && res.response) {
+                if (res && res.response && res.response.status && res.response.status == 1) {
+                    _this.setState({
+                        count: _this.state.count = res.response.data
+                    })
+                    _this.getNotificationPageData();
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    text: res.error,
+                    icon: 'warning'
+                });
+            }
         })
+            .catch(err => {
+                Swal.fire({
+                    text: "Server Not Responding, Please Restart Server",
+                    icon: 'warning'
+                });
+            });
+
 
     }
 
@@ -103,13 +123,32 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {
-
-            _this.setState({
-                paginationdata: res.response.data,
-                isFetch: true
-            })
-            EventEmitter.dispatch('isDisplay', 1);
+            if (res && res.response) {
+                if (res && res.response && res.response.status && res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                    EventEmitter.dispatch('isDisplay', 1);
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    text: res.error,
+                    icon: 'warning'
+                });
+            }
         })
+            .catch(err => {
+                Swal.fire({
+                    text: "Server Not Responding, Please Restart Server",
+                    icon: 'warning'
+                });
+            });
     }
 
     // editAppData(id) {
@@ -135,19 +174,32 @@ export default class TableNotifications extends React.Component {
         }).then((result) => {
             if (result.value) {
                 this.props.deleteNotificationData(data1).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        this.getNotificationPageData();
+                    if (res && res.response) {
+                        if (res && res.response && res.response.status && res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            this.getNotificationPageData();
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
-                });
+                })
+                    .catch(err => {
+                        Swal.fire({
+                            text: "Server Not Responding, Please Restart Server",
+                            icon: 'warning'
+                        });
+                    });
             }
         })
     }
@@ -170,11 +222,32 @@ export default class TableNotifications extends React.Component {
         }
         let _this = this;
         this.props.notificationPGData(obj).then(function (res) {
-            _this.setState({
-                paginationdata: res.response.data,
-                isFetch: true
-            })
+            if (res && res.response) {
+                if (res && res.response && res.response.status && res.response.status == 1) {
+                    _this.setState({
+                        paginationdata: res.response.data,
+                        isFetch: true
+                    })
+                } else {
+                    Swal.fire({
+                        text: res.response.message,
+                        icon: 'warning'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    text: res.error,
+                    icon: 'warning'
+                });
+            }
         })
+            .catch(err => {
+
+                Swal.fire({
+                    text: "Server Not Responding, Please Restart Server",
+                    icon: 'warning'
+                });
+            });
     }
 
     appData(data) {
@@ -338,7 +411,7 @@ export default class TableNotifications extends React.Component {
                     {
                         this.state.paginationdata ? (
                             <div>
-                                <Table hover className="mb-0" bordered>
+                                <Table hover className="mb-0 table_responsive" bordered>
                                     <thead>
                                         <tr>
                                             <th className="center">
@@ -383,12 +456,12 @@ export default class TableNotifications extends React.Component {
                                                             data.icon != null ? (
                                                                 <img src={REMOTE_URL + data.icon} className="img-nt" alt="admin@bootstrapmaster.com" />
                                                             ) : (
-                                                                <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                                                            )
+                                                                    <img src={require('../../../public/img/2.png')} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                                                                )
                                                         }
                                                     </td>
-                                                    <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.title}</td>
-                                                    <td onClick={() => this.appData(data)} style={{wordBreak:' break-all'}}>{data.message}</td>
+                                                    <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.title}</td>
+                                                    <td onClick={() => this.appData(data)} style={{ wordBreak: ' break-all' }}>{data.message}</td>
                                                     <td onClick={() => this.appData(data)}>{data.type == 1 ? 'Sheduled' : 'Immediate'}</td>
                                                     <td onClick={() => this.appData(data)}>
                                                         {data.true_count}
@@ -422,7 +495,7 @@ export default class TableNotifications extends React.Component {
                                             </ul>
                                         </div>
                                     ) : (
-                                            <Table hover className="mb-0" bordered>
+                                            <Table hover className="mb-0 table-responsive" bordered>
                                                 <thead>
                                                     <tr>
                                                         <th className="action">Action</th>

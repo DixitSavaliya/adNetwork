@@ -1,0 +1,7 @@
+@media(max-width: 768px) {
+    .table_responsive {
+        display: table !important;
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+}

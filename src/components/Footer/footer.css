@@ -1,0 +1,5 @@
+@media(max-width: 768px){
+    span.ml-auto {
+        margin-left: 0px !important;
+    }
+}

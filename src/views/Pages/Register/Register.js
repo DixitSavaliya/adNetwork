@@ -174,13 +174,13 @@ class Register extends Component {
       <div className="app flex-row align-items-center">
         <Container>
           <Row className="justify-content-center">
-            <Col md="5">
+            <Col  xs="12" sm="12" md="5" lg="5" xl="5">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
                     <h1>Register</h1>
                     <p className="text-muted">Sign Up to your account</p>
-                    <InputGroup >
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -191,10 +191,10 @@ class Register extends Component {
                         autoComplete="first_name"
                       />
                     </InputGroup>
-                    <div className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-3" className="text-danger">
                       {this.state.first_nameerror}
                     </div>
-                    <InputGroup >
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -205,10 +205,10 @@ class Register extends Component {
                         autoComplete="last_name"
                       />
                     </InputGroup>
-                    <div className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-3" className="text-danger">
                       {this.state.last_nameerror}
                     </div>
-                    <InputGroup >
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="email"
@@ -219,10 +219,10 @@ class Register extends Component {
                         autoComplete="email_id"
                       />
                     </InputGroup>
-                    <div className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-3" className="text-danger">
                       {this.state.email_iderror}
                     </div>
-                    <InputGroup >
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-lock"></i></InputGroupAddon>
                       <Input
                         type="password"
@@ -233,10 +233,10 @@ class Register extends Component {
                         autoComplete="password"
                       />
                     </InputGroup>
-                    <div className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-3" className="text-danger">
                       {this.state.passworderror}
                     </div>
-                    <InputGroup >
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -247,10 +247,10 @@ class Register extends Component {
                         autoComplete="mobile_no"
                       />
                     </InputGroup>
-                    <div className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-3" className="text-danger">
                       {this.state.mobile_noerror}
                     </div>
-                    <InputGroup>
+                    <InputGroup className="mb-10">
                       <FormGroup check inline>
                         <Input
 
@@ -288,7 +288,7 @@ class Register extends Component {
                         </Label>
 
                       </FormGroup>
-                      <div  className="mb-3" style={{ fontSize: 12, color: "red" }}>
+                      <div  className="mb-3" className="text-danger">
                         {this.state.statuserror}
                       </div>
                     </InputGroup>

@@ -493,7 +493,7 @@ class Dashboard extends Component {
                         this.state.publisher.length > 0 ? (
                           <Card>
                             <CardHeader>
-                              <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher App</strong>
+                              <strong className="app_color">Publisher App</strong>
                             </CardHeader>
                             <CardBody>
                               {
@@ -506,41 +506,35 @@ class Dashboard extends Component {
                                             <Card className="shadow_card">
                                               <CardBody className="padding">
                                                 <Row>
-                                                  <Col sm="1">
-                                                    <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                  </Col>
-                                                  <Col sm="3" className="content text-left">
+                                                  <Col sm="12" md="4" className="app-title-icon">
+                                                    <img src={REMOTE_URL + data.icon} className="" alt="admin@bootstrapmaster.com" />
                                                     <div className="app_detail">
-                                                      <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
-                                                      <h6 style={{ wordBreak: ' break-all' }}>{data.package}</h6>
+                                                      <h5 className="details_break">{data.name}</h5>
+                                                      <h6 className="details_break">{data.package}</h6>
                                                     </div>
                                                   </Col>
-                                                  <Col sm="4">
-                                                    <div className="text-center">
+                                                  <Col sm="6" md="4">
+                                                    <div className="count_div">
                                                       <label><strong>Hit Count</strong></label>
                                                       <div className="inline_content">
                                                         <h5>Today
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.today_hit_count}</p>
+                                                          <p className="blue">{data.today_hit_count}</p>
                                                         </h5>
                                                         <h5>Total
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.total_hit_count}</p>
+                                                          <p className="blue">{data.total_hit_count}</p>
                                                         </h5>
                                                       </div>
                                                     </div>
                                                   </Col>
-                                                  <Col sm="4">
-                                                    {/* <h5>Today Count:</h5>
-                                          <p className="blue">{data.today_impression_count}</p>
-                                          <h5>Total Count:</h5>
-                                          <p className="blue">{data.total_impression_count}</p> */}
-                                                    <div className="text-center">
+                                                  <Col sm="6" md="4">
+                                                    <div className="count_div">
                                                       <label><strong>Impression Count</strong></label>
                                                       <div className="inline_content">
                                                         <h5>Today
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.today_impression_count}</p>
+                                                          <p className="blue">{data.today_impression_count}</p>
                                                         </h5>
                                                         <h5>Total
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.total_impression_count}</p>
+                                                          <p className="blue">{data.total_impression_count}</p>
                                                         </h5>
                                                       </div>
                                                     </div>
@@ -572,7 +566,7 @@ class Dashboard extends Component {
                           this.state.advertiser.length > 0 ? (
                             <Card>
                               <CardHeader>
-                                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Advertiser App</strong>
+                                <strong className="app_color">Advertiser App</strong>
                               </CardHeader>
                               <CardBody>
                                 {
@@ -586,23 +580,23 @@ class Dashboard extends Component {
                                                 <CardBody className="padding">
                                                   <Row>
                                                     <Col sm="1">
-                                                      <img src={REMOTE_URL + data.icon} style={{ height: '55px' }} className="app-img" alt="admin@bootstrapmaster.com" />
+                                                      <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
                                                     </Col>
                                                     <Col sm="6" className="content text-left">
                                                       <div className="app_detail">
-                                                        <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
-                                                        <h6 style={{ wordBreak: ' break-all' }}>{data.package}</h6>
+                                                        <h5 className="details_break">{data.name}</h5>
+                                                        <h6 className="details_break">{data.package}</h6>
                                                       </div>
                                                     </Col>
                                                     <Col sm="5">
-                                                      <div className="text-center">
+                                                      <div className="count_div">
                                                         <label><strong>Impression Count</strong></label>
                                                         <div className="inline_content">
                                                           <h5>Today
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.today_count}</p>
+                                                  <p className="blue">{data.today_count}</p>
                                                           </h5>
                                                           <h5>Total
-                                                  <p style={{ marginBottom: '0px' }} className="blue">{data.total_count}</p>
+                                                  <p className="blue">{data.total_count}</p>
                                                           </h5>
                                                         </div>
                                                       </div>

@@ -5,5 +5,62 @@ select#rightid {
     .col {
         flex-basis: auto !important;
         width:100% !important;
-        }    
+        }  
     }
+
+.searchN{
+    display:block;
+    /* width: calc(100% - 258px); */
+}
+
+.searchN span {
+    padding: 0 10px;
+    display: inline-block;
+    margin: 0px 0px 19px auto;
+}
+
+.searchN .drop {
+    display: block;
+    float: right;
+    width: 70px;
+    margin: 0 auto 10px auto;
+}
+
+/* .page_per {
+    margin: 0px 0px 19px auto !important;
+} */
+
+@media(max-width: 768px){
+    .rightapp {
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        margin: 0 auto 10px auto;
+        text-align: center;
+    }
+
+    .searchN{
+        display:block !important;
+        /* width: calc(100% - 258px); */
+    }
+    .searchN .row {
+        display: block;
+    }
+
+    .searchN .drop {
+        display: block;
+        float: none;
+        width: 70px;
+        margin: 0 auto 10px auto;
+    }
+
+    .searchN span {
+        padding: 0 10px;
+        display: block;
+        margin: 0px auto 19px auto !important;
+        text-align: center;
+    }
+    
+    
+    
+}

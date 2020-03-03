@@ -44,7 +44,7 @@ class Notifications extends Component {
             title: '',
             titleerror: '',
             message: '',
-            messageerror:'',
+            messageerror: '',
             status: 0,
             statuserror: '',
             statuscheck1: true,
@@ -119,7 +119,7 @@ class Notifications extends Component {
     }
 
     handleChange(item, e) {
-        if(item.serverKey != "") {
+        if (item.serverKey != "") {
             let _id = item.id;
             this.setState({
                 app_id: this.state.app_id = _id
@@ -131,7 +131,7 @@ class Notifications extends Component {
                 data[ind]._rowChecked = newState;
                 if (!newState) {
                     data[ind]._rowChecked = false;
-    
+
                 } else {
                     data[ind]._rowChecked = true;
                 }
@@ -313,7 +313,7 @@ class Notifications extends Component {
         }
 
         if (titleerror || messageerror) {
-            this.setState({ titleerror, messageerror});
+            this.setState({ titleerror, messageerror });
             return false;
         }
         return true;
@@ -323,7 +323,7 @@ class Notifications extends Component {
     sendNotifications() {
         const isValid = this.validate();
         if (isValid) {
-            if(this.state.app_list.length > 0) {
+            if (this.state.app_list.length > 0) {
                 const obj = {
                     id: "",
                     user_id: this.props.auth.user.user_group_id,
@@ -352,15 +352,22 @@ class Notifications extends Component {
                     }
                 }
                 this.props.sendNotification(obj).then((res) => {
-                    if (res.response.status == 1) {
-                        Swal.fire({
-                            text: res.response.message,
-                            icon: 'success'
-                        });
-                        this.props.history.push(this.props.from || { pathname: '/list-notifications' });
+                    if (res && res.response) {
+                        if (res.response.status == 1) {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'success'
+                            });
+                            this.props.history.push(this.props.from || { pathname: '/list-notifications' });
+                        } else {
+                            Swal.fire({
+                                text: res.response.message,
+                                icon: 'warning'
+                            });
+                        }
                     } else {
                         Swal.fire({
-                            text: res.response.message,
+                            text: res.error,
                             icon: 'warning'
                         });
                     }
@@ -381,9 +388,9 @@ class Notifications extends Component {
                     <Col xl="4" lg="4" md="12" sm="12" xs="12">
                         <Card>
                             <CardHeader>
-                                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Publisher Application</strong>
+                                <strong className="app_color">Publisher Application</strong>
                             </CardHeader>
-                            <CardBody className="app_list media-app" style={{height:'410px'}}>
+                            <CardBody className="app_list media-app" style={{ height: '410px' }}>
                                 {
                                     this.state.publisherapp.length > 0 ? (
                                         <Row>
@@ -394,19 +401,18 @@ class Notifications extends Component {
                                                             <Card className="shadow_card">
                                                                 <CardBody className="padding">
                                                                     <Row>
-                                                                        <Col md="3" style={{ paddingLeft: '8px' }}>
+                                                                        <Col md="12" className="media">
                                                                             <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                        </Col>
-                                                                        <Col md="9" className="content">
-                                                                            <div className="app_detail">
+
+                                                                            <div className="app_detail content media-body">
                                                                                 {/* <Input
                                                                         type="checkbox"
                                                                         id="no"
                                                                         onChange={() => this.handleChange(data)}
                                                                         checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                     /> */}
-                                                                                <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
-                                                                                <h6 style={{ wordBreak: ' break-all',fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
+                                                                                <h5 className="details_break">{data.name}</h5>
+                                                                                <h6 className="details_break">{data.package}</h6>
                                                                                 {
                                                                                     this.state.publisherapp[index]['_rowChecked'] == true ? (
                                                                                         <Button type="button" className="selectedP" color="primary">
@@ -441,9 +447,9 @@ class Notifications extends Component {
                     <Col xl="4" lg="4" md="12" sm="12" xs="12">
                         <Card>
                             <CardHeader>
-                                <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Selected Application</strong>
+                                <strong className="app_color">Selected Application</strong>
                             </CardHeader>
-                            <CardBody className="app_list media-app" style={{height:'410px'}}>
+                            <CardBody className="app_list media-app" style={{ height: '410px' }}>
                                 {
                                     this.state.app_list.length > 0 ? (
                                         <Row>
@@ -454,19 +460,18 @@ class Notifications extends Component {
                                                             <Card className="shadow_card">
                                                                 <CardBody className="padding">
                                                                     <Row>
-                                                                        <Col md="3" style={{ paddingLeft: '8px' }}>
+                                                                        <Col md="12" className="media">
                                                                             <img src={REMOTE_URL + data.icon} className="app-img" alt="admin@bootstrapmaster.com" />
-                                                                        </Col>
-                                                                        <Col md="9" className="content">
-                                                                            <div className="app_detail">
+
+                                                                            <div className="app_detail content media-body">
                                                                                 {/* <Input
                                                                         type="checkbox"
                                                                         id="no"
                                                                         onChange={() => this.handleChange(data)}
                                                                         checked={this.state.advertiserapp[index]['_rowChecked'] == true}
                                                                     /> */}
-                                                                                <h5 style={{ wordBreak: ' break-all' }}>{data.name}</h5>
-                                                                                <h6 style={{ wordBreak: ' break-all',fontWeight: '200', fontSize: '14PX' }}>{data.package}</h6>
+                                                                                <h5 className="details_break">{data.name}</h5>
+                                                                                <h6 className="details_break">{data.package}</h6>
                                                                                 {
                                                                                     this.state.app_list[index]['_rowChecked'] == true ? (
                                                                                         <Button className="selectedP" color="danger" onClick={() => this.handleChange(data)}>
@@ -500,9 +505,9 @@ class Notifications extends Component {
                             <Col xs="12" sm="12">
                                 <Card>
                                     <CardHeader>
-                                        <strong style={{ color: '#20a8d8', fontSize: '20px' }}>Notification Details</strong>
+                                        <strong className="app_color">Notification Details</strong>
                                     </CardHeader>
-                                    <CardBody className="app_list media-app" style={{height:'410px'}}>
+                                    <CardBody className="app_list media-app">
                                         <Row>
                                             <Col xs="12">
                                                 <FormGroup>
@@ -519,7 +524,7 @@ class Notifications extends Component {
                                                         placeholder="Enter Title"
                                                         required
                                                     />
-                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                    <div className="text-danger">
                                                         {this.state.titleerror}
                                                     </div>
                                                 </FormGroup>
@@ -542,7 +547,7 @@ class Notifications extends Component {
                                                         placeholder="Content..."
                                                         required
                                                     />
-                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                    <div className="text-danger">
                                                         {this.state.messageerror}
                                                     </div>
                                                 </FormGroup>
@@ -593,7 +598,7 @@ class Notifications extends Component {
                                                                 </div>
                                                             )
                                                     }
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div className="text-danger">
                                                         {this.state.selectedFileerror}
                                                     </div> */}
                                                 </FormGroup>
@@ -615,7 +620,7 @@ class Notifications extends Component {
                                                         placeholder="Enter URL"
                                                         required
                                                     />
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div className="text-danger">
                                                         {this.state.urlerror}
                                                     </div> */}
                                                 </FormGroup>

@@ -75,6 +75,7 @@ class AdminLogin extends Component {
         }
         
         this.props.login(obj).then((res) => {
+          if (res && res.response) {
           if (res.response.status == 1) {
             this.props.getUser(res.response.data.id);
             const obj = {
@@ -90,6 +91,12 @@ class AdminLogin extends Component {
               icon: 'warning'
             });
           }
+        } else {
+          Swal.fire({
+            text: res.error,
+            icon: 'warning'
+          });
+        }
         });
       }
     };
@@ -100,13 +107,13 @@ class AdminLogin extends Component {
       <div className="app flex-row align-items-center">
         <Container>
           <Row className="justify-content-center">
-            <Col md="8">
+            <Col xs="12" sm="12" md="8" lg="8" xl="8">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
                     <h1>Login</h1>
                     <p className="text-muted">Sign In to your account</p>
-                    <InputGroup className="mb-3">
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-user"></i></InputGroupAddon>
                       <Input
                         type="text"
@@ -117,10 +124,10 @@ class AdminLogin extends Component {
                         autoComplete="username"
                       />
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.usernameerror}
                     </div>
-                    <InputGroup className="mb-4">
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="icon-lock"></i></InputGroupAddon>
                       <Input
                         type="password"
@@ -131,10 +138,10 @@ class AdminLogin extends Component {
                         autoComplete="current-password"
                       />
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.passworderror}
                     </div>
-                    <InputGroup className="mb-4">
+                    <InputGroup className="mb-10">
                       <InputGroupAddon><i className="fa fa-user-secret"></i></InputGroupAddon>
                       <Input
                         type="select"
@@ -148,22 +155,22 @@ class AdminLogin extends Component {
                         <option value="admin_staff">Admin_Staff</option>
                       </Input>
                     </InputGroup>
-                    <div className="mb-4" style={{ fontSize: 12, color: "red" }}>
+                    <div className="mb-4" className="text-danger">
                       {this.state.customSelectNameerror}
                     </div>
-                    <Row>
-                      <Col xs="6">
+                    <Row className="btn_center">
+                      <Col xs="12" sm="12" md="6" lg="6" xl="6">
                         <Button type="button" color="primary" className="px-4"
                           onClick={this.handleLogin.bind(this)}
                         >Login</Button>
                       </Col>
-                      <Col xs="6" className="text-right">
+                      <Col xs="12" sm="12" md="6" lg="6" xl="6" className="forgot_text">
                         <Link to="/forgot-password"><Button color="link" className="px-0">Forgot password?</Button></Link>
                       </Col>
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 " style={{ width: 44 + '%' }}>
+                <Card className="text-white bg-primary py-5 ">
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>

@@ -175,21 +175,42 @@ th.center {
 .img-nt{
   width: 50px;
 }
-
-
-@media screen and (max-width: 993px) {
+.table_responsive {
+  display: table;
+}
+@media screen and (max-width: 768px) {
   .table_responsive {
-    display: block;
+    display: block !important;
     overflow: hidden;
     overflow-x: scroll;
   }
 }
+.table_responsive2 {
+  display: table;
+}
+@media screen and (max-width: 619px) {
+  .table_responsive2 {
+    display: block !important;
+    overflow: hidden;
+    overflow-x: scroll;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .btn-group button {
+    margin-left: 5px !important;
+    margin-bottom: 5px !important;
+  }
+}
 
-@media screen and (max-width: 993px) {
+@media screen and (max-width: 992px) {
   .table_Inresponsive {
     display: inline-block;
     overflow: hidden;
     overflow-x: scroll;
+  }
+  .btn-group button {
+    margin-left: 5px !important;
+    margin-bottom: 5px !important;
   }
 }
 
@@ -210,3 +231,17 @@ td.name p , td.package p{
   display: block;
 }
 
+td.action i {
+  padding: 6px !important;
+}
+
+.table tbody tr td:first-child, .table thead tr th:first-child {
+  width: 65px !important;
+  text-align: center;
+}
+
+.fa-lg {
+  font-size: 25px !important;
+  line-height: .75em;
+  vertical-align: -15%;
+}

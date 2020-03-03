@@ -606,15 +606,22 @@ class CreateApp extends React.Component {
                     }
 
                     this.props.createApp(obj).then((res) => {
-                        if (res.response.status == 1) {
-                            Swal.fire({
-                                text: res.response.message,
-                                icon: 'success'
-                            });
-                            this.props.history.push(this.props.from || { pathname: '/listapp' });
+                        if (res && res.response) {
+                            if (res.response.status == 1) {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'success'
+                                });
+                                this.props.history.push(this.props.from || { pathname: '/listapp' });
+                            } else {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'warning'
+                                });
+                            }
                         } else {
                             Swal.fire({
-                                text: res.response.message,
+                                text: res.error,
                                 icon: 'warning'
                             });
                         }
@@ -664,15 +671,22 @@ class CreateApp extends React.Component {
                     }
 
                     this.props.createApp(obj).then((res) => {
-                        if (res.response.status == 1) {
-                            Swal.fire({
-                                text: res.response.message,
-                                icon: 'success'
-                            });
-                            this.props.history.push(this.props.from || { pathname: '/listapp' });
+                        if (res && res.response) {
+                            if (res.response.status == 1) {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'success'
+                                });
+                                this.props.history.push(this.props.from || { pathname: '/listapp' });
+                            } else {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'warning'
+                                });
+                            }
                         } else {
                             Swal.fire({
-                                text: res.response.message,
+                                text: res.error,
                                 icon: 'warning'
                             });
                         }
@@ -728,15 +742,22 @@ class CreateApp extends React.Component {
                         }
                     }
                     this.props.editApp(obj).then((res) => {
-                        if (res.response.status == 1) {
-                            Swal.fire({
-                                text: res.response.message,
-                                icon: 'success'
-                            });
-                            this.props.history.push(this.props.from || { pathname: '/listapp' });
+                        if (res && res.response) {
+                            if (res.response.status == 1) {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'success'
+                                });
+                                this.props.history.push(this.props.from || { pathname: '/listapp' });
+                            } else {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'warning'
+                                });
+                            }
                         } else {
                             Swal.fire({
-                                text: res.response.message,
+                                text: res.error,
                                 icon: 'warning'
                             });
                         }
@@ -785,15 +806,22 @@ class CreateApp extends React.Component {
                         }
                     }
                     this.props.editApp(obj).then((res) => {
-                        if (res.response.status == 1) {
-                            Swal.fire({
-                                text: res.response.message,
-                                icon: 'success'
-                            });
-                            this.props.history.push(this.props.from || { pathname: '/listapp' });
+                        if (res && res.response) {
+                            if (res.response.status == 1) {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'success'
+                                });
+                                this.props.history.push(this.props.from || { pathname: '/listapp' });
+                            } else {
+                                Swal.fire({
+                                    text: res.response.message,
+                                    icon: 'warning'
+                                });
+                            }
                         } else {
                             Swal.fire({
-                                text: res.response.message,
+                                text: res.error,
                                 icon: 'warning'
                             });
                         }
@@ -861,9 +889,9 @@ class CreateApp extends React.Component {
                                 {
                                     this.props.auth.auth_data.user_group == "publisher" ? (
                                         //Publisher App
-                                        <div>
+                                        <div className="mainBody">
                                             <Row>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="name"><b>Name:</b></Label>
                                                         <Input
@@ -876,12 +904,12 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter your appname"
                                                             required
                                                         />
-                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                        <div className="text-danger">
                                                             {this.state.nameerror}
                                                         </div>
                                                     </FormGroup>
                                                 </Col>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="package"><b>Package:</b></Label>
                                                         <Input
@@ -894,14 +922,14 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter your package"
                                                             required
                                                         />
-                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                        <div className="text-danger">
                                                             {this.state.packageerrror}
                                                         </div>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
                                                         <Input
@@ -915,14 +943,14 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter privacy policy content..."
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.privacyerror}
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
 
 
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     {
                                                         this.props.id ? (
                                                             <FormGroup>
@@ -940,7 +968,7 @@ class CreateApp extends React.Component {
                                                                     <option value="3">Web</option>
 
                                                                 </Input>
-                                                                <div style={{ fontSize: 12, color: "red" }}>
+                                                                <div className="text-danger">
                                                                     {this.state.customSelecterror}
                                                                 </div>
                                                             </FormGroup>
@@ -961,7 +989,7 @@ class CreateApp extends React.Component {
                                                                         <option value="3">Web</option>
 
                                                                     </Input>
-                                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                                    <div className="text-danger">
                                                                         {this.state.customSelecterror}
                                                                     </div>
                                                                 </FormGroup>
@@ -970,7 +998,7 @@ class CreateApp extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="Versioncode"><b>Versioncode:</b></Label>
                                                         <Input
@@ -983,12 +1011,12 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter Version Code"
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.version_codeerror}
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="Link"><b>Link:</b></Label>
                                                         <Input
@@ -1001,14 +1029,14 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter URL"
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.linkerror}
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="more_apps"><b>More apps:</b></Label>
                                                         <Input
@@ -1021,12 +1049,12 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter More Apps"
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.more_appserror}
                                                         </div> */}
                                                     </FormGroup>
                                                 </Col>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="Data"><b>Data:</b></Label>
                                                         <Input
@@ -1039,7 +1067,7 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter your data"
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.dataerror}
                                                         </div> */}
                                                     </FormGroup>
@@ -1047,7 +1075,7 @@ class CreateApp extends React.Component {
                                             </Row>
 
                                             <Row>
-                                                <Col xs="12">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup>
                                                         <Label htmlFor="ServerKey"><b>ServerKey:</b></Label>
                                                         <Input
@@ -1060,14 +1088,14 @@ class CreateApp extends React.Component {
                                                             placeholder="Enter ServerKey"
                                                             required
                                                         />
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                                 {this.state.serverKeyerror}
                                                             </div> */}
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="12">
+                                                <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                                     <FormGroup>
                                                         <Label htmlFor="description"><b>Description:</b></Label>
                                                         <Input
@@ -1081,7 +1109,7 @@ class CreateApp extends React.Component {
                                                             placeholder="Content..."
                                                             required
                                                         />
-                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                        <div className="text-danger">
                                                             {this.state.descriptionerror}
                                                         </div>
                                                     </FormGroup>
@@ -1089,7 +1117,7 @@ class CreateApp extends React.Component {
                                             </Row>
 
                                             <Row>
-                                                <Col xs="3">
+                                                <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                     <Label htmlFor="userrole"><b>Status:</b></Label>
                                                     <br />
                                                     <FormGroup check inline>
@@ -1127,12 +1155,12 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                     </FormGroup>
-                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                    <div className="text-danger">
                                                         {this.state.statuserror}
                                                     </div>
                                                 </Col>
 
-                                                <Col xs="3">
+                                                <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                     <Label htmlFor="inline-radio78"><b>WebView:</b></Label>
                                                     <br />
                                                     <FormGroup check inline>
@@ -1170,12 +1198,12 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                     </FormGroup>
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div className="text-danger">
                                                         {this.state.webviewstatuserror}
                                                     </div> */}
                                                 </Col>
 
-                                                <Col xs="3">
+                                                <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                     <Label htmlFor="userrole"><b>ExitStatus:</b></Label>
                                                     <br />
                                                     <FormGroup check inline>
@@ -1214,11 +1242,11 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                     </FormGroup>
-                                                    {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                    {/* <div className="text-danger">
                                                         {this.state.exitstatuserror}
                                                     </div> */}
                                                 </Col>
-                                                <Col xs="3">
+                                                <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                     <Label>
                                                         <b>IsLive:</b>
                                                     </Label>
@@ -1227,7 +1255,7 @@ class CreateApp extends React.Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup className="img-upload">
                                                         {
                                                             this.state.selectedFile != null ? (
@@ -1236,7 +1264,7 @@ class CreateApp extends React.Component {
                                                                         this.state.selectedFile ? (
                                                                             <div>
                                                                                 <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
-                                                                                <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.state.selectedFile)}></i>
+                                                                                <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
                                                                             </div>
                                                                         ) : (null)
                                                                     }
@@ -1245,21 +1273,21 @@ class CreateApp extends React.Component {
                                                                     <div>
                                                                         <p><b>Icon Image:</b></p>
                                                                         <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
-                                                                        <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
+                                                                        <span className="ml-20"><b>Or</b> Enter URL</span>
                                                                         <Input
                                                                             type="url"
                                                                             id="image"
                                                                             name="filename"
-                                                                            className="form-control"
+                                                                            className="form-control app_search"
                                                                             defaultValue={this.state.filename}
                                                                             onChange={(e) =>
                                                                                 this.state.filename = e.target.value
                                                                             }
-                                                                            style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                            // style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
                                                                             placeholder="Please Enter URL"
                                                                             required
                                                                         />
-                                                                        <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
+                                                                        <Button className="mt-0 ml-15" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
                                                                         <Input
                                                                             id="file-input"
                                                                             type="file"
@@ -1271,12 +1299,12 @@ class CreateApp extends React.Component {
                                                                     </div>
                                                                 )
                                                         }
-                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                        <div className="text-danger">
                                                             {this.state.selectedFileerror}
                                                         </div>
                                                     </FormGroup>
                                                 </Col>
-                                                <Col xs="6">
+                                                <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                     <FormGroup className="img-upload">
                                                         {
                                                             this.state.bannerselectedFile != null ? (
@@ -1285,7 +1313,7 @@ class CreateApp extends React.Component {
                                                                         this.state.bannerselectedFile ? (
                                                                             <div>
                                                                                 <img className="picture" src={REMOTE_URL + this.state.bannerselectedFile} />
-                                                                                <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
+                                                                                <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
                                                                             </div>
                                                                         ) : (null)
                                                                     }
@@ -1294,21 +1322,21 @@ class CreateApp extends React.Component {
                                                                     <div>
                                                                         <p><b>Banner Image:</b></p>
                                                                         <Label className="imag" for="file-input1"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
-                                                                        <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
+                                                                        <span className="ml-20"><b>Or</b> Enter URL</span>
                                                                         <Input
                                                                             type="url"
                                                                             id="image"
                                                                             name="bannerfilename"
-                                                                            className="form-control"
+                                                                            className="form-control app_search"
                                                                             defaultValue={this.state.bannerfilename}
                                                                             onChange={(e) =>
                                                                                 this.state.bannerfilename = e.target.value
                                                                             }
-                                                                            style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                            // style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
                                                                             placeholder="Please Enter URL"
                                                                             required
                                                                         />
-                                                                        <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLHandler.bind(this)}>Upload</Button>
+                                                                        <Button className="mt-0 ml-15" type="button" size="sm" color="primary" onClick={this.onURLHandler.bind(this)}>Upload</Button>
                                                                         <Input
                                                                             id="file-input1"
                                                                             type="file"
@@ -1320,7 +1348,7 @@ class CreateApp extends React.Component {
                                                                     </div>
                                                                 )
                                                         }
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.bannerselectedFileerror}
                                                         </div> */}
                                                     </FormGroup>
@@ -1334,7 +1362,7 @@ class CreateApp extends React.Component {
                                             //Advertiser App
                                             <div>
                                                 <Row>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup>
                                                             <Label htmlFor="name"><b>Name:</b></Label>
                                                             <Input
@@ -1347,12 +1375,12 @@ class CreateApp extends React.Component {
                                                                 placeholder="Enter your appname"
                                                                 required
                                                             />
-                                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                            <div className="text-danger">
                                                                 {this.state.nameerror}
                                                             </div>
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup>
                                                             <Label htmlFor="package"><b>Package:</b></Label>
                                                             <Input
@@ -1365,14 +1393,14 @@ class CreateApp extends React.Component {
                                                                 placeholder="Enter your package"
                                                                 required
                                                             />
-                                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                            <div className="text-danger">
                                                                 {this.state.packageerrror}
                                                             </div>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup>
                                                             <Label htmlFor="privacy"><b>Privacy Policy:</b></Label>
                                                             <Input
@@ -1386,13 +1414,13 @@ class CreateApp extends React.Component {
                                                                 placeholder="Enter privacy policy content..."
                                                                 required
                                                             />
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {/* <div className="text-danger">
                                                                 {this.state.privacyerror}
                                                             </div> */}
                                                         </FormGroup>
                                                     </Col>
 
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         {
                                                             this.props.id ? (
                                                                 <FormGroup>
@@ -1404,13 +1432,13 @@ class CreateApp extends React.Component {
                                                                         name="customSelect"
                                                                         onChange={this.onItemSelect}
                                                                     >
-                                                                          <option value="">{this.state.App.type == 1 ? 'Android' : (this.state.App.type == 2 ? 'IOS' : (this.state.App.type == 3 ? 'Web' : null))}</option>
+                                                                        <option value="">{this.state.App.type == 1 ? 'Android' : (this.state.App.type == 2 ? 'IOS' : (this.state.App.type == 3 ? 'Web' : null))}</option>
                                                                         <option value="1">Android</option>
                                                                         <option value="2">IOS</option>
                                                                         <option value="3">Web</option>
 
                                                                     </Input>
-                                                                    <div style={{ fontSize: 12, color: "red" }}>
+                                                                    <div className="text-danger">
                                                                         {this.state.customSelecterror}
                                                                     </div>
                                                                 </FormGroup>
@@ -1431,7 +1459,7 @@ class CreateApp extends React.Component {
                                                                             <option value="3">Web</option>
 
                                                                         </Input>
-                                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                                        <div className="text-danger">
                                                                             {this.state.customSelecterror}
                                                                         </div>
                                                                     </FormGroup>
@@ -1440,7 +1468,7 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup>
                                                             <Label htmlFor="Link"><b>Link:</b></Label>
                                                             <Input
@@ -1453,12 +1481,12 @@ class CreateApp extends React.Component {
                                                                 placeholder="Enter URL"
                                                                 required
                                                             />
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {/* <div className="text-danger">
                                                                 {this.state.linkerror}
                                                             </div> */}
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup>
                                                             <Label htmlFor="Data"><b>Data:</b></Label>
                                                             <Input
@@ -1471,14 +1499,14 @@ class CreateApp extends React.Component {
                                                                 placeholder="Enter your data"
                                                                 required
                                                             />
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {/* <div className="text-danger">
                                                                 {this.state.dataerror}
                                                             </div> */}
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="12">
+                                                    <Col xs="12" sm="12" md="12" lg="12" xl="12">
                                                         <FormGroup>
                                                             <Label htmlFor="description"><b>Description:</b></Label>
                                                             <Input
@@ -1492,7 +1520,7 @@ class CreateApp extends React.Component {
                                                                 placeholder="Content..."
                                                                 required
                                                             />
-                                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                            <div className="text-danger">
                                                                 {this.state.descriptionerror}
                                                             </div>
                                                         </FormGroup>
@@ -1500,7 +1528,7 @@ class CreateApp extends React.Component {
                                                 </Row>
 
                                                 <Row>
-                                                    <Col xs="3">
+                                                    <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                         <Label htmlFor="userrole"><b>Status:</b></Label>
                                                         <br />
                                                         <FormGroup check inline>
@@ -1538,12 +1566,12 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                         </FormGroup>
-                                                        <div style={{ fontSize: 12, color: "red" }}>
+                                                        <div className="text-danger">
                                                             {this.state.statuserror}
                                                         </div>
                                                     </Col>
 
-                                                    <Col xs="3">
+                                                    <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                         <Label htmlFor="inline-radio7896"><b>WebView:</b></Label>
                                                         <br />
                                                         <FormGroup check inline>
@@ -1581,12 +1609,12 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                         </FormGroup>
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                         {this.state.webviewstatuserror}
                                                     </div> */}
                                                     </Col>
 
-                                                    <Col xs="3">
+                                                    <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                         <Label htmlFor="userrole"><b>IsFeatures:</b></Label>
                                                         <br />
                                                         <FormGroup check inline>
@@ -1625,11 +1653,11 @@ class CreateApp extends React.Component {
                                                  </Label>
 
                                                         </FormGroup>
-                                                        {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                        {/* <div className="text-danger">
                                                             {this.state.statuserror}
                                                         </div> */}
                                                     </Col>
-                                                    <Col xs="3">
+                                                    <Col xs="12" sm="6" md="3" lg="3" xl="3">
                                                         <Label>
                                                             <b>IsLive:</b>
                                                         </Label>
@@ -1638,7 +1666,7 @@ class CreateApp extends React.Component {
                                                     </Col>
                                                 </Row>
                                                 <Row>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup className="img-upload">
                                                             {
                                                                 this.state.selectedFile != null ? (
@@ -1647,30 +1675,30 @@ class CreateApp extends React.Component {
                                                                             this.state.selectedFile ? (
                                                                                 <div>
                                                                                     <img className="picture" src={REMOTE_URL + this.state.selectedFile} />
-                                                                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIcon(this.state.selectedFile)}></i>
+                                                                                    <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIcon(this.state.selectedFile)}></i>
                                                                                 </div>
                                                                             ) : (null)
                                                                         }
                                                                     </div>
                                                                 ) : (
-                                                                        <div>
+                                                                        <div className="">
                                                                             <p><b>Icon Image:</b></p>
                                                                             <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
-                                                                            <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
+                                                                            <span className="mt-20"><b>Or</b> Enter URL</span>
                                                                             <Input
                                                                                 type="url"
                                                                                 id="image"
                                                                                 name="filename"
-                                                                                className="form-control"
+                                                                                className="form-control app_search"
                                                                                 defaultValue={this.state.filename}
                                                                                 onChange={(e) =>
                                                                                     this.state.filename = e.target.value
                                                                                 }
-                                                                                style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                                // style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
                                                                                 placeholder="Please Enter URL"
                                                                                 required
                                                                             />
-                                                                            <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
+                                                                            <Button className="mt-0 ml-15" type="button" size="sm" color="primary" onClick={this.onURLChangeHandler.bind(this)}>Upload</Button>
                                                                             <Input
                                                                                 id="file-input"
                                                                                 type="file"
@@ -1682,12 +1710,12 @@ class CreateApp extends React.Component {
                                                                         </div>
                                                                     )
                                                             }
-                                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                            <div className="text-danger">
                                                                 {this.state.selectedFileerror}
                                                             </div>
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col xs="6">
+                                                    <Col xs="12" sm="12" md="6" lg="6" xl="6">
                                                         <FormGroup className="img-upload">
                                                             {
                                                                 this.state.bannerselectedFile != null ? (
@@ -1696,7 +1724,7 @@ class CreateApp extends React.Component {
                                                                             this.state.bannerselectedFile ? (
                                                                                 <div>
                                                                                     <img className="picture" src={REMOTE_URL + this.state.bannerselectedFile} />
-                                                                                    <i className="fa fa-remove fa-lg" style={{cursor:'pointer'}} onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
+                                                                                    <i className="fa fa-remove fa-lg cursor" onClick={() => this.removeIconPath(this.state.bannerselectedFile)}></i>
                                                                                 </div>
                                                                             ) : (null)
                                                                         }
@@ -1705,21 +1733,21 @@ class CreateApp extends React.Component {
                                                                         <div>
                                                                             <p><b>Banner Image:</b></p>
                                                                             <Label className="imag" for="file-input"><i className="fa fa-upload fa-lg" style={{ color: '#20a8d8' }}></i></Label>
-                                                                            <span style={{ marginLeft: '20px' }}><b>Or</b> Enter URL</span>
+                                                                            <span className="mt-20"><b>Or</b> Enter URL</span>
                                                                             <Input
                                                                                 type="url"
                                                                                 id="image"
                                                                                 name="bannerfilename"
-                                                                                className="form-control"
+                                                                                className="form-control app_search"
                                                                                 defaultValue={this.state.bannerfilename}
                                                                                 onChange={(e) =>
                                                                                     this.state.bannerfilename = e.target.value
                                                                                 }
-                                                                                style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
+                                                                                // style={{ display: 'inline-block', width: 'calc(100% - 240px)', marginLeft: '20px' }}
                                                                                 placeholder="Please Enter URL"
                                                                                 required
                                                                             />
-                                                                            <Button style={{ marginLeft: '15px' }} className="mt-0" type="button" size="sm" color="primary" onClick={this.onURLHandler.bind(this)}>Upload</Button>
+                                                                            <Button className="mt-0 ml-15" type="button" size="sm" color="primary" onClick={this.onURLHandler.bind(this)}>Upload</Button>
                                                                             <Input
                                                                                 id="file-input"
                                                                                 type="file"
@@ -1731,7 +1759,7 @@ class CreateApp extends React.Component {
                                                                         </div>
                                                                     )
                                                             }
-                                                            {/* <div style={{ fontSize: 12, color: "red" }}>
+                                                            {/* <div className="text-danger">
                                                                 {this.state.bannerselectedFileerror}
                                                             </div> */}
                                                         </FormGroup>
